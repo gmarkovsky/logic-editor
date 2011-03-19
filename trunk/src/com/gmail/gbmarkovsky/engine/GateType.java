@@ -6,15 +6,18 @@ package com.gmail.gbmarkovsky.engine;
  *
  */
 public enum GateType {
-	AND("AND", "&");
+	AND("AND", "&", 2), OR("OR", "|", 2), NOT("NOT", "~", 1);
 	
-	private GateType(String name, String symbol) {
+	private GateType(String name, String symbol, int inputCount) {
 		this.name = name;
 		this.symbol = symbol;
+		this.inputCount = inputCount;
 	}
 	
 	private String name;
 	private String symbol;
+	private int inputCount;
+	private int outputCount;
 
 	public String getName() {
 		return name;
@@ -22,5 +25,13 @@ public enum GateType {
 	
 	public String getSymbol() {
 		return symbol;
+	}
+
+	public int getInputCount() {
+		return inputCount;
+	}
+
+	public int getOutputCount() {
+		return outputCount;
 	}
 }

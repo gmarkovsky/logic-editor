@@ -1,6 +1,7 @@
 package com.gmail.gbmarkovsky.views;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.HashMap;
 
 import com.gmail.gbmarkovsky.engine.Circuit;
@@ -31,5 +32,14 @@ public class CircuitView {
 
 	public void addGateView(GateView gateView) {
 		gateViews.put(gateView.getGate(), gateView);
+	}
+	
+	public GateView getGateViewForLocation(Point location) {
+		for (GateView gv: gateViews.values()) {
+			if (gv.isPointInsideGateView(location)) {
+				return gv;
+			}
+		}
+		return null;
 	}
 }

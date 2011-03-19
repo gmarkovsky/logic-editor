@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 
 import com.gmail.gbmarkovsky.engine.Circuit;
-import com.gmail.gbmarkovsky.engine.GateCreator;
+import com.gmail.gbmarkovsky.engine.CircuitTool;
 import com.gmail.gbmarkovsky.views.CircuitView;
 
 /**
@@ -17,11 +17,12 @@ public class CircuitEditor extends JComponent {
 	private static final long serialVersionUID = -2235220973441036453L;
 	private Circuit circuit;
 	private CircuitView circuitView;
+	//private GateCreator gateCreator;
+	private CircuitTool tool;
 	
 	public CircuitEditor() {
 		circuit = new Circuit();
 		circuitView = new CircuitView(circuit);
-		addMouseListener(new GateCreator(this));
 	}
 	
 	public void paint(Graphics g) {
@@ -36,5 +37,11 @@ public class CircuitEditor extends JComponent {
 		return circuitView;
 	}
 	
-	
+	public void setCurrentTool(CircuitTool tool) {
+		removeMouseListener(this.tool);
+		removeMouseMotionListener(this.tool);
+		this.tool = tool;
+		addMouseListener(this.tool);
+		addMouseMotionListener(this.tool);
+	}
 }
