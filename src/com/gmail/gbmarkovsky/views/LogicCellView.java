@@ -24,6 +24,10 @@ public class LogicCellView extends AbstractGateView {
 		g.setColor(Color.black);
 		g.drawRect(position.x, position.y, width, height);
 		g.drawString(gate.getType().getSymbol(), position.x + 5,  position.y + 12);
+		output.paint(g);
+		for (PinView pv: inputs) {
+			pv.paint(g);
+		}
 	}
 
 }

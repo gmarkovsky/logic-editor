@@ -7,10 +7,10 @@ package com.gmail.gbmarkovsky.engine;
  */
 public class LogicCell extends AbstractGate {
 
-	private LogicCell(GateType type) {
+	public LogicCell(GateType type) {
 		super(type);
 	}
-
+	
 	public static Gate createAndGate() {
 		return new LogicCell(GateType.AND);
 	} 

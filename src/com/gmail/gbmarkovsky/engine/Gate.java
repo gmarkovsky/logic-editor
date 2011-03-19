@@ -1,5 +1,7 @@
 package com.gmail.gbmarkovsky.engine;
 
+import java.util.ArrayList;
+
 /**
  * Логический элемент схемы.
  * @author george
@@ -8,4 +10,6 @@ package com.gmail.gbmarkovsky.engine;
 public interface Gate {
 
 	public GateType getType();
+	public Pin getOutput();
+	public ArrayList<Pin> getInputs();
 }
