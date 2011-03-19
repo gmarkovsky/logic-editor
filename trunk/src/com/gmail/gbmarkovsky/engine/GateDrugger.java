@@ -9,6 +9,7 @@ import com.gmail.gbmarkovsky.views.GateView;
 public class GateDrugger implements CircuitTool {
 	private CircuitEditor editor;
 	private Point prevPosition;
+	private GateView druggingGate;
 	
 	public GateDrugger(CircuitEditor editor) {
 		this.editor = editor;
@@ -35,23 +36,21 @@ public class GateDrugger implements CircuitTool {
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		prevPosition = arg0.getPoint();
+		druggingGate = editor.getCircuitView().getGateViewForLocation(arg0.getPoint());
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		druggingGate = null;
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
-		GateView gateView = editor.getCircuitView().getGateViewForLocation(arg0.getPoint());
 		int dx = arg0.getX() - prevPosition.x;
 		int dy = arg0.getY() - prevPosition.y;
-		if (gateView != null) {
-			Point oldPos = gateView.getPosition();
-			gateView.setPosition(new Point(oldPos.x + dx, oldPos.y + dy));
+		if (druggingGate != null) {
+			Point oldPos = druggingGate.getPosition();
+			druggingGate.setPosition(new Point(oldPos.x + dx, oldPos.y + dy));
 		}
 		prevPosition = arg0.getPoint();
 		editor.repaint();
