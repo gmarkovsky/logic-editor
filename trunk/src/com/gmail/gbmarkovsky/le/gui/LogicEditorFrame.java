@@ -1,4 +1,4 @@
-package com.gmail.gbmarkovsky.gui;
+package com.gmail.gbmarkovsky.le.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,9 +20,11 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 
-import com.gmail.gbmarkovsky.engine.GateCreator;
-import com.gmail.gbmarkovsky.engine.GateDrugger;
-import com.gmail.gbmarkovsky.engine.GateType;
+import com.gmail.gbmarkovsky.le.engine.GateCreator;
+import com.gmail.gbmarkovsky.le.engine.GateDrugger;
+import com.gmail.gbmarkovsky.le.engine.GateType;
+import com.gmail.gbmarkovsky.le.engine.InputCreator;
+import com.gmail.gbmarkovsky.le.engine.OutputCreator;
 
 /**
  * Окно редактора логических схем.
@@ -41,6 +43,8 @@ public class LogicEditorFrame extends JFrame {
 	private JToggleButton andGateButton;
 	private JToggleButton orGateButton;
 	private JToggleButton notGateButton;
+	private JToggleButton inputButton;
+	private JToggleButton outputButton;
 	
 	public LogicEditorFrame() {
 		setTitle("Редактор логических схем");
@@ -86,11 +90,15 @@ public class LogicEditorFrame extends JFrame {
 		andGateButton = new JToggleButton("AND");
 		orGateButton = new JToggleButton("OR");
 		notGateButton = new JToggleButton("NOT");
+		inputButton = new JToggleButton("In");
+		outputButton = new JToggleButton("Out");
         ButtonGroup group = new ButtonGroup();
         group.add(cursorButton);
         group.add(andGateButton);
         group.add(orGateButton);
         group.add(notGateButton);
+        group.add(inputButton);
+        group.add(outputButton);
         JPanel radioPanel = new JPanel(new GridBagLayout());
         radioPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         radioPanel.add(cursorButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
@@ -103,6 +111,12 @@ public class LogicEditorFrame extends JFrame {
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(0, 0, 0, 0), 0, 0));
         radioPanel.add(notGateButton, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+        		new Insets(0, 0, 0, 0), 0, 0));
+        radioPanel.add(inputButton, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+        		new Insets(0, 0, 0, 0), 0, 0));
+        radioPanel.add(outputButton, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(0, 0, 0, 0), 0, 0));
         controlPanel.add(radioPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
@@ -137,6 +151,20 @@ public class LogicEditorFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				circuitEditor.setCurrentTool(new GateCreator(circuitEditor, GateType.NOT));
+			}
+		});
+        inputButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				circuitEditor.setCurrentTool(new InputCreator(circuitEditor));
+			}
+		});
+        outputButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				circuitEditor.setCurrentTool(new OutputCreator(circuitEditor));
 			}
 		});
 	}

@@ -1,4 +1,4 @@
-package com.gmail.gbmarkovsky.engine;
+package com.gmail.gbmarkovsky.le.engine;
 
 /**
  * Тип элемента схемы.

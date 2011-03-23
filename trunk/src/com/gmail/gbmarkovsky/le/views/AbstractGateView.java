@@ -1,11 +1,11 @@
-package com.gmail.gbmarkovsky.views;
+package com.gmail.gbmarkovsky.le.views;
 
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import com.gmail.gbmarkovsky.engine.Gate;
-import com.gmail.gbmarkovsky.engine.Pin;
+import com.gmail.gbmarkovsky.le.engine.Gate;
+import com.gmail.gbmarkovsky.le.engine.Pin;
 
 /**
  * Абстрактная реализация класса для отображения логического элемента.

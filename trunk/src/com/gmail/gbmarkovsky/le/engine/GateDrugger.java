@@ -1,10 +1,10 @@
-package com.gmail.gbmarkovsky.engine;
+package com.gmail.gbmarkovsky.le.engine;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-import com.gmail.gbmarkovsky.gui.CircuitEditor;
-import com.gmail.gbmarkovsky.views.GateView;
+import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
+import com.gmail.gbmarkovsky.le.views.GateView;
 
 public class GateDrugger implements CircuitTool {
 	private CircuitEditor editor;

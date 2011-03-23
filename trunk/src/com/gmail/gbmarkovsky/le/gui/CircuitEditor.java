@@ -1,4 +1,4 @@
-package com.gmail.gbmarkovsky.gui;
+package com.gmail.gbmarkovsky.le.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,10 +6,10 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
-import com.gmail.gbmarkovsky.engine.Circuit;
-import com.gmail.gbmarkovsky.engine.CircuitTool;
-import com.gmail.gbmarkovsky.engine.WireCreator;
-import com.gmail.gbmarkovsky.views.CircuitView;
+import com.gmail.gbmarkovsky.le.engine.Circuit;
+import com.gmail.gbmarkovsky.le.engine.CircuitTool;
+import com.gmail.gbmarkovsky.le.engine.WireCreator;
+import com.gmail.gbmarkovsky.le.views.CircuitView;
 
 /**
  * Компонент для отображения и редактирования логической схемы.

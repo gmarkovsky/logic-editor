@@ -1,7 +1,7 @@
-package com.gmail.gbmarkovsky.engine;
+package com.gmail.gbmarkovsky.le.engine;
 
 /**
- * Проводник, соединяющий контакты
+ * Проводник, соединяющий контакты.
  * @author george
  *
  */

@@ -1,9 +1,9 @@
-package com.gmail.gbmarkovsky.views;
+package com.gmail.gbmarkovsky.le.views;
 
 import java.awt.Graphics;
 import java.awt.Point;
 
-import com.gmail.gbmarkovsky.engine.Gate;
+import com.gmail.gbmarkovsky.le.engine.Gate;
 
 /**
  * Интерфейс для всех классов, отображающих логические элементы схемы.

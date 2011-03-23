@@ -1,4 +1,4 @@
-package com.gmail.gbmarkovsky.engine;
+package com.gmail.gbmarkovsky.le.engine;
 
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;

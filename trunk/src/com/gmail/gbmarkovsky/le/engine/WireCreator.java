@@ -1,16 +1,15 @@
-package com.gmail.gbmarkovsky.engine;
+package com.gmail.gbmarkovsky.le.engine;
 
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-import com.gmail.gbmarkovsky.gui.CircuitEditor;
-import com.gmail.gbmarkovsky.views.PinView;
+import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
+import com.gmail.gbmarkovsky.le.views.PinView;
 
 public class WireCreator implements CircuitTool {
 	private CircuitEditor circuitEditor;
-	private PinView startPin;
-	private PinView endPin;
+	@SuppressWarnings("unused")
 	private Point mousePosition;
 	
 	public WireCreator(CircuitEditor circuitEditor) {
@@ -40,7 +39,6 @@ public class WireCreator implements CircuitTool {
 		Point pressPosition = arg0.getPoint();
 		PinView pinViewForLocation = circuitEditor.getCircuitView().getPinViewForLocation(pressPosition);
 		if (pinViewForLocation != null) {
-			startPin = pinViewForLocation;
 		}
 	}
 
