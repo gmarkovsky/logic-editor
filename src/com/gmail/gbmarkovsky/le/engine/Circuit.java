@@ -26,6 +26,15 @@ public class Circuit {
 		outputs.add(output);
 	}
 	
+	/**
+	 * Удаляет гейт из схемы.
+	 * @param gate
+	 * @return <code>true</code> если такой гейт есть в схеме, иначе <code>false</code>
+	 */
+	public boolean deleteGate(Gate gate) {
+		return gates.remove(gate);
+	}
+	
 	public Collection<Gate> getGates() {
 		return gates;
 	}
