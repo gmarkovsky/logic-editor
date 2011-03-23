@@ -99,10 +99,10 @@ public class LogicEditorFrame extends JFrame {
         radioPanel.add(andGateButton, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(0, 0, 0, 0), 0, 0));
-        radioPanel.add(orGateButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+        radioPanel.add(orGateButton, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(0, 0, 0, 0), 0, 0));
-        radioPanel.add(notGateButton, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+        radioPanel.add(notGateButton, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(0, 0, 0, 0), 0, 0));
         controlPanel.add(radioPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,

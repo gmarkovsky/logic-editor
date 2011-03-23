@@ -42,4 +42,14 @@ public class CircuitView {
 		}
 		return null;
 	}
+	
+	public PinView getPinViewForLocation(Point location) {
+		for (GateView gv: gateViews.values()) {
+			PinView pv = gv.getPinViewForLocation(location);
+			if (pv != null) {
+				return pv;
+			}
+		}
+		return null;
+	}
 }

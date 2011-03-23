@@ -1,11 +1,14 @@
 package com.gmail.gbmarkovsky.gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
 import com.gmail.gbmarkovsky.engine.Circuit;
 import com.gmail.gbmarkovsky.engine.CircuitTool;
+import com.gmail.gbmarkovsky.engine.WireCreator;
 import com.gmail.gbmarkovsky.views.CircuitView;
 
 /**
@@ -23,10 +26,20 @@ public class CircuitEditor extends JComponent {
 	public CircuitEditor() {
 		circuit = new Circuit();
 		circuitView = new CircuitView(circuit);
+		WireCreator wireCreator = new WireCreator(this);
+		addMouseListener(wireCreator);
+		addMouseMotionListener(wireCreator);
+		setBackground(Color.white);
+		setForeground(Color.white);
 	}
 	
 	public void paint(Graphics g) {
 		circuitView.paint(g);
+		for (MouseListener ml: getMouseListeners()) {
+			if (ml instanceof WireCreator) {
+				((WireCreator) ml).paint(g);
+			}
+		}
 	}
 
 	public Circuit getCircuit() {
