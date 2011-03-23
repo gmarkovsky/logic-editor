@@ -19,6 +19,7 @@ public interface GateView {
 	public void setWidth(int width);
 	public int getHeight();
 	public void setHeight(int height);
+	public PinView getPinViewForLocation(Point location);
 	public boolean isPointInsideGateView(Point point);
 	public void paint(Graphics g);
 }

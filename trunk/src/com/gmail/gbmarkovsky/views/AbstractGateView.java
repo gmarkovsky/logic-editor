@@ -14,6 +14,9 @@ import com.gmail.gbmarkovsky.engine.Pin;
  */
 public abstract class AbstractGateView implements GateView {
 	protected Gate gate;
+	/**
+	 * Левый верхний угол гейта
+	 */
 	protected Point position;
 	protected int width = 30;
 	protected int height = 45;
@@ -86,6 +89,23 @@ public abstract class AbstractGateView implements GateView {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Возвращает PinView включающий точку <code>location</code>.
+	 * @param location точка
+	 * @return PinView под точкой <code>location</code>, если такого нет, то null
+	 */
+	public PinView getPinViewForLocation(Point location) {
+		if (output.isPointOnPin(location)) {
+			return output;
+		}
+		for (PinView pv: inputs) {
+			if (pv.isPointOnPin(location)) {
+				return pv;
+			}
+		}
+		return null;
 	}
 	
 	public abstract void paint(Graphics g);

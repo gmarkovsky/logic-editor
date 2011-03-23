@@ -6,7 +6,7 @@ package com.gmail.gbmarkovsky.engine;
  *
  */
 public enum GateType {
-	AND("AND", "&", 2), OR("OR", "|", 2), NOT("NOT", "~", 1);
+	AND("AND", "&", 2), OR("OR", "1", 2), NOT("NOT", "~", 1);
 	
 	private GateType(String name, String symbol, int inputCount) {
 		this.name = name;
