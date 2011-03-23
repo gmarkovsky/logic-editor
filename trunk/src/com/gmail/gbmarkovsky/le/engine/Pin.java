@@ -1,7 +1,12 @@
 package com.gmail.gbmarkovsky.le.engine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Контакт гейта, вход или выход.
+ * Если контакт является входом, то к нему может быть подсоединен один проводник.
+ * В случае если это выход, то к нему может быть присоединено много проводников.
  * @author george
  *
  */
@@ -12,9 +17,9 @@ public class Pin {
 	private PinType type;
 	
 	/**
-	 * Провод присоединенный к контакту. Может быть <code>null</code>.
+	 * Провода присоединенные к контакту.
 	 */
-	private Wire wire;
+	private List<Wire> wires = new ArrayList<Wire>();
 	
 	private Pin(PinType type) {
 		this.type = type;
@@ -32,11 +37,13 @@ public class Pin {
 		return type;
 	}
 
-	public Wire getWire() {
-		return wire;
+	public List<Wire> getWires() {
+		return wires;
 	}
 
-	public void setWire(Wire wire) {
-		this.wire = wire;
+	public void addWire(Wire wire) throws Exception {
+		if (!((wires.size() > 0) && type.equals(PinType.INPUT))) {
+			wires.add(wire);
+		}
 	}
 }
