@@ -1,8 +1,8 @@
-package com.gmail.gbmarkovsky.views;
+package com.gmail.gbmarkovsky.le.views;
 
 import java.awt.Graphics;
 
-import com.gmail.gbmarkovsky.engine.Wire;
+import com.gmail.gbmarkovsky.le.engine.Wire;
 
 public class WireView {
 	//private PinView start;

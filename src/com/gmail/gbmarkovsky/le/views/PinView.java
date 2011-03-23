@@ -1,12 +1,12 @@
-package com.gmail.gbmarkovsky.views;
+package com.gmail.gbmarkovsky.le.views;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 
-import com.gmail.gbmarkovsky.engine.Pin;
-import com.gmail.gbmarkovsky.engine.PinType;
+import com.gmail.gbmarkovsky.le.engine.Pin;
+import com.gmail.gbmarkovsky.le.engine.PinType;
 
 public class PinView {
 	private static final int PIN_WIDTH = 6;

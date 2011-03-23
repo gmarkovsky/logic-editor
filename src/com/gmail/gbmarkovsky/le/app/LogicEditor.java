@@ -1,6 +1,6 @@
-package com.gmail.gbmarkovsky.app;
+package com.gmail.gbmarkovsky.le.app;
 
-import com.gmail.gbmarkovsky.gui.LogicEditorFrame;
+import com.gmail.gbmarkovsky.le.gui.LogicEditorFrame;
 
 /**
  * Приложение для моделирования логических схем.
