@@ -6,6 +6,7 @@ import java.util.Collection;
 import com.gmail.gbmarkovsky.le.elements.Gate;
 import com.gmail.gbmarkovsky.le.elements.Input;
 import com.gmail.gbmarkovsky.le.elements.Output;
+import com.gmail.gbmarkovsky.le.elements.Wire;
 
 /**
  * Схема как набор логических элементов, набор входов и набор выходов.
@@ -16,7 +17,7 @@ public class Circuit {
 	private ArrayList<Gate> gates = new ArrayList<Gate>();
 	private ArrayList<Input> inputs = new ArrayList<Input>();
 	private ArrayList<Output> outputs = new ArrayList<Output>();
-	
+	private ArrayList<Wire> wires = new ArrayList<Wire>();
 	
 	public void addGate(Gate gate) {
 		gates.add(gate);
@@ -28,6 +29,10 @@ public class Circuit {
 	
 	public void addOutput(Output output) {
 		outputs.add(output);
+	}
+	
+	public void addWire(Wire wire) {
+		wires.add(wire);
 	}
 	
 	/**

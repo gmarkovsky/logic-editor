@@ -4,12 +4,12 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
-import com.gmail.gbmarkovsky.le.views.GateView;
+import com.gmail.gbmarkovsky.le.views.ElementView;
 
 public class GateDrugger implements CircuitTool {
 	private CircuitEditor editor;
 	private Point prevPosition;
-	private GateView druggingGate;
+	private ElementView druggingElement;
 	
 	public GateDrugger(CircuitEditor editor) {
 		this.editor = editor;
@@ -18,39 +18,36 @@ public class GateDrugger implements CircuitTool {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		druggingGate = editor.getCircuitView().getGateViewForLocation(arg0.getPoint());
+		druggingElement = editor.getCircuitView().getElementViewForLocation(arg0.getPoint());
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		druggingGate = null;
+		druggingElement = null;
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		int dx = arg0.getX() - prevPosition.x;
 		int dy = arg0.getY() - prevPosition.y;
-		if (druggingGate != null) {
-			Point oldPos = druggingGate.getPosition();
-			druggingGate.setPosition(new Point(oldPos.x + dx, oldPos.y + dy));
+		if (druggingElement != null) {
+			Point oldPos = druggingElement.getPosition();
+			druggingElement.setPosition(new Point(oldPos.x + dx, oldPos.y + dy));
 		}
 		prevPosition = arg0.getPoint();
 		editor.repaint();

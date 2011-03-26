@@ -6,7 +6,7 @@ import java.awt.Point;
 
 import com.gmail.gbmarkovsky.le.elements.Output;
 
-public class OutputView {
+public class OutputView implements ElementView {
 	private static final int HEIGHT = 20;
 	private static final int WIDTH = 20;
 	private Point position;
@@ -47,5 +47,48 @@ public class OutputView {
 		g.drawRect(position.x, position.y, WIDTH, HEIGHT);
 		//g.drawString(gate.getType().getSymbol(), position.x + 5,  position.y + 12);
 		inPin.paint(g);
+	}
+
+	@Override
+	public Point getPosition() {
+		return position;
+	}
+
+	@Override
+	public int getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setWidth(int width) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setHeight(int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isPointInsideView(Point point) {
+		int x = point.x;
+		int y = point.y;
+		int x0 = position.x;
+		int y0 = position.y;
+		int x1 = position.x + WIDTH;
+		int y1 = position.y + HEIGHT;
+		if ((x <= x1) && (x >= x0) && (y <= y1) && (y >= y0)) {
+			return true;
+		}
+		return false;
 	}
 }

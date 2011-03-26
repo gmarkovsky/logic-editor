@@ -23,11 +23,12 @@ public class CircuitEditor extends JComponent {
 	private CircuitView circuitView;
 	//private GateCreator gateCreator;
 	private CircuitTool tool;
+	private WireCreator wireCreator;
 	
 	public CircuitEditor() {
 		circuit = new Circuit();
 		circuitView = new CircuitView(circuit);
-		WireCreator wireCreator = new WireCreator(this);
+		wireCreator = new WireCreator(this);
 		addMouseListener(wireCreator);
 		addMouseMotionListener(wireCreator);
 		PinSelectionTool pinSelectionTool = new PinSelectionTool(this);
@@ -63,5 +64,15 @@ public class CircuitEditor extends JComponent {
 		this.tool = tool;
 		addMouseListener(this.tool);
 		addMouseMotionListener(this.tool);
+	}
+	
+	public void setWireC() {
+		addMouseListener(wireCreator);
+		addMouseMotionListener(wireCreator);
+	}
+	
+	public void removeWireC() {
+		removeMouseListener(wireCreator);
+		removeMouseMotionListener(wireCreator);
 	}
 }

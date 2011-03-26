@@ -27,6 +27,11 @@ public class PinView {
 	 */
 	private Point center;
 	
+	/**
+	 * Точка для подключения проводов.
+	 */
+	private Point border;
+	
 	private Pin pin;
 	
 	/**
@@ -56,8 +61,10 @@ public class PinView {
 		this.position = position;
 		if (pin.getType().equals(PinType.INPUT)) {
 			center = new Point(position.x - PIN_WIDTH/2, position.y);
+			border = new Point(position.x - PIN_WIDTH, position.y);
 		} else {
 			center = new Point(position.x + PIN_WIDTH/2, position.y);
+			border = new Point(position.x + PIN_WIDTH, position.y);
 		}
 	}
 
@@ -67,6 +74,14 @@ public class PinView {
 	 */
 	public Point getCenter() {
 		return center;
+	}
+	
+	public Point getBorder() {
+		return border;
+	}
+
+	public Pin getPin() {
+		return pin;
 	}
 	
 	/**

@@ -78,7 +78,7 @@ public abstract class AbstractGateView implements GateView {
 		this.height = height;
 	}
 	
-	public boolean isPointInsideGateView(Point point) {
+	public boolean isPointInsideView(Point point) {
 		int x = point.x;
 		int y = point.y;
 		int x0 = position.x;
