@@ -68,6 +68,18 @@ public class CircuitView {
 				return pv;
 			}
 		}
+		for (InputView iv: inputViews.values()) {
+			PinView pv = iv.getPinViewForLocation(location);
+			if (pv != null) {
+				return pv;
+			}
+		}
+		for (OutputView ov: outputViews.values()) {
+			PinView pv = ov.getPinViewForLocation(location);
+			if (pv != null) {
+				return pv;
+			}
+		}
 		return null;
 	}
 }

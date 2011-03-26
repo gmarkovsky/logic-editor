@@ -3,6 +3,7 @@ package com.gmail.gbmarkovsky.le.views;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.gmail.gbmarkovsky.le.engine.Gate;
 import com.gmail.gbmarkovsky.le.engine.Pin;
@@ -26,17 +27,16 @@ public abstract class AbstractGateView implements GateView {
 	public AbstractGateView(Point position, Gate gate) {
 		this.gate = gate;
 		this.position = position;
-		output = new PinView(new Point(position.x + width, position.y + height/2), gate.getOutput());
+		output = new PinView(new Point(position.x + width + 1, position.y + height/2), gate.getOutput());
 		inputs = new ArrayList<PinView>();
-		ArrayList<Pin> pins = gate.getInputs();
-		ArrayList<Point> inputPositions = getInputPositions();
+		List<Pin> pins = gate.getInputs();
+		List<Point> inputPositions = getInputPositions();
 		for (int i = 0; i < inputPositions.size(); i++) {
 			inputs.add(new PinView(inputPositions.get(i), pins.get(i)));
 		}
-	}
+	}	
 	
-	
-	public ArrayList<Point> getInputPositions() {
+	public List<Point> getInputPositions() {
 		int inputCount = gate.getType().getInputCount();
 		ArrayList<Point> list = new ArrayList<Point>(inputCount);
 		for (int i = 1; i <= inputCount; i++) {
@@ -55,8 +55,8 @@ public abstract class AbstractGateView implements GateView {
 
 	public void setPosition(Point position) {
 		this.position = position;
-		output.setPosition(new Point(position.x + width, position.y + height/2));
-		ArrayList<Point> inputPositions = getInputPositions();
+		output.setPosition(new Point(position.x + width + 1, position.y + height/2));
+		List<Point> inputPositions = getInputPositions();
 		for (int i = 0; i < inputs.size(); i++) {
 			inputs.get(i).setPosition(inputPositions.get(i));
 		}

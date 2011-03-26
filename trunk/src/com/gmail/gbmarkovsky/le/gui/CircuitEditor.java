@@ -8,6 +8,7 @@ import javax.swing.JComponent;
 
 import com.gmail.gbmarkovsky.le.engine.Circuit;
 import com.gmail.gbmarkovsky.le.engine.CircuitTool;
+import com.gmail.gbmarkovsky.le.engine.PinSelectionTool;
 import com.gmail.gbmarkovsky.le.engine.WireCreator;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 
@@ -29,6 +30,9 @@ public class CircuitEditor extends JComponent {
 		WireCreator wireCreator = new WireCreator(this);
 		addMouseListener(wireCreator);
 		addMouseMotionListener(wireCreator);
+		PinSelectionTool pinSelectionTool = new PinSelectionTool(this);
+		addMouseListener(pinSelectionTool);
+		addMouseMotionListener(pinSelectionTool);
 		setBackground(Color.white);
 		setForeground(Color.white);
 	}
@@ -38,6 +42,9 @@ public class CircuitEditor extends JComponent {
 		for (MouseListener ml: getMouseListeners()) {
 			if (ml instanceof WireCreator) {
 				((WireCreator) ml).paint(g);
+			}
+			if (ml instanceof PinSelectionTool) {
+				((PinSelectionTool) ml).paint(g);
 			}
 		}
 	}
