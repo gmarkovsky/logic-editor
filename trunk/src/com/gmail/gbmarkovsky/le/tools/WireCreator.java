@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 import com.gmail.gbmarkovsky.le.elements.Pin;
+import com.gmail.gbmarkovsky.le.elements.PinType;
 import com.gmail.gbmarkovsky.le.elements.Wire;
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.PinView;
@@ -14,6 +15,7 @@ public class WireCreator implements CircuitTool {
 	private CircuitEditor circuitEditor;
 	private Point mousePosition;
 	private PinView startPin;
+	private PinType waitForPinType;
 	
 	public WireCreator(CircuitEditor circuitEditor) {
 		this.circuitEditor = circuitEditor;
@@ -41,18 +43,31 @@ public class WireCreator implements CircuitTool {
 		if (startPin == null) {
 			if (pinViewForLocation != null) {
 				startPin = pinViewForLocation;
+				if (startPin.getPin().getType().equals(PinType.INPUT)) {
+					waitForPinType = PinType.OUTPUT;
+				} else {
+					waitForPinType = PinType.INPUT;
+				}
 			}
 		} else {
-			Pin start = startPin.getPin();
-			Pin end = pinViewForLocation.getPin();
-			Wire wire = new Wire(start, end);
-			start.addWire(wire);
-			end.addWire(wire);
-			WireView wireView = new WireView(wire, startPin, pinViewForLocation);
-			circuitEditor.getCircuitView().addWireView(wireView);
-			circuitEditor.getCircuit().addWire(wire);
-			startPin = null;
+			if (pinViewForLocation != null) {
+				if (!pinViewForLocation.getPin().getType().equals(waitForPinType)) {
+					return;
+				}
+				Pin start = startPin.getPin();
+				Pin end = pinViewForLocation.getPin();
+				Wire wire = new Wire(start, end);
+				start.addWire(wire);
+				end.addWire(wire);
+				WireView wireView = new WireView(wire, startPin, pinViewForLocation);
+				circuitEditor.getCircuitView().addWireView(wireView);
+				circuitEditor.getCircuit().addWire(wire);
+				startPin = null;
+			} else {
+				startPin = null;
+			}
 		}
+		circuitEditor.repaint();
 	}
 
 	@Override
