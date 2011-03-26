@@ -1,7 +1,11 @@
-package com.gmail.gbmarkovsky.le.engine;
+package com.gmail.gbmarkovsky.le.circuit;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import com.gmail.gbmarkovsky.le.elements.Gate;
+import com.gmail.gbmarkovsky.le.elements.Input;
+import com.gmail.gbmarkovsky.le.elements.Output;
 
 /**
  * Схема как набор логических элементов, набор входов и набор выходов.

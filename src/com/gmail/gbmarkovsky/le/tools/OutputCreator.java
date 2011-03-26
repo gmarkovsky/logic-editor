@@ -1,27 +1,29 @@
-package com.gmail.gbmarkovsky.le.engine;
+package com.gmail.gbmarkovsky.le.tools;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
+import com.gmail.gbmarkovsky.le.circuit.Circuit;
+import com.gmail.gbmarkovsky.le.elements.Output;
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
-import com.gmail.gbmarkovsky.le.views.InputView;
+import com.gmail.gbmarkovsky.le.views.OutputView;
 
-public class InputCreator implements CircuitTool {
+public class OutputCreator implements CircuitTool {
 	private CircuitEditor editor;
 	
-	public InputCreator(CircuitEditor editor) {
+	public OutputCreator(CircuitEditor editor) {
 		this.editor = editor;
 	}
-
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		Circuit circuit = editor.getCircuit();
 		CircuitView circuitView = editor.getCircuitView();
-		Input input = new Input();
-		InputView inputView = new InputView(new Point(arg0.getX(), arg0.getY()), input);
-		circuit.addInput(input);
-		circuitView.addInputView(inputView);
+		Output output = new Output();
+		OutputView outputView = new OutputView(new Point(arg0.getX(), arg0.getY()), output);
+		circuit.addOutput(output);
+		circuitView.addOutputView(outputView);
 		editor.repaint();
 	}
 

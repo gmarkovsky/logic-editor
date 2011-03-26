@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
-import com.gmail.gbmarkovsky.le.engine.Gate;
+import com.gmail.gbmarkovsky.le.elements.Gate;
 
 /**
  * Класс для отображения логического элемента.

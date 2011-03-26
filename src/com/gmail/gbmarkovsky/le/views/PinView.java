@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 
-import com.gmail.gbmarkovsky.le.engine.Pin;
-import com.gmail.gbmarkovsky.le.engine.PinType;
+import com.gmail.gbmarkovsky.le.elements.Pin;
+import com.gmail.gbmarkovsky.le.elements.PinType;
 
 /**
  * Представление контакта.

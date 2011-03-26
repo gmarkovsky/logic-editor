@@ -13,11 +13,11 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
-import com.gmail.gbmarkovsky.le.engine.GateCreator;
-import com.gmail.gbmarkovsky.le.engine.GateDrugger;
-import com.gmail.gbmarkovsky.le.engine.GateType;
-import com.gmail.gbmarkovsky.le.engine.InputCreator;
-import com.gmail.gbmarkovsky.le.engine.OutputCreator;
+import com.gmail.gbmarkovsky.le.elements.GateType;
+import com.gmail.gbmarkovsky.le.tools.GateCreator;
+import com.gmail.gbmarkovsky.le.tools.GateDrugger;
+import com.gmail.gbmarkovsky.le.tools.InputCreator;
+import com.gmail.gbmarkovsky.le.tools.OutputCreator;
 
 public class CircuitEditorPanel extends JPanel {
 	private static final long serialVersionUID = -2541499089778347322L;

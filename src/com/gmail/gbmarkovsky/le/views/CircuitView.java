@@ -4,10 +4,10 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.HashMap;
 
-import com.gmail.gbmarkovsky.le.engine.Circuit;
-import com.gmail.gbmarkovsky.le.engine.Gate;
-import com.gmail.gbmarkovsky.le.engine.Input;
-import com.gmail.gbmarkovsky.le.engine.Output;
+import com.gmail.gbmarkovsky.le.circuit.Circuit;
+import com.gmail.gbmarkovsky.le.elements.Gate;
+import com.gmail.gbmarkovsky.le.elements.Input;
+import com.gmail.gbmarkovsky.le.elements.Output;
 
 /**
  * Отображает логическую схему.

@@ -1,4 +1,4 @@
-package com.gmail.gbmarkovsky.le.engine;
+package com.gmail.gbmarkovsky.le.elements;
 
 public class Input {
 	private Pin outPin;

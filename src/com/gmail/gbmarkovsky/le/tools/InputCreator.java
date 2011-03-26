@@ -1,43 +1,29 @@
-package com.gmail.gbmarkovsky.le.engine;
+package com.gmail.gbmarkovsky.le.tools;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
+import com.gmail.gbmarkovsky.le.circuit.Circuit;
+import com.gmail.gbmarkovsky.le.elements.Input;
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
-import com.gmail.gbmarkovsky.le.views.GateView;
-import com.gmail.gbmarkovsky.le.views.LogicCellView;
+import com.gmail.gbmarkovsky.le.views.InputView;
 
-/**
- * Предназначен для создания логических элементов в ответ на действия пользователя.
- * @author george
- *
- */
-public class GateCreator implements CircuitTool {
+public class InputCreator implements CircuitTool {
 	private CircuitEditor editor;
-	private GateType gateType;
 	
-	public GateCreator(CircuitEditor editor, GateType gateType) {
+	public InputCreator(CircuitEditor editor) {
 		this.editor = editor;
-		this.gateType = gateType;
-	}
-	
-	public GateType getGateType() {
-		return gateType;
-	}
-
-	public void setGateType(GateType gateType) {
-		this.gateType = gateType;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		Circuit circuit = editor.getCircuit();
 		CircuitView circuitView = editor.getCircuitView();
-		Gate gate = new LogicCell(gateType);
-		GateView gateView = new LogicCellView(new Point(arg0.getX(), arg0.getY()), gate);
-		circuit.addGate(gate);
-		circuitView.addGateView(gateView);
+		Input input = new Input();
+		InputView inputView = new InputView(new Point(arg0.getX(), arg0.getY()), input);
+		circuit.addInput(input);
+		circuitView.addInputView(inputView);
 		editor.repaint();
 	}
 
