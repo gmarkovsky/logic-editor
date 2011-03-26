@@ -8,6 +8,7 @@ import com.gmail.gbmarkovsky.le.circuit.Circuit;
 import com.gmail.gbmarkovsky.le.elements.Gate;
 import com.gmail.gbmarkovsky.le.elements.Input;
 import com.gmail.gbmarkovsky.le.elements.Output;
+import com.gmail.gbmarkovsky.le.elements.Wire;
 
 /**
  * Отображает логическую схему.
@@ -19,6 +20,7 @@ public class CircuitView {
 	private HashMap<Gate, GateView> gateViews = new HashMap<Gate, GateView>();
 	private HashMap<Input, InputView> inputViews = new HashMap<Input, InputView>();
 	private HashMap<Output, OutputView> outputViews = new HashMap<Output, OutputView>();
+	private HashMap<Wire, WireView> wireViews = new HashMap<Wire, WireView>();
 	
 	public CircuitView(Circuit circuit) {
 		this.circuit = circuit;
@@ -38,6 +40,9 @@ public class CircuitView {
 		for (OutputView ov: outputViews.values()) {
 			ov.paint(g);
 		}
+		for (WireView wv: wireViews.values()) {
+			wv.paint(g);
+		}
 	}
 
 	public void addGateView(GateView gateView) {
@@ -52,10 +57,24 @@ public class CircuitView {
 		outputViews.put(outputView.getOutput(), outputView);
 	}
 	
-	public GateView getGateViewForLocation(Point location) {
+	public void addWireView(WireView wireView) {
+		wireViews.put(wireView.getWire(), wireView);
+	}
+	
+	public ElementView getElementViewForLocation(Point location) {
 		for (GateView gv: gateViews.values()) {
-			if (gv.isPointInsideGateView(location)) {
+			if (gv.isPointInsideView(location)) {
 				return gv;
+			}
+		}
+		for (InputView iv: inputViews.values()) {
+			if (iv.isPointInsideView(location)) {
+				return iv;
+			}
+		}
+		for (OutputView ov: outputViews.values()) {
+			if (ov.isPointInsideView(location)) {
+				return ov;
 			}
 		}
 		return null;

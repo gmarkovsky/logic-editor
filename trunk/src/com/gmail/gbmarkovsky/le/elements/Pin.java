@@ -25,10 +25,18 @@ public class Pin {
 		this.type = type;
 	}
 	
+	/**
+	 * Фабричный метод для создания входа схемы.
+	 * @return новый экземпляр входа схемы
+	 */
 	public static Pin createInput() {
 		return new Pin(PinType.INPUT);
 	}
 
+	/**
+	 * Фабричный метод для создания выхода схемы.
+	 * @return новый экземпляр выхода схемы
+	 */
 	public static Pin createOutput() {
 		return new Pin(PinType.OUTPUT);
 	}
@@ -37,11 +45,21 @@ public class Pin {
 		return type;
 	}
 
+	/**
+	 * Возвращает список проводов, подключенных к контакту.
+	 * @return
+	 */
 	public List<Wire> getWires() {
 		return wires;
 	}
 
-	public void addWire(Wire wire) throws Exception {
+	/**
+	 * Добавляет новый провод к контакту.
+	 * Если контакт входной, то к нему можно подсоединить не более 1 провода.
+	 * @param wire
+	 * @throws Exception
+	 */
+	public void addWire(Wire wire) {
 		if (!((wires.size() > 0) && type.equals(PinType.INPUT))) {
 			wires.add(wire);
 		}

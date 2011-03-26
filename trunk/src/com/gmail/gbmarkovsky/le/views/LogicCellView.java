@@ -29,5 +29,4 @@ public class LogicCellView extends AbstractGateView {
 			pv.paint(g);
 		}
 	}
-
 }

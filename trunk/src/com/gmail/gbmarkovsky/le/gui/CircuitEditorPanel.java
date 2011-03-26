@@ -93,6 +93,7 @@ public class CircuitEditorPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				circuitEditor.setCurrentTool(new GateDrugger(circuitEditor));
+				circuitEditor.setWireC();
 			}
 		});
         andGateButton.addActionListener(new ActionListener() {
@@ -100,6 +101,7 @@ public class CircuitEditorPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				circuitEditor.setCurrentTool(new GateCreator(circuitEditor, GateType.AND));
+				circuitEditor.removeWireC();
 			}
 		});
         orGateButton.addActionListener(new ActionListener() {
@@ -107,6 +109,7 @@ public class CircuitEditorPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				circuitEditor.setCurrentTool(new GateCreator(circuitEditor, GateType.OR));
+				circuitEditor.removeWireC();
 			}
 		});
         notGateButton.addActionListener(new ActionListener() {
@@ -114,6 +117,7 @@ public class CircuitEditorPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				circuitEditor.setCurrentTool(new GateCreator(circuitEditor, GateType.NOT));
+				circuitEditor.removeWireC();
 			}
 		});
         inputButton.addActionListener(new ActionListener() {
@@ -121,6 +125,7 @@ public class CircuitEditorPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				circuitEditor.setCurrentTool(new InputCreator(circuitEditor));
+				circuitEditor.removeWireC();
 			}
 		});
         outputButton.addActionListener(new ActionListener() {
@@ -128,6 +133,7 @@ public class CircuitEditorPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				circuitEditor.setCurrentTool(new OutputCreator(circuitEditor));
+				circuitEditor.removeWireC();
 			}
 		});
 	}
