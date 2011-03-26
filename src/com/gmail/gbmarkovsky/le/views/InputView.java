@@ -21,13 +21,25 @@ public class InputView {
 	
 	public void setPosition(Point position) {
 		this.position = position;
-		outPin.setPosition(new Point(position.x + WIDTH, position.y + HEIGHT/2));
+		outPin.setPosition(new Point(position.x + WIDTH + 1, position.y + HEIGHT/2));
 	}
 	
 	public Input getInput() {
 		return input;
 	}
 
+	/**
+	 * Возвращает PinView включающий точку <code>location</code>.
+	 * @param location точка
+	 * @return PinView под точкой <code>location</code>, если такого нет, то null
+	 */
+	public PinView getPinViewForLocation(Point location) {
+		if (outPin.isPointOnPin(location)) {
+			return outPin;
+		}
+		return null;
+	}
+	
 	public void paint(Graphics g) {
 		g.setColor(Color.white);
 		g.fillRect(position.x, position.y, WIDTH, HEIGHT);

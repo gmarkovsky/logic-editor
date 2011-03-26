@@ -27,7 +27,19 @@ public class OutputView {
 	public Output getOutput() {
 		return output;
 	}
-
+	
+	/**
+	 * Возвращает PinView включающий точку <code>location</code>.
+	 * @param location точка
+	 * @return PinView под точкой <code>location</code>, если такого нет, то null
+	 */
+	public PinView getPinViewForLocation(Point location) {
+		if (inPin.isPointOnPin(location)) {
+			return inPin;
+		}
+		return null;
+	}
+	
 	public void paint(Graphics g) {
 		g.setColor(Color.white);
 		g.fillRect(position.x, position.y, WIDTH, HEIGHT);
