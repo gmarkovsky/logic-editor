@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
-import com.gmail.gbmarkovsky.le.engine.Output;
+import com.gmail.gbmarkovsky.le.elements.Output;
 
 public class OutputView {
 	private static final int HEIGHT = 20;

@@ -2,7 +2,7 @@ package com.gmail.gbmarkovsky.le.views;
 
 import java.awt.Graphics;
 
-import com.gmail.gbmarkovsky.le.engine.Wire;
+import com.gmail.gbmarkovsky.le.elements.Wire;
 
 public class WireView {
 	//private PinView start;

@@ -6,10 +6,10 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 
-import com.gmail.gbmarkovsky.le.engine.Circuit;
-import com.gmail.gbmarkovsky.le.engine.CircuitTool;
-import com.gmail.gbmarkovsky.le.engine.PinSelectionTool;
-import com.gmail.gbmarkovsky.le.engine.WireCreator;
+import com.gmail.gbmarkovsky.le.circuit.Circuit;
+import com.gmail.gbmarkovsky.le.tools.CircuitTool;
+import com.gmail.gbmarkovsky.le.tools.PinSelectionTool;
+import com.gmail.gbmarkovsky.le.tools.WireCreator;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 
 /**

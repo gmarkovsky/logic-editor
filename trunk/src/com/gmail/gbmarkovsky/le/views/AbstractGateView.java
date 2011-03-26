@@ -5,8 +5,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gmail.gbmarkovsky.le.engine.Gate;
-import com.gmail.gbmarkovsky.le.engine.Pin;
+import com.gmail.gbmarkovsky.le.elements.Gate;
+import com.gmail.gbmarkovsky.le.elements.Pin;
 
 /**
  * Абстрактная реализация класса для отображения логического элемента.
