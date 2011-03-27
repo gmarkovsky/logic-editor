@@ -2,7 +2,9 @@ package com.gmail.gbmarkovsky.le.views;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
 import com.gmail.gbmarkovsky.le.elements.Gate;
@@ -100,5 +102,13 @@ public class CircuitView {
 			}
 		}
 		return null;
+	}
+	
+	public List<ElementView> getElements() {
+		ArrayList<ElementView> list = new ArrayList<ElementView>();
+		list.addAll(gateViews.values());
+		list.addAll(inputViews.values());
+		list.addAll(outputViews.values());
+		return list;
 	}
 }

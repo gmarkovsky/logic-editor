@@ -48,6 +48,7 @@ public class ElementDrugger implements CircuitTool {
 		if (druggingElement != null) {
 			Point oldPos = druggingElement.getPosition();
 			druggingElement.setPosition(new Point(oldPos.x + dx, oldPos.y + dy));
+			editor.updateSize();
 		}
 		prevPosition = arg0.getPoint();
 		editor.repaint();
