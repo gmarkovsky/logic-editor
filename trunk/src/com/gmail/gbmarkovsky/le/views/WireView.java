@@ -24,4 +24,12 @@ public class WireView {
 		g.setColor(Color.black);
 		g.drawLine(start.getBorder().x, start.getBorder().y, end.getBorder().x, end.getBorder().y);
 	}
+
+	public PinView getStart() {
+		return start;
+	}
+
+	public PinView getEnd() {
+		return end;
+	}
 }

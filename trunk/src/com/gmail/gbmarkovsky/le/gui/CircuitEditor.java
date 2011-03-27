@@ -12,6 +12,7 @@ import com.gmail.gbmarkovsky.le.circuit.Circuit;
 import com.gmail.gbmarkovsky.le.tools.CircuitTool;
 import com.gmail.gbmarkovsky.le.tools.PinSelectionTool;
 import com.gmail.gbmarkovsky.le.tools.WireCreator;
+import com.gmail.gbmarkovsky.le.tools.WireSelectionTool;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
 
@@ -27,11 +28,13 @@ public class CircuitEditor extends JComponent {
 	//private GateCreator gateCreator;
 	private CircuitTool tool;
 	private WireCreator wireCreator;
+	private WireSelectionTool wireSelectionTool;
 	
 	public CircuitEditor() {
 		circuit = new Circuit();
 		circuitView = new CircuitView(circuit);
 		wireCreator = new WireCreator(this);
+		wireSelectionTool = new WireSelectionTool(this);
 		addMouseListener(wireCreator);
 		addMouseMotionListener(wireCreator);
 		PinSelectionTool pinSelectionTool = new PinSelectionTool(this);
@@ -39,6 +42,8 @@ public class CircuitEditor extends JComponent {
 		addMouseMotionListener(pinSelectionTool);
 		setBackground(Color.white);
 		setForeground(Color.white);
+		//circuitView.addElementView(new SevenSegmentsIndicatorView(new Point(40, 50),
+				//new SevenSegmentsIndicator()));
 	}
 	
 	public void paint(Graphics g) {
@@ -49,6 +54,9 @@ public class CircuitEditor extends JComponent {
 			}
 			if (ml instanceof PinSelectionTool) {
 				((PinSelectionTool) ml).paint(g);
+			}
+			if (ml instanceof WireSelectionTool) {
+				((WireSelectionTool) ml).paint(g);
 			}
 		}
 	}
@@ -72,11 +80,15 @@ public class CircuitEditor extends JComponent {
 	public void setWireC() {
 		addMouseListener(wireCreator);
 		addMouseMotionListener(wireCreator);
+		addMouseListener(wireSelectionTool);
+		addMouseMotionListener(wireSelectionTool);
 	}
 	
 	public void removeWireC() {
 		removeMouseListener(wireCreator);
 		removeMouseMotionListener(wireCreator);
+		removeMouseListener(wireSelectionTool);
+		removeMouseMotionListener(wireSelectionTool);
 	}
 	
 	public void updateSize() {

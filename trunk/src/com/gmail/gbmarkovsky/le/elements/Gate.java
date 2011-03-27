@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author george
  *
  */
-public interface Gate {
+public interface Gate extends Element {
 
 	public GateType getType();
 	public Pin getOutput();
