@@ -15,7 +15,7 @@ import javax.swing.JToggleButton;
 
 import com.gmail.gbmarkovsky.le.elements.GateType;
 import com.gmail.gbmarkovsky.le.tools.GateCreator;
-import com.gmail.gbmarkovsky.le.tools.GateDrugger;
+import com.gmail.gbmarkovsky.le.tools.ElementDrugger;
 import com.gmail.gbmarkovsky.le.tools.InputCreator;
 import com.gmail.gbmarkovsky.le.tools.OutputCreator;
 
@@ -92,7 +92,7 @@ public class CircuitEditorPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				circuitEditor.setCurrentTool(new GateDrugger(circuitEditor));
+				circuitEditor.setCurrentTool(new ElementDrugger(circuitEditor));
 				circuitEditor.setWireC();
 			}
 		});

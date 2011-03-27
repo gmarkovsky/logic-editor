@@ -11,6 +11,11 @@ import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.PinView;
 import com.gmail.gbmarkovsky.le.views.WireView;
 
+/** 
+ * Инструмент для соединения контактов проводниками.
+ * @author george
+ *
+ */
 public class WireCreator implements CircuitTool {
 	private CircuitEditor circuitEditor;
 	private Point mousePosition;

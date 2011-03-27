@@ -6,12 +6,12 @@ import java.awt.event.MouseEvent;
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.ElementView;
 
-public class GateDrugger implements CircuitTool {
+public class ElementDrugger implements CircuitTool {
 	private CircuitEditor editor;
 	private Point prevPosition;
 	private ElementView druggingElement;
 	
-	public GateDrugger(CircuitEditor editor) {
+	public ElementDrugger(CircuitEditor editor) {
 		this.editor = editor;
 		prevPosition = new Point();
 	}
