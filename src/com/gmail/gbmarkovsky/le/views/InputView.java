@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 
+import com.gmail.gbmarkovsky.le.elements.Element;
 import com.gmail.gbmarkovsky.le.elements.Input;
 
 public class InputView implements ElementView {
@@ -92,5 +93,10 @@ public class InputView implements ElementView {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public Element getElement() {
+		return input;
 	}
 }

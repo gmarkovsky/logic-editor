@@ -3,6 +3,8 @@ package com.gmail.gbmarkovsky.le.views;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import com.gmail.gbmarkovsky.le.elements.Element;
+
 public interface ElementView {
 	public Point getPosition();
 	public void setPosition(Point position);
@@ -13,4 +15,5 @@ public interface ElementView {
 	public PinView getPinViewForLocation(Point location);
 	public boolean isPointInsideView(Point point);
 	public void paint(Graphics g);
+	public Element getElement();
 }

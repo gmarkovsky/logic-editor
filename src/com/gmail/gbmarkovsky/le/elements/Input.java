@@ -1,6 +1,6 @@
 package com.gmail.gbmarkovsky.le.elements;
 
-public class Input {
+public class Input implements Element {
 	private Pin outPin;
 
 	public Input() {

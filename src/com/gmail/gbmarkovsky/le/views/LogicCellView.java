@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import com.gmail.gbmarkovsky.le.elements.Element;
 import com.gmail.gbmarkovsky.le.elements.Gate;
 
 /**
@@ -28,5 +29,10 @@ public class LogicCellView extends AbstractGateView {
 		for (PinView pv: inputs) {
 			pv.paint(g);
 		}
+	}
+
+	@Override
+	public Element getElement() {
+		return gate;
 	}
 }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
+import com.gmail.gbmarkovsky.le.elements.Element;
 import com.gmail.gbmarkovsky.le.elements.Gate;
 import com.gmail.gbmarkovsky.le.elements.Input;
 import com.gmail.gbmarkovsky.le.elements.Output;
@@ -23,6 +24,7 @@ public class CircuitView {
 	private HashMap<Input, InputView> inputViews = new HashMap<Input, InputView>();
 	private HashMap<Output, OutputView> outputViews = new HashMap<Output, OutputView>();
 	private HashMap<Wire, WireView> wireViews = new HashMap<Wire, WireView>();
+	private HashMap<Element, ElementView> elementViews = new HashMap<Element, ElementView>();
 	
 	public CircuitView(Circuit circuit) {
 		this.circuit = circuit;
@@ -45,6 +47,9 @@ public class CircuitView {
 		for (WireView wv: wireViews.values()) {
 			wv.paint(g);
 		}
+		for (ElementView ew: elementViews.values()) {
+			ew.paint(g);
+		}
 	}
 
 	public void addGateView(GateView gateView) {
@@ -61,6 +66,10 @@ public class CircuitView {
 	
 	public void addWireView(WireView wireView) {
 		wireViews.put(wireView.getWire(), wireView);
+	}
+	
+	public void addElementView(ElementView elementView) {
+		elementViews.put(elementView.getElement(), elementView);
 	}
 	
 	public ElementView getElementViewForLocation(Point location) {
@@ -110,5 +119,9 @@ public class CircuitView {
 		list.addAll(inputViews.values());
 		list.addAll(outputViews.values());
 		return list;
+	}
+	
+	public List<WireView> getWires() {
+		return new ArrayList<WireView>(wireViews.values());
 	}
 }
