@@ -24,6 +24,7 @@ public class InputCreator implements CircuitTool {
 		InputView inputView = new InputView(new Point(arg0.getX(), arg0.getY()), input);
 		circuit.addInput(input);
 		circuitView.addInputView(inputView);
+		editor.updateSize();
 		editor.repaint();
 	}
 

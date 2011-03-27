@@ -24,6 +24,7 @@ public class OutputCreator implements CircuitTool {
 		OutputView outputView = new OutputView(new Point(arg0.getX(), arg0.getY()), output);
 		circuit.addOutput(output);
 		circuitView.addOutputView(outputView);
+		editor.updateSize();
 		editor.repaint();
 	}
 

@@ -42,6 +42,7 @@ public class GateCreator implements CircuitTool {
 		GateView gateView = new LogicCellView(new Point(arg0.getX(), arg0.getY()), gate);
 		circuit.addGate(gate);
 		circuitView.addGateView(gateView);
+		editor.updateSize();
 		editor.repaint();
 	}
 

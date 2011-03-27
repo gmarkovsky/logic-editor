@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 
 import com.gmail.gbmarkovsky.le.elements.GateType;
@@ -42,7 +43,9 @@ public class CircuitEditorPanel extends JPanel {
 		setLayout(new BorderLayout());
 		circuitEditor =  new CircuitEditor();
 		initControlPanel();
-		add(circuitEditor, BorderLayout.CENTER);
+		
+		JScrollPane scrollPane = new JScrollPane(circuitEditor);
+		add(scrollPane, BorderLayout.CENTER);
 		add(controlPanel, BorderLayout.WEST);
 	}
 	
