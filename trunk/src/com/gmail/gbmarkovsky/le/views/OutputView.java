@@ -2,13 +2,15 @@ package com.gmail.gbmarkovsky.le.views;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 
 import com.gmail.gbmarkovsky.le.elements.Output;
 
 public class OutputView implements ElementView {
-	private static final int HEIGHT = 20;
-	private static final int WIDTH = 20;
+	private static final int HEIGHT = 16;
+	private static final int WIDTH = 16;
 	private Point position;
 	private PinView inPin;
 	private Output output;
@@ -41,11 +43,11 @@ public class OutputView implements ElementView {
 	}
 	
 	public void paint(Graphics g) {
+		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setColor(Color.white);
-		g.fillRect(position.x, position.y, WIDTH, HEIGHT);
+		g.fillOval(position.x, position.y, WIDTH, HEIGHT);
 		g.setColor(Color.black);
-		g.drawRect(position.x, position.y, WIDTH, HEIGHT);
-		//g.drawString(gate.getType().getSymbol(), position.x + 5,  position.y + 12);
+		g.drawOval(position.x, position.y, WIDTH, HEIGHT);
 		inPin.paint(g);
 	}
 

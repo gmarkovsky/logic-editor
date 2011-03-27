@@ -1,5 +1,6 @@
 package com.gmail.gbmarkovsky.le.views;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import com.gmail.gbmarkovsky.le.elements.Wire;
@@ -20,6 +21,7 @@ public class WireView {
 	}
 	
 	public void paint(Graphics g) {
+		g.setColor(Color.black);
 		g.drawLine(start.getBorder().x, start.getBorder().y, end.getBorder().x, end.getBorder().y);
 	}
 }
