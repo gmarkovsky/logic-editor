@@ -42,8 +42,8 @@ public class CircuitEditor extends JComponent {
 		addMouseMotionListener(pinSelectionTool);
 		setBackground(Color.white);
 		setForeground(Color.white);
-		//circuitView.addElementView(new SevenSegmentsIndicatorView(new Point(40, 50),
-				//new SevenSegmentsIndicator()));
+//		circuitView.addElementView(new SevenSegmentsIndicatorView(new Point(40, 50),
+//				new SevenSegmentsIndicator()));
 	}
 	
 	public void paint(Graphics g) {

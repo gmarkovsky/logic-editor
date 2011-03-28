@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Контакт гейта, вход или выход.
+ * Контакт элемента, вход или выход.
  * Если контакт является входом, то к нему может быть подсоединен один проводник.
  * В случае если это выход, то к нему может быть присоединено много проводников.
  * @author george
@@ -47,7 +47,7 @@ public class Pin {
 
 	/**
 	 * Возвращает список проводов, подключенных к контакту.
-	 * @return
+	 * @return список проводов, подключенных к контакту
 	 */
 	public List<Wire> getWires() {
 		return wires;
@@ -57,7 +57,6 @@ public class Pin {
 	 * Добавляет новый провод к контакту.
 	 * Если контакт входной, то к нему можно подсоединить не более 1 провода.
 	 * @param wire
-	 * @throws Exception
 	 */
 	public void addWire(Wire wire) {
 		if (!((wires.size() > 0) && type.equals(PinType.INPUT))) {
