@@ -140,4 +140,8 @@ public class CircuitEditorPanel extends JPanel {
 			}
 		});
 	}
+
+	public CircuitEditor getCircuitEditor() {
+		return circuitEditor;
+	}
 }

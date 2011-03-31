@@ -16,9 +16,9 @@ public abstract class AbstractGate implements Gate {
 		this.type = type;
 		inputs = new ArrayList<Pin>(type.getInputCount());
 		for (int i = 0; i < type.getInputCount(); i++) {
-			inputs.add(Pin.createInput());
+			inputs.add(Pin.createInput(this));
 		}
-		output = Pin.createOutput();
+		output = Pin.createOutput(this);
 	}
 	
 	public GateType getType() {

@@ -6,7 +6,7 @@ public class Output implements Element {
 	private Pin inPin;
 
 	public Output() {
-		this.inPin = Pin.createInput();
+		this.inPin = Pin.createInput(this);
 	}
 	
 	public Pin getPin() {
