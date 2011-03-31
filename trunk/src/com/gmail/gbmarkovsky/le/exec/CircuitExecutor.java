@@ -9,7 +9,7 @@ public class CircuitExecutor {
 		this.circuit = circuit;
 	}
 	
-	public void execuit() {
-		
+	public void execute() {
+		circuit.getGates();
 	}
 }
