@@ -21,24 +21,32 @@ public class Pin {
 	 */
 	private List<Wire> wires = new ArrayList<Wire>();
 	
-	private Pin(PinType type) {
+	private Element element;
+	
+	/**
+	 * Значение сигнала на контакте.
+	 */
+	private boolean signal;
+	
+	private Pin(PinType type, Element element) {
 		this.type = type;
+		this.element = element;
 	}
 	
 	/**
 	 * Фабричный метод для создания входа схемы.
 	 * @return новый экземпляр входа схемы
 	 */
-	public static Pin createInput() {
-		return new Pin(PinType.INPUT);
+	public static Pin createInput(Element element) {
+		return new Pin(PinType.INPUT, element);
 	}
 
 	/**
 	 * Фабричный метод для создания выхода схемы.
 	 * @return новый экземпляр выхода схемы
 	 */
-	public static Pin createOutput() {
-		return new Pin(PinType.OUTPUT);
+	public static Pin createOutput(Element element) {
+		return new Pin(PinType.OUTPUT, element);
 	}
 	
 	public PinType getType() {
@@ -62,5 +70,17 @@ public class Pin {
 		if (!((wires.size() > 0) && type.equals(PinType.INPUT))) {
 			wires.add(wire);
 		}
+	}
+
+	public boolean isSignal() {
+		return signal;
+	}
+
+	public void setSignal(boolean signal) {
+		this.signal = signal;
+	}
+
+	public Element getElement() {
+		return element;
 	}
 }

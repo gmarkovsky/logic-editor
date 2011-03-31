@@ -80,4 +80,16 @@ public class Circuit {
 	public Collection<Gate> getGates() {
 		return gates;
 	}
+
+	public Collection<Input> getInputs() {
+		return inputs;
+	}
+
+	public Collection<Output> getOutputs() {
+		return outputs;
+	}
+
+	public Collection<Wire> getWires() {
+		return wires;
+	}
 }

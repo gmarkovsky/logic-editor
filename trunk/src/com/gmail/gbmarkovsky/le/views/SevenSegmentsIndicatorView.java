@@ -36,7 +36,7 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		calculatePositions();
 		List<Point> outPos = getInputPositions();
 		for (int i = 0; i < 7; i++) {
-			outputs.add(new PinView(outPos.get(i), Pin.createOutput()));
+			outputs.add(new PinView(outPos.get(i), Pin.createOutput(null)));
 		}
 	}
 

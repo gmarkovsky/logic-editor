@@ -46,6 +46,27 @@ public class LogicEditorFrame extends JFrame {
 		});
 		miExit.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_X, ActionEvent.ALT_MASK));
+		
+//		JMenuItem miSave = new JMenuItem("Сохранить");
+//		miSave.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				FileOutputStream fw = null;
+//				try {
+//					fw = new FileOutputStream("test.xml");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				try {
+//					CircuitSerializer.write(editorPanel.getCircuitEditor().getCircuit()).writeTo(fw);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//		
+//		mFile.add(miSave);
 		mFile.add(miExit);
 		menuBar.add(mFile);
 		setJMenuBar(menuBar);
