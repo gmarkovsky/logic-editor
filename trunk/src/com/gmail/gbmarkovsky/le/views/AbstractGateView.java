@@ -108,5 +108,13 @@ public abstract class AbstractGateView implements GateView {
 		return null;
 	}
 	
+	public boolean isInsideRect(Point p, int w, int h) {
+		if ((position.x - p.x < w - width) && (position.x > p.x) &&
+				(position.y - p.y < h - height) && (position.y > p.y)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public abstract void paint(Graphics g);
 }

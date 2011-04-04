@@ -135,6 +135,12 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean isInsideRect(Point p, int w, int h) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 //	public static void main(String[] args) {
 //		new TestFrame();

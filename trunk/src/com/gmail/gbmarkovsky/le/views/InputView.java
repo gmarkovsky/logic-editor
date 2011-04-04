@@ -97,4 +97,13 @@ public class InputView implements ElementView {
 	public Element getElement() {
 		return input;
 	}
+
+	@Override
+	public boolean isInsideRect(Point p, int w, int h) {
+		if ((position.x - p.x < w - WIDTH) && (position.x > p.x) &&
+				(position.y - p.y < h - HEIGHT) && (position.y > p.y)) {
+			return true;
+		}
+		return false;
+	}
 }

@@ -2,7 +2,10 @@ package com.gmail.gbmarkovsky.le.tools;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.ElementView;
@@ -11,6 +14,8 @@ import com.gmail.gbmarkovsky.le.views.OutputView;
 
 public class ElementSelector implements CircuitTool {
 	private CircuitEditor circuitEditor;
+	private Point basePoint;
+	private Point currentPoint;
 	
 	public ElementSelector(CircuitEditor circuitEditor) {
 		super();
@@ -19,7 +24,6 @@ public class ElementSelector implements CircuitTool {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -36,17 +40,38 @@ public class ElementSelector implements CircuitTool {
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		ElementView selectedElement = circuitEditor.getCircuitView().getElementViewForLocation(arg0.getPoint());
-		circuitEditor.setSelectedElement(selectedElement);
+		if (selectedElement != null && !circuitEditor.getSelectedElements().contains(selectedElement) ) {
+			circuitEditor.setSelectedElement(selectedElement);
+		}
+		if (circuitEditor.getSelectedElements().isEmpty() && selectedElement == null) {
+			basePoint = arg0.getPoint();
+			currentPoint = basePoint;
+			circuitEditor.setSelection(true);
+		}
+		if (selectedElement == null) {
+			circuitEditor.getSelectedElements().clear();
+		}
+		circuitEditor.repaint();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		
+		basePoint = null;
+		currentPoint = null;
+		circuitEditor.setSelection(false);
+		circuitEditor.repaint();
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		
+		if (basePoint != null) {
+			currentPoint = e.getPoint();
+			List<ElementView> list = circuitEditor.getSelectedElements();
+			Rectangle rect = normalizeRect(basePoint, currentPoint);
+			list.clear();
+			list.addAll(circuitEditor.getCircuitView().getElementsInsideRect(rect.getLocation(), rect.width, rect.height));
+			circuitEditor.repaint();
+		}
 	}
 
 	@Override
@@ -55,8 +80,8 @@ public class ElementSelector implements CircuitTool {
 	}
 
 	public void paint(Graphics g) {
-		ElementView selectedElement = circuitEditor.getSelectedElement();
-		if (selectedElement != null) {
+		List<ElementView> selectedElements = circuitEditor.getSelectedElements();
+		for (ElementView selectedElement: selectedElements) {
 			g.setColor(Color.red);
 			if (selectedElement instanceof InputView || selectedElement instanceof OutputView) {
 				g.drawOval(selectedElement.getPosition().x - 1, selectedElement.getPosition().y - 1, 
@@ -66,5 +91,45 @@ public class ElementSelector implements CircuitTool {
 						selectedElement.getWidth() + 2, selectedElement.getHeight() + 2);
 			}
 		}
+		if (basePoint != null) {
+			Rectangle rect = normalizeRect(basePoint, currentPoint);
+			g.setColor(Color.blue);
+			g.drawRect(rect.x, rect.y, rect.width, rect.height);
+		}
+	}
+	
+	private Rectangle normalizeRect(Point basePoint, Point currentPoint) {
+		Point p;
+		int w;
+		int h;
+		Rectangle rectangle = null;
+		int dx = basePoint.x - currentPoint.x;
+		int dy = basePoint.y - currentPoint.y;
+		if (dx > 0) {
+			if (dy > 0) {
+				p = currentPoint;
+				w = dx;
+				h = dy;
+				rectangle = new Rectangle(p.x, p.y, w, h);
+			} else {
+				p = new Point(currentPoint.x, basePoint.y);
+				w = dx;
+				h = -dy;
+				rectangle = new Rectangle(p.x, p.y, w, h);
+			} 
+		} else {
+			if (dy > 0) {
+				p = new Point(basePoint.x, currentPoint.y);
+				w = -dx;
+				h = dy;
+				rectangle = new Rectangle(p.x, p.y, w, h);
+			} else {
+				p = basePoint;
+				w = -dx;
+				h = -dy;
+				rectangle = new Rectangle(p.x, p.y, w, h);
+			} 	
+		}
+		return rectangle;
 	}
 }

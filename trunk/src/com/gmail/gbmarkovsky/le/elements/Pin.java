@@ -79,6 +79,10 @@ public class Pin {
 		}
 	}
 
+	public boolean removeWire(Wire wire) {
+		return wires.remove(wire);
+	}
+	
 	public boolean isSignal() {
 		return signal;
 	}

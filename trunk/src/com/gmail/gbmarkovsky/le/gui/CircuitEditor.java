@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JComponent;
 
@@ -30,8 +32,9 @@ public class CircuitEditor extends JComponent {
 	private CircuitTool tool;
 	private WireCreator wireCreator;
 	private WireSelectionTool wireSelectionTool;
-	private ElementView selectedElement;
+	private List<ElementView> selectedElements = new ArrayList<ElementView>();
 	private ElementSelector elementSelector;
+	private boolean isSelection;
 	
 	public CircuitEditor() {
 		circuit = new Circuit();
@@ -40,8 +43,7 @@ public class CircuitEditor extends JComponent {
 		wireCreator = new WireCreator(this);
 		//wireSelectionTool = new WireSelectionTool(this);
 		elementSelector = new ElementSelector(this);
-		addMouseListener(wireCreator);
-		addMouseMotionListener(wireCreator);
+		setWireC();
 		PinSelectionTool pinSelectionTool = new PinSelectionTool(this);
 		addMouseListener(pinSelectionTool);
 		addMouseMotionListener(pinSelectionTool);
@@ -50,13 +52,10 @@ public class CircuitEditor extends JComponent {
 //		circuitView.addElementView(new SevenSegmentsIndicatorView(new Point(40, 50),
 //				new SevenSegmentsIndicator()));
 	}
-	
-	public ElementView getSelectedElement() {
-		return selectedElement;
-	}
 
 	public void setSelectedElement(ElementView selectedElement) {
-		this.selectedElement = selectedElement;
+		selectedElements.clear();
+		selectedElements.add(selectedElement);
 	}
 
 	public void setCircuit(Circuit circuit) {
@@ -125,11 +124,23 @@ public class CircuitEditor extends JComponent {
 		setPreferredSize(dimension);
 	}
 	
-	public void deleteSelectedElement() {
-		if (selectedElement != null) {
-			circuitView.deleteElementView(selectedElement);
+	public void deleteSelectedElements() {
+		for (ElementView ew: selectedElements) {
+			circuitView.deleteElementView(ew);
 			repaint();
-			selectedElement = null;
 		}
+		selectedElements.clear();
+	}
+	
+	public List<ElementView> getSelectedElements() {
+		return selectedElements;
+	}
+
+	public boolean isSelection() {
+		return isSelection;
+	}
+
+	public void setSelection(boolean isSelection) {
+		this.isSelection = isSelection;
 	}
 }
