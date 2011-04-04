@@ -1,5 +1,6 @@
 package com.gmail.gbmarkovsky.le.tools;
 
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
@@ -57,5 +58,11 @@ public class ElementDrugger implements CircuitTool {
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		prevPosition = arg0.getPoint();
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 }

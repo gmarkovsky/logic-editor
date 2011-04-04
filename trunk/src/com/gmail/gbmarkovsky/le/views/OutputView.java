@@ -59,8 +59,7 @@ public class OutputView implements ElementView {
 
 	@Override
 	public int getWidth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return WIDTH;
 	}
 
 	@Override
@@ -71,8 +70,7 @@ public class OutputView implements ElementView {
 
 	@Override
 	public int getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return HEIGHT;
 	}
 
 	@Override

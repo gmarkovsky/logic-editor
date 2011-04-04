@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Контакт элемента, вход или выход.
+ * Контакт элемента, входной или выходной.
  * Если контакт является входом, то к нему может быть подсоединен один проводник.
  * В случае если это выход, то к нему может быть присоединено много проводников.
  * @author george
@@ -21,6 +21,9 @@ public class Pin {
 	 */
 	private List<Wire> wires = new ArrayList<Wire>();
 	
+	/**
+	 * Элемент схемы, которому принадлежит контакт.
+	 */
 	private Element element;
 	
 	/**
@@ -49,6 +52,10 @@ public class Pin {
 		return new Pin(PinType.OUTPUT, element);
 	}
 	
+	/**
+	 * Возвращает тип контакта <code>{INPUT, OUTPUT}</code>.
+	 * @return тип контакта
+	 */
 	public PinType getType() {
 		return type;
 	}
@@ -82,5 +89,12 @@ public class Pin {
 
 	public Element getElement() {
 		return element;
+	}
+	
+	public boolean isNewConnectAllowed () {
+		if ((type == PinType.INPUT) && (wires.size() > 0)) {
+			return false;
+		}
+		return true;
 	}
 }

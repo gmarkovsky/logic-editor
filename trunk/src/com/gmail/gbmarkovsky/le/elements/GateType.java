@@ -34,4 +34,20 @@ public enum GateType {
 	public int getOutputCount() {
 		return outputCount;
 	}
+	
+	public static GateType parseGateType(String string) {
+		if (string.equals("AND")) {
+			return AND;
+		} else if (string.equals("OR")) {
+			return OR;
+		} else if (string.equals("NOT")) {
+			return NOT;
+		}
+		return null;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 }

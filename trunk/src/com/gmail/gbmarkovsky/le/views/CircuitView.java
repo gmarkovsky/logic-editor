@@ -2,6 +2,8 @@ package com.gmail.gbmarkovsky.le.views;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +20,7 @@ import com.gmail.gbmarkovsky.le.elements.Wire;
  * @author george
  *
  */
-public class CircuitView {
+public class CircuitView implements PropertyChangeListener {
 	private Circuit circuit;
 	private HashMap<Gate, GateView> gateViews = new HashMap<Gate, GateView>();
 	private HashMap<Input, InputView> inputViews = new HashMap<Input, InputView>();
@@ -47,21 +49,24 @@ public class CircuitView {
 		for (WireView wv: wireViews.values()) {
 			wv.paint(g);
 		}
-		for (ElementView ew: elementViews.values()) {
-			ew.paint(g);
-		}
+//		for (ElementView ew: elementViews.values()) {
+//			ew.paint(g);
+//		}
 	}
 
 	public void addGateView(GateView gateView) {
 		gateViews.put(gateView.getGate(), gateView);
+		addElementView(gateView);
 	}
 	
 	public void addInputView(InputView inputView) {
 		inputViews.put(inputView.getInput(), inputView);
+		addElementView(inputView);
 	}
 	
 	public void addOutputView(OutputView outputView) {
 		outputViews.put(outputView.getOutput(), outputView);
+		addElementView(outputView);
 	}
 	
 	public void addWireView(WireView wireView) {
@@ -123,5 +128,30 @@ public class CircuitView {
 	
 	public List<WireView> getWires() {
 		return new ArrayList<WireView>(wireViews.values());
+	}
+	
+	public ElementView getElementView(Element element) {
+		return elementViews.get(element);
+	}
+	
+	public void deleteElementView(ElementView elementView) {
+		elementViews.remove(elementView.getElement());
+		if (elementView instanceof InputView) {
+			inputViews.remove(elementView.getElement());
+			circuit.deleteInput((Input) elementView.getElement());
+		} else if (elementView instanceof OutputView) {
+			outputViews.remove(elementView.getElement());
+			circuit.deleteOutput((Output) elementView.getElement());
+		} else {
+			gateViews.remove(elementView.getElement());
+			circuit.deleteGate((Gate) elementView.getElement());
+		}
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName() == Circuit.WIRE_DELETE) {
+			wireViews.remove(evt.getOldValue());
+		}
 	}
 }

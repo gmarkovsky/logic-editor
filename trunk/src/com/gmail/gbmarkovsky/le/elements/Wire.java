@@ -6,7 +6,14 @@ package com.gmail.gbmarkovsky.le.elements;
  *
  */
 public class Wire {
+	/**
+	 * Выходной контакт элемента к которому присоединено начало проводника.
+	 */
 	private Pin start;
+	
+	/**
+	 * Входной контакт элемента к которому присоединен конец проводника.
+	 */
 	private Pin end;
 	
 	public Wire(Pin start, Pin end) {

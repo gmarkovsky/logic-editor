@@ -47,6 +47,9 @@ public class WireCreator implements CircuitTool {
 		PinView pinViewForLocation = circuitEditor.getCircuitView().getPinViewForLocation(pressPosition);
 		if (startPin == null) {
 			if (pinViewForLocation != null) {
+				if (!pinViewForLocation.getPin().isNewConnectAllowed()) {
+					return;
+				}
 				startPin = pinViewForLocation;
 				if (startPin.getPin().getType().equals(PinType.INPUT)) {
 					waitForPinType = PinType.OUTPUT;
@@ -57,6 +60,9 @@ public class WireCreator implements CircuitTool {
 		} else {
 			if (pinViewForLocation != null) {
 				if (!pinViewForLocation.getPin().getType().equals(waitForPinType)) {
+					return;
+				}
+				if (!pinViewForLocation.getPin().isNewConnectAllowed()) {
 					return;
 				}
 				Pin start = startPin.getPin();
