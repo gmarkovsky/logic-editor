@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<circuit>
+    <elements>
+        <element id="0" type="AND">
+            <view x="220" y="130"/>
+        </element>
+        <element id="1" type="AND">
+            <view x="221" y="59"/>
+        </element>
+        <element id="2" type="AND">
+            <view x="373" y="157"/>
+        </element>
+        <element id="3" type="AND">
+            <view x="370" y="25"/>
+        </element>
+    </elements>
+    <inputs>
+        <input id="4">
+            <view x="129" y="66"/>
+        </input>
+        <input id="5">
+            <view x="124" y="93"/>
+        </input>
+        <input id="6">
+            <view x="130" y="142"/>
+        </input>
+        <input id="7">
+            <view x="126" y="167"/>
+        </input>
+        <input id="8">
+            <view x="132" y="204"/>
+        </input>
+    </inputs>
+    <outputs>
+        <output id="9">
+            <view x="636" y="48"/>
+        </output>
+        <output id="10">
+            <view x="494" y="159"/>
+        </output>
+    </outputs>
+    <wires>
+        <wire end="3" start="1"/>
+        <wire end="2" start="1"/>
+        <wire end="3" start="0"/>
+        <wire end="1" start="4"/>
+        <wire end="1" start="5"/>
+        <wire end="0" start="6"/>
+        <wire end="0" start="7"/>
+        <wire end="2" start="8"/>
+        <wire end="10" start="2"/>
+        <wire end="9" start="3"/>
+    </wires>
+</circuit>

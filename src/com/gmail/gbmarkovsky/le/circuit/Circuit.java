@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.gmail.gbmarkovsky.le.elements.Gate;
 import com.gmail.gbmarkovsky.le.elements.Input;
@@ -53,15 +54,15 @@ public class Circuit {
 	 * @return <code>true</code> если такой гейт есть в схеме, иначе <code>false</code>
 	 */
 	public boolean deleteGate(Gate gate) {
-		for (Wire wire: gate.getOutput().getWires()) {
-			wires.remove(wire);
-			firePropertyChange(WIRE_DELETE, wire, null);
-		}
+		List<Wire> wiresToDisconnect = new ArrayList<Wire>();
+		wiresToDisconnect.addAll(gate.getOutput().getWires());
 		for (Pin pin: gate.getInputs()) {
-			for (Wire wire: pin.getWires()) {
-				wires.remove(wire);
-				firePropertyChange(WIRE_DELETE, wire, null);
-			}
+			wiresToDisconnect.addAll(pin.getWires());
+		}
+		for (Wire wire: wiresToDisconnect) {
+			wires.remove(wire);
+			wire.disconnect();
+			firePropertyChange(WIRE_DELETE, wire, null);
 		}
 		return gates.remove(gate);
 	}
@@ -72,8 +73,10 @@ public class Circuit {
 	 * @return <code>true</code> если такой вход есть в схеме, иначе <code>false</code>
 	 */
 	public boolean deleteInput(Input input) {
-		for (Wire wire: input.getPin().getWires()) {
+		List<Wire> wiresToDisconnect = new ArrayList<Wire>(input.getPin().getWires());
+		for (Wire wire: wiresToDisconnect) {
 			wires.remove(wire);
+			wire.disconnect();
 			firePropertyChange(WIRE_DELETE, wire, null);
 		}
 		return inputs.remove(input);
@@ -85,8 +88,10 @@ public class Circuit {
 	 * @return <code>true</code> если такой выход есть в схеме, иначе <code>false</code>
 	 */
 	public boolean deleteOutput(Output output) {
-		for (Wire wire: output.getPin().getWires()) {
+		List<Wire> wiresToDisconnect = new ArrayList<Wire>(output.getPin().getWires());
+		for (Wire wire: wiresToDisconnect) {
 			wires.remove(wire);
+			wire.disconnect();
 			firePropertyChange(WIRE_DELETE, wire, null);
 		}
 		return outputs.remove(output);

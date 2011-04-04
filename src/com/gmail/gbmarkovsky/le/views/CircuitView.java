@@ -118,6 +118,16 @@ public class CircuitView implements PropertyChangeListener {
 		return null;
 	}
 	
+	public List<ElementView> getElementsInsideRect(Point p, int w, int h) {
+		List<ElementView> list = new ArrayList<ElementView>();
+		for (ElementView ew: elementViews.values()) {
+			if (ew.isInsideRect(p, w, h)) {
+				list.add(ew);
+			}
+		}
+		return list;
+	}
+	
 	public List<ElementView> getElements() {
 		ArrayList<ElementView> list = new ArrayList<ElementView>();
 		list.addAll(gateViews.values());

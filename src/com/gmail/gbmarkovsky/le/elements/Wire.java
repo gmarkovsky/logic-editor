@@ -36,4 +36,9 @@ public class Wire {
 	public void setEnd(Pin end) {
 		this.end = end;
 	}
+	
+	public void disconnect() {
+		start.removeWire(this);
+		end.removeWire(this);
+	}
 }

@@ -14,6 +14,7 @@ public interface ElementView {
 	public void setHeight(int height);
 	public PinView getPinViewForLocation(Point location);
 	public boolean isPointInsideView(Point point);
+	public boolean isInsideRect(Point p, int w, int h);
 	public void paint(Graphics g);
 	public Element getElement();
 }

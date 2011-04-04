@@ -3,6 +3,7 @@ package com.gmail.gbmarkovsky.le.tools;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.ElementView;
@@ -35,6 +36,7 @@ public class ElementDrugger implements CircuitTool {
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		druggingElement = editor.getCircuitView().getElementViewForLocation(arg0.getPoint());
+		prevPosition = arg0.getPoint();
 	}
 
 	@Override
@@ -44,15 +46,18 @@ public class ElementDrugger implements CircuitTool {
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
-		int dx = arg0.getX() - prevPosition.x;
-		int dy = arg0.getY() - prevPosition.y;
-		if (druggingElement != null) {
-			Point oldPos = druggingElement.getPosition();
-			druggingElement.setPosition(new Point(oldPos.x + dx, oldPos.y + dy));
+		if (editor.getSelectedElements().contains(druggingElement)) {
+			int dx = arg0.getX() - prevPosition.x;
+			int dy = arg0.getY() - prevPosition.y;
+			List<ElementView> list = editor.getSelectedElements();
+			for (ElementView ew: list) {
+				Point oldPos = ew.getPosition();
+				ew.setPosition(new Point(oldPos.x + dx, oldPos.y + dy));
+			}
 			editor.updateSize();
+			prevPosition = arg0.getPoint();
+			editor.repaint();
 		}
-		prevPosition = arg0.getPoint();
-		editor.repaint();
 	}
 
 	@Override
@@ -62,7 +67,6 @@ public class ElementDrugger implements CircuitTool {
 
 	@Override
 	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
 		
 	}
 }

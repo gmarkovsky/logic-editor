@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -53,7 +54,7 @@ public class CircuitEditorPanel extends JPanel {
 	private void initControlPanel() {
 		controlPanel = new JPanel(new GridBagLayout());
 		controlPanel.setBorder(BorderFactory.createBevelBorder(1));
-		cursorButton = new JToggleButton("A", true);
+		cursorButton = new JToggleButton(new ImageIcon("icons/cursor.png"), true);
 		andGateButton = new JToggleButton("AND");
 		orGateButton = new JToggleButton("OR");
 		notGateButton = new JToggleButton("NOT");
