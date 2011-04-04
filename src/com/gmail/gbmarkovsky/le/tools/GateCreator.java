@@ -1,5 +1,6 @@
 package com.gmail.gbmarkovsky.le.tools;
 
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
@@ -20,10 +21,14 @@ import com.gmail.gbmarkovsky.le.views.LogicCellView;
 public class GateCreator implements CircuitTool {
 	private CircuitEditor editor;
 	private GateType gateType;
+	private GateView gateView;
+	private boolean drawFantom;
 	
 	public GateCreator(CircuitEditor editor, GateType gateType) {
 		this.editor = editor;
 		this.gateType = gateType;
+		Gate gate = new LogicCell(this.gateType);
+		gateView = new LogicCellView(new Point(0, 0), gate);
 	}
 	
 	public GateType getGateType() {
@@ -48,12 +53,13 @@ public class GateCreator implements CircuitTool {
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		
+		drawFantom = true;
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		
+		drawFantom = false;
+		editor.repaint();
 	}
 
 	@Override
@@ -73,7 +79,14 @@ public class GateCreator implements CircuitTool {
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		
+		gateView.setPosition(arg0.getPoint());
+		editor.repaint();
+	}
+	
+	public void paint(Graphics g) {
+		if (drawFantom) {
+			gateView.paint(g);
+		}
 	}
 
 }

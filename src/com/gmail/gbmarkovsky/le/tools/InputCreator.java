@@ -1,5 +1,6 @@
 package com.gmail.gbmarkovsky.le.tools;
 
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
@@ -11,9 +12,12 @@ import com.gmail.gbmarkovsky.le.views.InputView;
 
 public class InputCreator implements CircuitTool {
 	private CircuitEditor editor;
+	private InputView inputView;
+	private boolean drawFantom;
 	
 	public InputCreator(CircuitEditor editor) {
 		this.editor = editor;
+		inputView = new InputView(new Point(0, 0), new Input());
 	}
 
 	@Override
@@ -30,12 +34,13 @@ public class InputCreator implements CircuitTool {
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		
+		drawFantom = true;
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		
+		drawFantom = false;
+		editor.repaint();
 	}
 
 	@Override
@@ -55,7 +60,15 @@ public class InputCreator implements CircuitTool {
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		
+		inputView.setPosition(arg0.getPoint());
+		editor.repaint();
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		if (drawFantom) {
+			inputView.paint(g);
+		}
 	}
 
 }
