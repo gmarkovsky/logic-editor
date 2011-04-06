@@ -43,10 +43,10 @@ public class ElementSelector implements CircuitTool {
 		if (selectedElement != null && !circuitEditor.getSelectedElements().contains(selectedElement) ) {
 			circuitEditor.setSelectedElement(selectedElement);
 		}
-		if (circuitEditor.getSelectedElements().isEmpty() && selectedElement == null) {
+		if (selectedElement == null) {
 			basePoint = arg0.getPoint();
 			currentPoint = basePoint;
-			circuitEditor.setSelection(true);
+			//circuitEditor.setSelection(true);
 		}
 		if (selectedElement == null) {
 			circuitEditor.getSelectedElements().clear();
@@ -58,7 +58,6 @@ public class ElementSelector implements CircuitTool {
 	public void mouseReleased(MouseEvent arg0) {
 		basePoint = null;
 		currentPoint = null;
-		circuitEditor.setSelection(false);
 		circuitEditor.repaint();
 	}
 
