@@ -51,10 +51,12 @@ public class CircuitEditorPanel extends JPanel {
 		add(controlPanel, BorderLayout.NORTH);
 	}
 	
-	private void initControlPanel() {
+	private void initControlPanel(){
 		controlPanel = new JPanel(new GridBagLayout());
 		controlPanel.setBorder(BorderFactory.createBevelBorder(1));
-		cursorButton = new JToggleButton(new ImageIcon("icons/cursor.png"), true);
+		
+		ImageIcon imageIcon = new ImageIcon(CircuitEditorPanel.class.getResource("cursor.png"));
+		cursorButton = new JToggleButton(imageIcon, true);
 		andGateButton = new JToggleButton("AND");
 		orGateButton = new JToggleButton("OR");
 		notGateButton = new JToggleButton("NOT");
