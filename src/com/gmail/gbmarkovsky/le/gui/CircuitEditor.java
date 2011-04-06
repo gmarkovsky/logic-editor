@@ -28,20 +28,17 @@ public class CircuitEditor extends JComponent {
 	private static final long serialVersionUID = -2235220973441036453L;
 	private Circuit circuit;
 	private CircuitView circuitView;
-	//private GateCreator gateCreator;
 	private CircuitTool tool;
 	private WireCreator wireCreator;
 	private WireSelectionTool wireSelectionTool;
 	private List<ElementView> selectedElements = new ArrayList<ElementView>();
 	private ElementSelector elementSelector;
-	private boolean isSelection;
 	
 	public CircuitEditor() {
 		circuit = new Circuit();
 		circuitView = new CircuitView(circuit);
 		circuit.addPropertyChangeListener(circuitView);
 		wireCreator = new WireCreator(this);
-		//wireSelectionTool = new WireSelectionTool(this);
 		elementSelector = new ElementSelector(this);
 		setWireC();
 		PinSelectionTool pinSelectionTool = new PinSelectionTool(this);
@@ -134,13 +131,5 @@ public class CircuitEditor extends JComponent {
 	
 	public List<ElementView> getSelectedElements() {
 		return selectedElements;
-	}
-
-	public boolean isSelection() {
-		return isSelection;
-	}
-
-	public void setSelection(boolean isSelection) {
-		this.isSelection = isSelection;
 	}
 }
