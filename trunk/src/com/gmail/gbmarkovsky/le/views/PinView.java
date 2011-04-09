@@ -14,8 +14,8 @@ import com.gmail.gbmarkovsky.le.elements.PinType;
  *
  */
 public class PinView {
-	public static final int PIN_WIDTH = 6;
-	public static final int PIN_HEIGHT = 4;
+	public static final int PIN_WIDTH = 8;
+	public static final int PIN_HEIGHT = 8;
 	
 	/**
 	 * Точка крепления контакта к гейту.
