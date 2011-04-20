@@ -25,4 +25,10 @@ public class SevenSegmentsIndicator implements Element {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int getInputIndex(Pin pin) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

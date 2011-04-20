@@ -116,5 +116,18 @@ public abstract class AbstractGateView implements GateView {
 		return false;
 	}
 	
+	public PinView getInputPinView(Pin pin) {
+		for(PinView pw: inputs) {
+			if (pw.getPin() == pin) {
+				return pw;
+			}
+		}
+		return null;
+	}
+	
+	public PinView getOutput() {
+		return output;
+	}
+	
 	public abstract void paint(Graphics g);
 }

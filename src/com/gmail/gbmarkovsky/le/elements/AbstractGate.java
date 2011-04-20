@@ -29,7 +29,15 @@ public abstract class AbstractGate implements Gate {
 		return inputs;
 	}
 
+	public Pin getInput(int index) {
+		return inputs.get(index);
+	}
+	
 	public Pin getOutput() {
 		return output;
+	}
+	
+	public int getInputIndex(Pin pin) {
+		return inputs.indexOf(pin);
 	}
 }

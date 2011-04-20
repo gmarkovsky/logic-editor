@@ -1,9 +1,8 @@
 package com.gmail.gbmarkovsky.le.views;
 
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.RenderingHints;
 
 import com.gmail.gbmarkovsky.le.elements.Pin;
 import com.gmail.gbmarkovsky.le.elements.PinType;
@@ -102,9 +101,7 @@ public class PinView {
 	 * @param g графический контекст для отрисовки контакта
 	 */
 	public void paint(Graphics g) {
-		//g.drawLine(position.x, position.y, point.x, point.y);
-		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		//g.fillOval(point.x - 2, point.y - 2, PIN_DIAMETER, PIN_DIAMETER);
+		g.setColor(Color.gray);
 		g.fillRect(center.x - PIN_WIDTH/2, center.y - PIN_HEIGHT/2, PIN_WIDTH, PIN_HEIGHT);
 	}
 }

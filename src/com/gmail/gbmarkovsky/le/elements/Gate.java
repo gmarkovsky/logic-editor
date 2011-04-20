@@ -12,4 +12,5 @@ public interface Gate extends Element {
 	public GateType getType();
 	public Pin getOutput();
 	public ArrayList<Pin> getInputs();
+	public Pin getInput(int index);
 }

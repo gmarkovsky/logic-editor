@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 
 import com.gmail.gbmarkovsky.le.elements.Element;
 import com.gmail.gbmarkovsky.le.elements.Output;
+import com.gmail.gbmarkovsky.le.elements.Pin;
 
 public class OutputView implements ElementView {
 	private static final int HEIGHT = 16;
@@ -27,7 +28,11 @@ public class OutputView implements ElementView {
 		inPin.setPosition(new Point(position.x, position.y + HEIGHT/2));
 	}
 	
-	public Output getOutput() {
+	public PinView getOutput() {
+		return null;
+	}
+	
+	public Output getOutputE() {
 		return output;
 	}
 	
@@ -105,5 +110,11 @@ public class OutputView implements ElementView {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public PinView getInputPinView(Pin pin) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

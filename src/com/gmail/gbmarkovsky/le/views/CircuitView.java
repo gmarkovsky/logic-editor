@@ -65,7 +65,7 @@ public class CircuitView implements PropertyChangeListener {
 	}
 	
 	public void addOutputView(OutputView outputView) {
-		outputViews.put(outputView.getOutput(), outputView);
+		outputViews.put(outputView.getOutputE(), outputView);
 		addElementView(outputView);
 	}
 	
