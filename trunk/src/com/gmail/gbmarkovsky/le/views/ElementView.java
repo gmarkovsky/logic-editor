@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 import com.gmail.gbmarkovsky.le.elements.Element;
+import com.gmail.gbmarkovsky.le.elements.Pin;
 
 public interface ElementView {
 	public Point getPosition();
@@ -17,4 +18,6 @@ public interface ElementView {
 	public boolean isInsideRect(Point p, int w, int h);
 	public void paint(Graphics g);
 	public Element getElement();
+	public PinView getInputPinView(Pin pin);
+	public PinView getOutput();
 }

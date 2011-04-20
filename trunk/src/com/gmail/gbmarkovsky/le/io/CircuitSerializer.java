@@ -31,6 +31,7 @@ import com.gmail.gbmarkovsky.le.elements.GateType;
 import com.gmail.gbmarkovsky.le.elements.Input;
 import com.gmail.gbmarkovsky.le.elements.LogicCell;
 import com.gmail.gbmarkovsky.le.elements.Output;
+import com.gmail.gbmarkovsky.le.elements.Pin;
 import com.gmail.gbmarkovsky.le.elements.Wire;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
@@ -38,6 +39,7 @@ import com.gmail.gbmarkovsky.le.views.GateView;
 import com.gmail.gbmarkovsky.le.views.InputView;
 import com.gmail.gbmarkovsky.le.views.LogicCellView;
 import com.gmail.gbmarkovsky.le.views.OutputView;
+import com.gmail.gbmarkovsky.le.views.WireView;
 
 public class CircuitSerializer {
 	
@@ -154,6 +156,7 @@ public class CircuitSerializer {
 			org.w3c.dom.Element wire = doc.createElement("wire");
 			wire.setAttribute("start", gateToIdMap.get(cwire.getStart().getElement()).toString());
 			wire.setAttribute("end", gateToIdMap.get(cwire.getEnd().getElement()).toString());
+			wire.setAttribute("inputIndex", Integer.toString(cwire.getEnd().getElement().getInputIndex(cwire.getEnd())));
 			wires.appendChild(wire);
 		}
 		return doc;
@@ -246,19 +249,21 @@ public class CircuitSerializer {
 		// Читаем провода
 		list = root.getElementsByTagName("wire");
 		for (int i = 0; i < list.getLength(); i++) {
-//			org.w3c.dom.Element element = (org.w3c.dom.Element) list.item(i);
-//			int start = Integer.parseInt(element.getAttribute("start"));
-//			int end = Integer.parseInt(element.getAttribute("end"));
+			org.w3c.dom.Element element = (org.w3c.dom.Element) list.item(i);
+			int start = Integer.parseInt(element.getAttribute("start"));
+			int end = Integer.parseInt(element.getAttribute("end"));
+			int inpIndex = Integer.parseInt(element.getAttribute("inputIndex"));
 			
-			
-//			Pin start = startPin.getPin();
-//			Pin end = pinViewForLocation.getPin();
-//			Wire wire = new Wire(start, end);
-//			start.addWire(wire);
-//			end.addWire(wire);
-//			WireView wireView = new WireView(wire, startPin, pinViewForLocation);
-//			circuitEditor.getCircuitView().addWireView(wireView);
-//			circuitEditor.getCircuit().addWire(wire);
+			Pin startPin = ((Gate) idToGateMap.get(start)).getOutput();
+			Gate gate = (Gate) idToGateMap.get(end);
+			Pin endPin = gate.getInput(inpIndex);
+			ElementView gateView = circuitView.getElementView(gate);
+			Wire wire = new Wire(startPin, endPin);
+			startPin.addWire(wire);
+			endPin.addWire(wire);
+			WireView wireView = new WireView(wire, gateView.getInputPinView(startPin), gateView.getOutput());
+			circuit.addWire(wire);
+			circuitView.addWireView(wireView);
 		}
 		return circuitView;
 	}

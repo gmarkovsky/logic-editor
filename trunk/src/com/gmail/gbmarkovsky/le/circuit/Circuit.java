@@ -27,7 +27,6 @@ public class Circuit {
 	
 	private PropertyChangeSupport propertyChangeSupport;
 	
-	
 	public Circuit() {
 		propertyChangeSupport = new PropertyChangeSupport(this);
 	}

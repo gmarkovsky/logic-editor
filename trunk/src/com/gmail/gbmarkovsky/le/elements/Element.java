@@ -14,4 +14,5 @@ public interface Element {
 	public List<Pin> getInputs();
 	public List<Pin> getOutputs();
 	public GateType getType();
+	public int getInputIndex(Pin pin);
 }
