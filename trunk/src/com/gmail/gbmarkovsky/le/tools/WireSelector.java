@@ -14,7 +14,6 @@ import com.gmail.gbmarkovsky.le.views.WireView;
 
 public class WireSelector implements CircuitTool {
 	private CircuitEditor circuitEditor;
-	private WireView selectedWire;
 
 	public WireSelector(CircuitEditor circuitEditor) {
 		this.circuitEditor = circuitEditor;
@@ -40,13 +39,11 @@ public class WireSelector implements CircuitTool {
 		Point point = arg0.getPoint();
 		for (WireView wv: circuitEditor.getCircuitView().getWires()) {
 			if (wv.isPointOnWire(point)) {
-				selectedWire = wv;
-				circuitEditor.setSelectedWireView(selectedWire);
+				circuitEditor.setSelectedWireView(wv);
 				circuitEditor.repaint();
 				return;
 			}
 		}
-		selectedWire = null;
 		circuitEditor.setSelectedWireView(null);
 		circuitEditor.repaint();
 	}
@@ -67,6 +64,7 @@ public class WireSelector implements CircuitTool {
 	}
 
 	public void paint(Graphics g) {
+		WireView selectedWire = circuitEditor.getSelectedWireView();
 		if (selectedWire != null) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(Color.red);
