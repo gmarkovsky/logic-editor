@@ -125,7 +125,8 @@ public class LogicEditorFrame extends JFrame {
 		});
 		
 		mFile.add(miSave);
-		
+		miSave.setEnabled(false);
+		miOpen.setEnabled(false);
 		mFile.add(new JSeparator());
 		mFile.add(miExit);
 		menuBar.add(mFile);
