@@ -10,26 +10,25 @@ import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 import com.gmail.gbmarkovsky.le.views.InputView;
 
-public class InputCreator implements CircuitTool {
-	private CircuitEditor editor;
+public class InputCreator extends AbstractCircuitTool {
 	private InputView inputView;
 	private boolean drawFantom;
 	
-	public InputCreator(CircuitEditor editor) {
-		this.editor = editor;
+	public InputCreator(CircuitEditor circuitEditor) {
+		super(circuitEditor);
 		inputView = new InputView(new Point(0, 0), new Input());
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		Circuit circuit = editor.getCircuit();
-		CircuitView circuitView = editor.getCircuitView();
+		Circuit circuit = circuitEditor.getCircuit();
+		CircuitView circuitView = circuitEditor.getCircuitView();
 		Input input = new Input();
 		InputView inputView = new InputView(new Point(arg0.getX(), arg0.getY()), input);
 		circuit.addInput(input);
 		circuitView.addInputView(inputView);
-		editor.updateSize();
-		editor.repaint();
+		circuitEditor.updateSize();
+		circuitEditor.repaint();
 	}
 
 	@Override
@@ -40,7 +39,7 @@ public class InputCreator implements CircuitTool {
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		drawFantom = false;
-		editor.repaint();
+		circuitEditor.repaint();
 	}
 
 	@Override
@@ -61,7 +60,7 @@ public class InputCreator implements CircuitTool {
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		inputView.setPosition(arg0.getPoint());
-		editor.repaint();
+		circuitEditor.repaint();
 	}
 
 	@Override

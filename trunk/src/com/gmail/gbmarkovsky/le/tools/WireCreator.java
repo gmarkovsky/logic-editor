@@ -21,14 +21,13 @@ import com.gmail.gbmarkovsky.le.views.WireView;
  * @author george
  *
  */
-public class WireCreator implements CircuitTool {
-	private CircuitEditor circuitEditor;
+public class WireCreator extends AbstractCircuitTool {
 	private Point mousePosition;
 	private PinView startPin;
 	private PinType waitForPinType;
 	
 	public WireCreator(CircuitEditor circuitEditor) {
-		this.circuitEditor = circuitEditor;
+		super(circuitEditor);
 	}
 	
 	@Override

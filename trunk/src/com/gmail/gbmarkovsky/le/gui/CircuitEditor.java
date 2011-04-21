@@ -13,11 +13,12 @@ import javax.swing.JComponent;
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
 import com.gmail.gbmarkovsky.le.tools.CircuitTool;
 import com.gmail.gbmarkovsky.le.tools.ElementSelector;
-import com.gmail.gbmarkovsky.le.tools.PinSelectionTool;
+import com.gmail.gbmarkovsky.le.tools.PinSelector;
 import com.gmail.gbmarkovsky.le.tools.WireCreator;
-import com.gmail.gbmarkovsky.le.tools.WireSelectionTool;
+import com.gmail.gbmarkovsky.le.tools.WireSelector;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
+import com.gmail.gbmarkovsky.le.views.WireView;
 
 /**
  * Компонент для отображения и редактирования логической схемы.
@@ -30,7 +31,8 @@ public class CircuitEditor extends JComponent {
 	private CircuitView circuitView;
 	private CircuitTool tool;
 	private WireCreator wireCreator;
-	private WireSelectionTool wireSelectionTool;
+	private WireSelector wireSelectionTool;
+	private WireView selectedWireView;
 	private List<ElementView> selectedElements = new ArrayList<ElementView>();
 	private ElementSelector elementSelector;
 	
@@ -40,9 +42,9 @@ public class CircuitEditor extends JComponent {
 		circuit.addPropertyChangeListener(circuitView);
 		wireCreator = new WireCreator(this);
 		elementSelector = new ElementSelector(this);
-		wireSelectionTool = new WireSelectionTool(this);
+		wireSelectionTool = new WireSelector(this);
 		setWireC();
-		PinSelectionTool pinSelectionTool = new PinSelectionTool(this);
+		PinSelector pinSelectionTool = new PinSelector(this);
 		addMouseListener(pinSelectionTool);
 		addMouseMotionListener(pinSelectionTool);
 		setDoubleBuffered(true);
@@ -124,14 +126,27 @@ public class CircuitEditor extends JComponent {
 	}
 	
 	public void deleteSelectedElements() {
-		for (ElementView ew: selectedElements) {
-			circuitView.deleteElementView(ew);
-			repaint();
+		if (!selectedElements.isEmpty()) {
+			for (ElementView ew: selectedElements) {
+				circuitView.deleteElementView(ew);
+				repaint();
+			}
+			selectedElements.clear();
 		}
-		selectedElements.clear();
 	}
 	
 	public List<ElementView> getSelectedElements() {
 		return selectedElements;
+	}
+
+	public void setSelectedWireView(WireView selectedWireView) {
+		this.selectedWireView = selectedWireView;
+	}
+	
+	public void deleteSelectedWire() {
+		if (selectedWireView != null) {
+			circuitView.deleteWire(selectedWireView);
+			repaint();
+		}
 	}
 }

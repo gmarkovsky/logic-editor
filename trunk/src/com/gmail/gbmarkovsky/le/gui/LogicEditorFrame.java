@@ -136,6 +136,8 @@ public class LogicEditorFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				editorPanel.getCircuitEditor().deleteSelectedElements();
+				editorPanel.getCircuitEditor().deleteSelectedWire();
+				editorPanel.getCircuitEditor().repaint();
 			}
 		});
 		miDelete.setAccelerator(KeyStroke.getKeyStroke("DELETE"));

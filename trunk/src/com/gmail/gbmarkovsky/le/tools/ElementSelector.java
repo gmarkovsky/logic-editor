@@ -12,14 +12,12 @@ import com.gmail.gbmarkovsky.le.views.ElementView;
 import com.gmail.gbmarkovsky.le.views.InputView;
 import com.gmail.gbmarkovsky.le.views.OutputView;
 
-public class ElementSelector implements CircuitTool {
-	private CircuitEditor circuitEditor;
+public class ElementSelector extends AbstractCircuitTool {
 	private Point basePoint;
 	private Point currentPoint;
 	
 	public ElementSelector(CircuitEditor circuitEditor) {
-		super();
-		this.circuitEditor = circuitEditor;
+		super(circuitEditor);
 	}
 
 	@Override

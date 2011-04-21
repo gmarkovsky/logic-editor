@@ -18,14 +18,13 @@ import com.gmail.gbmarkovsky.le.views.LogicCellView;
  * @author george
  *
  */
-public class GateCreator implements CircuitTool {
-	private CircuitEditor editor;
+public class GateCreator extends AbstractCircuitTool {
 	private GateType gateType;
 	private GateView gateView;
 	private boolean drawFantom;
 	
-	public GateCreator(CircuitEditor editor, GateType gateType) {
-		this.editor = editor;
+	public GateCreator(CircuitEditor circuitEditor, GateType gateType) {
+		super(circuitEditor);
 		this.gateType = gateType;
 		Gate gate = new LogicCell(this.gateType);
 		gateView = new LogicCellView(new Point(0, 0), gate);
@@ -41,14 +40,14 @@ public class GateCreator implements CircuitTool {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		Circuit circuit = editor.getCircuit();
-		CircuitView circuitView = editor.getCircuitView();
+		Circuit circuit = circuitEditor.getCircuit();
+		CircuitView circuitView = circuitEditor.getCircuitView();
 		Gate gate = new LogicCell(gateType);
 		GateView gateView = new LogicCellView(new Point(arg0.getX(), arg0.getY()), gate);
 		circuit.addGate(gate);
 		circuitView.addGateView(gateView);
-		editor.updateSize();
-		editor.repaint();
+		circuitEditor.updateSize();
+		circuitEditor.repaint();
 	}
 
 	@Override
@@ -59,7 +58,7 @@ public class GateCreator implements CircuitTool {
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		drawFantom = false;
-		editor.repaint();
+		circuitEditor.repaint();
 	}
 
 	@Override
@@ -80,7 +79,7 @@ public class GateCreator implements CircuitTool {
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		gateView.setPosition(arg0.getPoint());
-		editor.repaint();
+		circuitEditor.repaint();
 	}
 	
 	public void paint(Graphics g) {

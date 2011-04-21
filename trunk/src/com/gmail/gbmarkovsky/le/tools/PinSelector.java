@@ -13,12 +13,11 @@ import com.gmail.gbmarkovsky.le.views.PinView;
  * @author george
  *
  */
-public class PinSelectionTool implements CircuitTool {
-	private CircuitEditor circuitEditor;
+public class PinSelector extends AbstractCircuitTool {
 	private PinView markedPin;
 
-	public PinSelectionTool(CircuitEditor circuitEditor) {
-		this.circuitEditor = circuitEditor;
+	public PinSelector(CircuitEditor circuitEditor) {
+		super(circuitEditor);
 	}
 
 	@Override

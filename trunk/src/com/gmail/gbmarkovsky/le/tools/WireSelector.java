@@ -12,11 +12,11 @@ import java.awt.event.MouseEvent;
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.WireView;
 
-public class WireSelectionTool implements CircuitTool {
+public class WireSelector implements CircuitTool {
 	private CircuitEditor circuitEditor;
 	private WireView selectedWire;
 
-	public WireSelectionTool(CircuitEditor circuitEditor) {
+	public WireSelector(CircuitEditor circuitEditor) {
 		this.circuitEditor = circuitEditor;
 	}
 
@@ -37,15 +37,17 @@ public class WireSelectionTool implements CircuitTool {
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		Point m = arg0.getPoint();
+		Point point = arg0.getPoint();
 		for (WireView wv: circuitEditor.getCircuitView().getWires()) {
-			if (wv.isPointOnWire(m)) {
+			if (wv.isPointOnWire(point)) {
 				selectedWire = wv;
+				circuitEditor.setSelectedWireView(selectedWire);
 				circuitEditor.repaint();
 				return;
 			}
 		}
 		selectedWire = null;
+		circuitEditor.setSelectedWireView(null);
 		circuitEditor.repaint();
 	}
 
@@ -61,14 +63,7 @@ public class WireSelectionTool implements CircuitTool {
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-//		Point pressPosition = arg0.getPoint();
-//		PinView pinViewForLocation = circuitEditor.getCircuitView().getPinViewForLocation(pressPosition);
-//		if (pinViewForLocation != null) {
-//			markedPin = pinViewForLocation;
-//		} else {
-//			markedPin = null;
-//		}
-//		circuitEditor.repaint();
+
 	}
 
 	public void paint(Graphics g) {

@@ -8,16 +8,15 @@ import java.util.List;
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.ElementView;
 
-public class ElementDrugger implements CircuitTool {
-	private CircuitEditor editor;
+public class ElementDrugger extends AbstractCircuitTool {
 	private Point prevPosition;
 	private ElementView druggingElement;
 	
-	public ElementDrugger(CircuitEditor editor) {
-		this.editor = editor;
+	public ElementDrugger(CircuitEditor circuitEditor) {
+		super(circuitEditor);
 		prevPosition = new Point();
 	}
-
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		
@@ -35,7 +34,7 @@ public class ElementDrugger implements CircuitTool {
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		druggingElement = editor.getCircuitView().getElementViewForLocation(arg0.getPoint());
+		druggingElement = circuitEditor.getCircuitView().getElementViewForLocation(arg0.getPoint());
 		prevPosition = arg0.getPoint();
 	}
 
@@ -46,17 +45,17 @@ public class ElementDrugger implements CircuitTool {
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
-		if (editor.getSelectedElements().contains(druggingElement)) {
+		if (circuitEditor.getSelectedElements().contains(druggingElement)) {
 			int dx = arg0.getX() - prevPosition.x;
 			int dy = arg0.getY() - prevPosition.y;
-			List<ElementView> list = editor.getSelectedElements();
+			List<ElementView> list = circuitEditor.getSelectedElements();
 			for (ElementView ew: list) {
 				Point oldPos = ew.getPosition();
 				ew.setPosition(new Point(oldPos.x + dx, oldPos.y + dy));
 			}
-			editor.updateSize();
+			circuitEditor.updateSize();
 			prevPosition = arg0.getPoint();
-			editor.repaint();
+			circuitEditor.repaint();
 		}
 	}
 
