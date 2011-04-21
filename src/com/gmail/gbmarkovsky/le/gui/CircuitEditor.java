@@ -139,6 +139,10 @@ public class CircuitEditor extends JComponent {
 		return selectedElements;
 	}
 
+	public WireView getSelectedWireView() {
+		return selectedWireView;
+	}
+	
 	public void setSelectedWireView(WireView selectedWireView) {
 		this.selectedWireView = selectedWireView;
 	}
@@ -146,6 +150,7 @@ public class CircuitEditor extends JComponent {
 	public void deleteSelectedWire() {
 		if (selectedWireView != null) {
 			circuitView.deleteWire(selectedWireView);
+			selectedWireView = null;
 			repaint();
 		}
 	}
