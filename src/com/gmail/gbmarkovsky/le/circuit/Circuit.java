@@ -112,6 +112,12 @@ public class Circuit {
 		return wires;
 	}
 	
+
+	public void deleteWire(Wire wire) {
+		wires.remove(wire);
+		wire.disconnect();
+	} 
+	
 	public void addPropertyChangeListener(PropertyChangeListener p) {
 		propertyChangeSupport.addPropertyChangeListener(p);
 	}
@@ -122,5 +128,5 @@ public class Circuit {
 
 	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
 		propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-	} 
+	}
 }
