@@ -1,7 +1,12 @@
 package com.gmail.gbmarkovsky.le.tools;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 
 import com.gmail.gbmarkovsky.le.elements.Pin;
@@ -67,10 +72,19 @@ public class WireCreator implements CircuitTool {
 				}
 				Pin start = startPin.getPin();
 				Pin end = pinViewForLocation.getPin();
-				Wire wire = new Wire(start, end);
-				start.addWire(wire);
-				end.addWire(wire);
-				WireView wireView = new WireView(wire, startPin, pinViewForLocation);
+				Wire wire = null;
+				WireView wireView = null;
+				if (start.getType() == PinType.OUTPUT && end.getType() == PinType.INPUT) {
+					wire = new Wire(start, end);
+					start.addWire(wire);
+					end.addWire(wire);
+					wireView = new WireView(wire, startPin, pinViewForLocation);
+				} else {
+					wire = new Wire(end, start);
+					start.addWire(wire);
+					end.addWire(wire);
+					wireView = new WireView(wire, pinViewForLocation, startPin);
+				}
 				circuitEditor.getCircuitView().addWireView(wireView);
 				circuitEditor.getCircuit().addWire(wire);
 				startPin = null;
@@ -99,7 +113,14 @@ public class WireCreator implements CircuitTool {
 
 	public void paint(Graphics g) {
 		if (startPin != null) {
-			g.drawLine(startPin.getBorder().x, startPin.getBorder().y, mousePosition.x, mousePosition.y);
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setColor(Color.black);
+			Stroke tmpStroke = g2.getStroke();
+	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	        BasicStroke stroke = new BasicStroke(2.0f);
+	        g2.setStroke(stroke);
+			g2.drawLine(startPin.getBorder().x, startPin.getBorder().y, mousePosition.x, mousePosition.y);
+			g2.setStroke(tmpStroke);
 		}
 	}
 }

@@ -37,7 +37,7 @@ public class Pin {
 	}
 	
 	/**
-	 * Фабричный метод для создания входа схемы.
+	 * Фабричный метод для создания входного контакта.
 	 * @return новый экземпляр входа схемы
 	 */
 	public static Pin createInput(Element element) {
@@ -45,7 +45,7 @@ public class Pin {
 	}
 
 	/**
-	 * Фабричный метод для создания выхода схемы.
+	 * Фабричный метод для создания выходного контакта.
 	 * @return новый экземпляр выхода схемы
 	 */
 	public static Pin createOutput(Element element) {
@@ -95,7 +95,7 @@ public class Pin {
 		return element;
 	}
 	
-	public boolean isNewConnectAllowed () {
+	public boolean isNewConnectAllowed() {
 		if ((type == PinType.INPUT) && (wires.size() > 0)) {
 			return false;
 		}

@@ -58,6 +58,7 @@ public class LogicEditorFrame extends JFrame {
 				editorPanel.getCircuitEditor().repaint();	
 			}
 		});
+		mFile.add(miNew);
 		miNew.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		JMenuItem miExit = new JMenuItem("Выход");
@@ -124,7 +125,7 @@ public class LogicEditorFrame extends JFrame {
 		});
 		
 		mFile.add(miSave);
-		mFile.add(miNew);
+		
 		mFile.add(new JSeparator());
 		mFile.add(miExit);
 		menuBar.add(mFile);
