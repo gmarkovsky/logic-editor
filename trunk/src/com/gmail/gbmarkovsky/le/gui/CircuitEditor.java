@@ -40,10 +40,12 @@ public class CircuitEditor extends JComponent {
 		circuit.addPropertyChangeListener(circuitView);
 		wireCreator = new WireCreator(this);
 		elementSelector = new ElementSelector(this);
+		wireSelectionTool = new WireSelectionTool(this);
 		setWireC();
 		PinSelectionTool pinSelectionTool = new PinSelectionTool(this);
 		addMouseListener(pinSelectionTool);
 		addMouseMotionListener(pinSelectionTool);
+		setDoubleBuffered(true);
 		setBackground(Color.white);
 		setForeground(Color.white);
 //		circuitView.addElementView(new SevenSegmentsIndicatorView(new Point(40, 50),
