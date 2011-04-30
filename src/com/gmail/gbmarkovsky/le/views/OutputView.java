@@ -114,7 +114,9 @@ public class OutputView implements ElementView {
 
 	@Override
 	public PinView getInputPinView(Pin pin) {
-		// TODO Auto-generated method stub
+		if (pin == inPin.getPin()) {
+			return inPin;
+		}
 		return null;
 	}
 }

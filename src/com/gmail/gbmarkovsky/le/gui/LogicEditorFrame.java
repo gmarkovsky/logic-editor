@@ -4,16 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileFilter;
 
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
 import com.gmail.gbmarkovsky.le.io.CircuitSerializer;
@@ -28,6 +31,8 @@ public class LogicEditorFrame extends JFrame {
 	private static final long serialVersionUID = 8808280554536347790L;
 	private static final int WIDTH = 750;
 	private static final int HEIGHT = 500;
+	
+	private File currentDirectory;
 	
 	private CircuitEditorPanel editorPanel;
 	
@@ -77,9 +82,20 @@ public class LogicEditorFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				File file = null;
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.addChoosableFileFilter(new XmlFileFilter());
+				fileChooser.setCurrentDirectory(currentDirectory);
+				int returnVal = fileChooser.showOpenDialog(LogicEditorFrame.this);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					file = fileChooser.getSelectedFile();
+					currentDirectory = file;
+				} else {
+					return;
+				}
 				FileInputStream fw = null;
 				try {
-					fw = new FileInputStream("test.xml");
+					fw = new FileInputStream(file);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -110,9 +126,26 @@ public class LogicEditorFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				File file = null;
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.addChoosableFileFilter(new XmlFileFilter());
+				fileChooser.setCurrentDirectory(currentDirectory);
+				int returnVal = fileChooser.showSaveDialog(LogicEditorFrame.this);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					file = fileChooser.getSelectedFile();
+					currentDirectory = file;
+				} else {
+					return;
+				}
+
 				FileOutputStream fw = null;
 				try {
-					fw = new FileOutputStream("test.xml");
+					XmlFileFilter xmlFileFilter = new XmlFileFilter();
+					if (xmlFileFilter.accept(file.getAbsoluteFile())) {
+						fw = new FileOutputStream(file);
+					} else {
+						fw = new FileOutputStream(file.getAbsoluteFile() + ".xml");
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -125,8 +158,8 @@ public class LogicEditorFrame extends JFrame {
 		});
 		
 		mFile.add(miSave);
-		miSave.setEnabled(false);
-		miOpen.setEnabled(false);
+		//miSave.setEnabled(false);
+		//miOpen.setEnabled(false);
 		mFile.add(new JSeparator());
 		mFile.add(miExit);
 		menuBar.add(mFile);
@@ -147,6 +180,51 @@ public class LogicEditorFrame extends JFrame {
 		
 		setJMenuBar(menuBar);
 	}
-	
+}
 
+class XmlFileFilter extends FileFilter {
+
+	@Override
+	public boolean accept(File pathname) {
+		if (pathname.isDirectory()) {
+			return true;
+		}
+		
+		String extension = Utils.getExtension(pathname);
+		if (extension != null) {
+			if (extension.equals(Utils.xml)) {
+		        return true;
+			} else {
+				return false;
+			}
+		}
+	    return false;
+	}
+
+	@Override
+	public String getDescription() {
+		return "xml files";
+	}
+}
+
+class Utils {
+
+    public final static String jpeg = "jpeg";
+    public final static String jpg = "jpg";
+    public final static String gif = "gif";
+    public final static String tiff = "tiff";
+    public final static String tif = "tif";
+    public final static String png = "png";
+    public final static String xml = "xml";
+  
+    public static String getExtension(File f) {
+        String ext = null;
+        String s = f.getName();
+        int i = s.lastIndexOf('.');
+
+        if (i > 0 &&  i < s.length() - 1) {
+            ext = s.substring(i+1).toLowerCase();
+        }
+        return ext;
+    }
 }

@@ -36,4 +36,14 @@ public class Input implements Element {
 		// TODO Auto-generated method stub
 		return -1;
 	}
+
+	@Override
+	public Pin getInput(int index) {
+		throw new RuntimeException("Can't get input pin for input");
+	}
+
+	@Override
+	public Pin getOutput() {
+		return outPin;
+	}
 }

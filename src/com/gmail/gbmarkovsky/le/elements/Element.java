@@ -15,4 +15,6 @@ public interface Element {
 	public List<Pin> getOutputs();
 	public GateType getType();
 	public int getInputIndex(Pin pin);
+	public Pin getInput(int index);
+	public Pin getOutput();
 }

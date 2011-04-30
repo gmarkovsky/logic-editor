@@ -185,7 +185,7 @@ public class CircuitSerializer {
 		CircuitView circuitView = new CircuitView(circuit);
 		org.w3c.dom.Element root = doc.getDocumentElement();
 
-		Map<Integer, Element> idToGateMap = new HashMap<Integer, Element>();
+		Map<Integer, Element> idToElementMap = new HashMap<Integer, Element>();
 		
 		// Читаем гейты
 		NodeList list = root.getElementsByTagName("element");
@@ -201,7 +201,7 @@ public class CircuitSerializer {
 			Gate gate = new LogicCell(gateType);
 			GateView gateView = new LogicCellView(new Point(x, y), gate);
 			
-			idToGateMap.put(id, gate);
+			idToElementMap.put(id, gate);
 			
 			circuit.addGate(gate);
 			circuitView.addGateView(gateView);
@@ -220,7 +220,7 @@ public class CircuitSerializer {
 			Input input = new Input();
 			InputView inputView = new InputView(new Point(x, y), input);
 			
-			idToGateMap.put(id, input);
+			idToElementMap.put(id, input);
 			
 			circuit.addInput(input);
 			circuitView.addInputView(inputView);
@@ -240,7 +240,7 @@ public class CircuitSerializer {
 			Output output = new Output();
 			OutputView outputView = new OutputView(new Point(x, y), output);
 			
-			idToGateMap.put(id, output);
+			idToElementMap.put(id, output);
 			
 			circuit.addOutput(output);
 			circuitView.addOutputView(outputView);
@@ -254,14 +254,17 @@ public class CircuitSerializer {
 			int end = Integer.parseInt(element.getAttribute("end"));
 			int inpIndex = Integer.parseInt(element.getAttribute("inputIndex"));
 			
-			Pin startPin = ((Gate) idToGateMap.get(start)).getOutput();
-			Gate gate = (Gate) idToGateMap.get(end);
-			Pin endPin = gate.getInput(inpIndex);
-			ElementView gateView = circuitView.getElementView(gate);
+			Element startElement = idToElementMap.get(start);
+			Element endElement = idToElementMap.get(end);
+			
+			Pin startPin = startElement.getOutput();
+			Pin endPin = endElement.getInput(inpIndex);
+			
+			ElementView startElementView = circuitView.getElementView(startElement);
+			ElementView endElementView = circuitView.getElementView(endElement);
+			
 			Wire wire = new Wire(startPin, endPin);
-			startPin.addWire(wire);
-			endPin.addWire(wire);
-			WireView wireView = new WireView(wire, gateView.getInputPinView(startPin), gateView.getOutput());
+			WireView wireView = new WireView(wire, startElementView.getOutput(), endElementView.getInputPinView(endPin));
 			circuit.addWire(wire);
 			circuitView.addWireView(wireView);
 		}
