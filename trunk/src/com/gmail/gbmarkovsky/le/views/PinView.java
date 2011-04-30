@@ -3,6 +3,8 @@ package com.gmail.gbmarkovsky.le.views;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.gmail.gbmarkovsky.le.elements.Pin;
 import com.gmail.gbmarkovsky.le.elements.PinType;
@@ -32,6 +34,8 @@ public class PinView {
 	private Point border;
 	
 	private Pin pin;
+	
+	private ArrayList<WireView> wires = new ArrayList<WireView>();
 	
 	/**
 	 * Создает представление контакта по заданной точке крепления к гейту <code>position</code>
@@ -94,6 +98,24 @@ public class PinView {
 			return true;
 		}
 		return false;
+	}
+	
+	public void addWireView(WireView wireView) {
+		if (!((wires.size() > 0) && pin.getType().equals(PinType.INPUT))) {
+			wires.add(wireView);
+		}
+	}
+	
+	public void removeWireView(WireView wireView) {
+		wires.remove(wireView);
+	}
+	
+	public List<WireView> getWires() {
+		return wires;
+	}
+	
+	public boolean isWireOnPin(WireView wireView) {
+		return wires.contains(wireView);
 	}
 	
 	/**
