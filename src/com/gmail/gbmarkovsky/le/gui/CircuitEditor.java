@@ -12,10 +12,6 @@ import javax.swing.JComponent;
 
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
 import com.gmail.gbmarkovsky.le.tools.CircuitTool;
-import com.gmail.gbmarkovsky.le.tools.ElementSelector;
-import com.gmail.gbmarkovsky.le.tools.PinSelector;
-import com.gmail.gbmarkovsky.le.tools.WireCreator;
-import com.gmail.gbmarkovsky.le.tools.WireSelector;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
 import com.gmail.gbmarkovsky.le.views.WireView;
@@ -27,26 +23,20 @@ import com.gmail.gbmarkovsky.le.views.WireView;
  */
 public class CircuitEditor extends JComponent {
 	private static final long serialVersionUID = -2235220973441036453L;
+	
 	private Circuit circuit;
 	private CircuitView circuitView;
-	private CircuitTool tool;
-	private WireCreator wireCreator;
-	private WireSelector wireSelectionTool;
+	
 	private WireView selectedWireView;
 	private List<ElementView> selectedElements = new ArrayList<ElementView>();
-	private ElementSelector elementSelector;
+	
+	private ArrayList<CircuitTool> tools = new ArrayList<CircuitTool>();
 	
 	public CircuitEditor() {
 		circuit = new Circuit();
 		circuitView = new CircuitView(circuit);
 		circuit.addPropertyChangeListener(circuitView);
-		wireCreator = new WireCreator(this);
-		elementSelector = new ElementSelector(this);
-		wireSelectionTool = new WireSelector(this);
-		setWireC();
-		PinSelector pinSelectionTool = new PinSelector(this);
-		addMouseListener(pinSelectionTool);
-		addMouseMotionListener(pinSelectionTool);
+
 		setDoubleBuffered(true);
 		setBackground(Color.white);
 		setForeground(Color.white);
@@ -84,30 +74,18 @@ public class CircuitEditor extends JComponent {
 		return circuitView;
 	}
 	
-	public void setCurrentTool(CircuitTool tool) {
-		removeMouseListener(this.tool);
-		removeMouseMotionListener(this.tool);
-		this.tool = tool;
-		addMouseListener(this.tool);
-		addMouseMotionListener(this.tool);
+	public void addCircuitTool(CircuitTool tool) {
+		tools.add(tool);
+		addMouseListener(tool);
+		addMouseMotionListener(tool);
 	}
 	
-	public void setWireC() {
-		addMouseListener(wireCreator);
-		addMouseMotionListener(wireCreator);
-		addMouseListener(wireSelectionTool);
-		addMouseMotionListener(wireSelectionTool);
-		addMouseListener(elementSelector);
-		addMouseMotionListener(elementSelector);
-	}
-	
-	public void removeWireC() {
-		removeMouseListener(wireCreator);
-		removeMouseMotionListener(wireCreator);
-		removeMouseListener(wireSelectionTool);
-		removeMouseMotionListener(wireSelectionTool);
-		removeMouseListener(elementSelector);
-		removeMouseMotionListener(elementSelector);
+	public void clearCircuitTools() {
+		for(CircuitTool tool: tools) {
+			removeMouseListener(tool);
+			removeMouseMotionListener(tool);
+		}
+		tools.clear();
 	}
 	
 	public void updateSize() {

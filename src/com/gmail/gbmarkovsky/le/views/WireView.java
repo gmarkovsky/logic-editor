@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
 
+import com.gmail.gbmarkovsky.le.elements.PinType;
 import com.gmail.gbmarkovsky.le.elements.Wire;
 
 public class WireView {
@@ -20,9 +21,14 @@ public class WireView {
 	private Stroke stroke = new BasicStroke(2.0f);
 	
 	public WireView(Wire wire, PinView start, PinView end) {
+		if (start.getPin().getType() != PinType.OUTPUT || end.getPin().getType() != PinType.INPUT) {
+			throw new RuntimeException("Wrong wire connection");
+		}
 		this.wire = wire;
 		this.start = start;
 		this.end = end;
+		this.start.addWireView(this);
+		this.end.addWireView(this);
 		line = new Line2D.Double(start.getBorder().x, start.getBorder().y, end.getBorder().x, end.getBorder().y);
 	}
 	
@@ -54,5 +60,10 @@ public class WireView {
 			return true;
 		}
 		return false;
+	}
+	
+	public void disconnect() {
+		start.removeWireView(this);
+		end.removeWireView(this);
 	}
 }

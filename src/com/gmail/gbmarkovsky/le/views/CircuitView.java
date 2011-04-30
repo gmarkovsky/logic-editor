@@ -160,7 +160,12 @@ public class CircuitView implements PropertyChangeListener {
 
 	public void deleteWire(WireView wireView) {
 		wireViews.remove(wireView.getWire());
+		wireView.disconnect();
 		circuit.deleteWire(wireView.getWire());
+	}
+	
+	public WireView getWireView(Wire wire) {
+		return wireViews.get(wire);
 	}
 	
 	@Override

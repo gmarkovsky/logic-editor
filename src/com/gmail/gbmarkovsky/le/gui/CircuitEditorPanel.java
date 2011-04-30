@@ -18,9 +18,14 @@ import javax.swing.JToggleButton;
 
 import com.gmail.gbmarkovsky.le.elements.GateType;
 import com.gmail.gbmarkovsky.le.tools.ElementDrugger;
+import com.gmail.gbmarkovsky.le.tools.ElementSelector;
 import com.gmail.gbmarkovsky.le.tools.GateCreator;
 import com.gmail.gbmarkovsky.le.tools.InputCreator;
 import com.gmail.gbmarkovsky.le.tools.OutputCreator;
+import com.gmail.gbmarkovsky.le.tools.PinSelector;
+import com.gmail.gbmarkovsky.le.tools.WireChanger;
+import com.gmail.gbmarkovsky.le.tools.WireCreator;
+import com.gmail.gbmarkovsky.le.tools.WireSelector;
 
 public class CircuitEditorPanel extends JPanel {
 	private static final long serialVersionUID = -2541499089778347322L;
@@ -29,6 +34,7 @@ public class CircuitEditorPanel extends JPanel {
 	private JPanel controlPanel;
 	
 	private JToggleButton cursorButton;
+	private JToggleButton wireButton;
 	private JToggleButton andGateButton;
 	private JToggleButton orGateButton;
 	private JToggleButton notGateButton;
@@ -40,14 +46,16 @@ public class CircuitEditorPanel extends JPanel {
 		initListeners();
 	}
 	
-	
 	private void initControls() {
 		setLayout(new BorderLayout());
 		circuitEditor =  new CircuitEditor();
 		initControlPanel();
 		
-		circuitEditor.setCurrentTool(new ElementDrugger(circuitEditor));
-		circuitEditor.setWireC();
+		circuitEditor.addCircuitTool(new ElementDrugger(circuitEditor));
+		circuitEditor.addCircuitTool(new ElementSelector(circuitEditor));
+		circuitEditor.addCircuitTool(new PinSelector(circuitEditor));
+		circuitEditor.addCircuitTool(new WireChanger(circuitEditor));
+		circuitEditor.addCircuitTool(new WireSelector(circuitEditor));
 		
 		JScrollPane scrollPane = new JScrollPane(circuitEditor);
 		add(scrollPane, BorderLayout.CENTER);
@@ -59,7 +67,9 @@ public class CircuitEditorPanel extends JPanel {
 		controlPanel.setBorder(BorderFactory.createBevelBorder(1));
 		
 		ImageIcon imageIcon = new ImageIcon(CircuitEditorPanel.class.getResource("cursor.png"));
+		ImageIcon wireIcon = new ImageIcon(CircuitEditorPanel.class.getResource("wire.png"));
 		cursorButton = new JToggleButton(imageIcon, true);
+		wireButton = new JToggleButton(wireIcon);
 		andGateButton = new JToggleButton("AND");
 		orGateButton = new JToggleButton("OR");
 		notGateButton = new JToggleButton("NOT");
@@ -67,6 +77,7 @@ public class CircuitEditorPanel extends JPanel {
 		outputButton = new JToggleButton("Out");
         ButtonGroup group = new ButtonGroup();
         group.add(cursorButton);
+        group.add(wireButton);
         group.add(andGateButton);
         group.add(orGateButton);
         group.add(notGateButton);
@@ -82,19 +93,27 @@ public class CircuitEditorPanel extends JPanel {
 		radioPanel.add(jSeparator, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
         		new Insets(5, 3, 5, 3), 0, 0));
-        radioPanel.add(andGateButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+        radioPanel.add(wireButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.NONE,
+        		new Insets(0, 0, 0, 0), 0, 0));
+        jSeparator = new JSeparator(JSeparator.VERTICAL);
+        jSeparator.setPreferredSize(new Dimension(1, 1));
+		radioPanel.add(jSeparator, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+        		new Insets(5, 3, 5, 3), 0, 0));
+        radioPanel.add(andGateButton, new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.NONE,
         		new Insets(5, 0, 5, 0), 0, 0));
-        radioPanel.add(orGateButton, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+        radioPanel.add(orGateButton, new GridBagConstraints(5, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.NONE,
         		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(notGateButton, new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0,
+        radioPanel.add(notGateButton, new GridBagConstraints(6, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.NONE,
         		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(inputButton, new GridBagConstraints(5, 0, 1, 1, 0.0, 0.0,
+        radioPanel.add(inputButton, new GridBagConstraints(7, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.NONE,
         		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(outputButton, new GridBagConstraints(6, 0, 1, 1, 0.0, 0.0,
+        radioPanel.add(outputButton, new GridBagConstraints(8, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.NONE,
         		new Insets(5, 2, 5, 0), 0, 0));
         controlPanel.add(radioPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
@@ -107,48 +126,61 @@ public class CircuitEditorPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				circuitEditor.setCurrentTool(new ElementDrugger(circuitEditor));
-				circuitEditor.setWireC();
+				circuitEditor.clearCircuitTools();
+				circuitEditor.addCircuitTool(new ElementDrugger(circuitEditor));
+				circuitEditor.addCircuitTool(new ElementSelector(circuitEditor));
+				circuitEditor.addCircuitTool(new PinSelector(circuitEditor));
+				circuitEditor.addCircuitTool(new WireChanger(circuitEditor));
+				circuitEditor.addCircuitTool(new WireSelector(circuitEditor));
+			}
+		});
+        wireButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				circuitEditor.clearCircuitTools();
+				circuitEditor.addCircuitTool(new WireCreator(circuitEditor));
+				circuitEditor.addCircuitTool(new PinSelector(circuitEditor));
 			}
 		});
         andGateButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				circuitEditor.setCurrentTool(new GateCreator(circuitEditor, GateType.AND));
-				circuitEditor.removeWireC();
+				circuitEditor.clearCircuitTools();
+				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.AND));
 			}
 		});
         orGateButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				circuitEditor.setCurrentTool(new GateCreator(circuitEditor, GateType.OR));
-				circuitEditor.removeWireC();
+				circuitEditor.clearCircuitTools();
+				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.OR));
 			}
 		});
         notGateButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				circuitEditor.setCurrentTool(new GateCreator(circuitEditor, GateType.NOT));
-				circuitEditor.removeWireC();
+				circuitEditor.clearCircuitTools();
+				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.NOT));
 			}
 		});
         inputButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				circuitEditor.setCurrentTool(new InputCreator(circuitEditor));
-				circuitEditor.removeWireC();
+				circuitEditor.clearCircuitTools();
+				circuitEditor.addCircuitTool(new InputCreator(circuitEditor));
 			}
 		});
         outputButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				circuitEditor.setCurrentTool(new OutputCreator(circuitEditor));
-				circuitEditor.removeWireC();
+				circuitEditor.clearCircuitTools();
+				circuitEditor.addCircuitTool(new OutputCreator(circuitEditor));
 			}
 		});
 	}
