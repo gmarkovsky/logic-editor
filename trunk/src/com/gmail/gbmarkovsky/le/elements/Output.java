@@ -36,4 +36,17 @@ public class Output implements Element {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public Pin getInput(int index) {
+		if (index == 0) {
+			return inPin;
+		}
+		throw new RuntimeException("Output has only one input pin");
+	}
+
+	@Override
+	public Pin getOutput() {
+		throw new RuntimeException("Can't get output pin for output");
+	}
 }

@@ -46,6 +46,9 @@ public class CircuitEditorPanel extends JPanel {
 		circuitEditor =  new CircuitEditor();
 		initControlPanel();
 		
+		circuitEditor.setCurrentTool(new ElementDrugger(circuitEditor));
+		circuitEditor.setWireC();
+		
 		JScrollPane scrollPane = new JScrollPane(circuitEditor);
 		add(scrollPane, BorderLayout.CENTER);
 		add(controlPanel, BorderLayout.NORTH);

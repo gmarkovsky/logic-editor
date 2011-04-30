@@ -24,6 +24,8 @@ public class Wire {
 		}
 		this.start = start;
 		this.end = end;
+		this.start.addWire(this);
+		this.end.addWire(this);
 	}
 
 	public Pin getStart() {

@@ -75,13 +75,9 @@ public class WireCreator extends AbstractCircuitTool {
 				WireView wireView = null;
 				if (start.getType() == PinType.OUTPUT && end.getType() == PinType.INPUT) {
 					wire = new Wire(start, end);
-					start.addWire(wire);
-					end.addWire(wire);
 					wireView = new WireView(wire, startPin, pinViewForLocation);
 				} else {
 					wire = new Wire(end, start);
-					start.addWire(wire);
-					end.addWire(wire);
 					wireView = new WireView(wire, pinViewForLocation, startPin);
 				}
 				circuitEditor.getCircuitView().addWireView(wireView);

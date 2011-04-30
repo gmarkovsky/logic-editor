@@ -110,13 +110,11 @@ public class InputView implements ElementView {
 
 	@Override
 	public PinView getInputPinView(Pin pin) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("Can't get input pin view for inputview");
 	}
 
 	@Override
 	public PinView getOutput() {
-		// TODO Auto-generated method stub
-		return null;
+		return outPin;
 	}
 }
