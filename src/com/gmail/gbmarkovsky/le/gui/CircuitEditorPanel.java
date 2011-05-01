@@ -75,6 +75,19 @@ public class CircuitEditorPanel extends JPanel {
 		notGateButton = new JToggleButton("NOT");
 		inputButton = new JToggleButton("In");
 		outputButton = new JToggleButton("Out");
+		
+		cursorButton.setToolTipText("Выделение, перемещение");
+		wireButton.setToolTipText("Нарисовать провод");
+		
+		final int bw = 46;
+		final int bh = 30;
+		
+		andGateButton.setPreferredSize(new Dimension(bw, bh));
+		orGateButton.setPreferredSize(new Dimension(bw, bh));
+		notGateButton.setPreferredSize(new Dimension(bw, bh));
+		inputButton.setPreferredSize(new Dimension(bw, bh));
+		outputButton.setPreferredSize(new Dimension(bw, bh));
+		
         ButtonGroup group = new ButtonGroup();
         group.add(cursorButton);
         group.add(wireButton);
@@ -110,10 +123,15 @@ public class CircuitEditorPanel extends JPanel {
         radioPanel.add(notGateButton, new GridBagConstraints(6, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.NONE,
         		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(inputButton, new GridBagConstraints(7, 0, 1, 1, 0.0, 0.0,
+        jSeparator = new JSeparator(JSeparator.VERTICAL);
+        jSeparator.setPreferredSize(new Dimension(1, 1));
+		radioPanel.add(jSeparator, new GridBagConstraints(7, 0, 1, 1, 0.0, 0.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+        		new Insets(5, 3, 5, 3), 0, 0));
+        radioPanel.add(inputButton, new GridBagConstraints(8, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.NONE,
         		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(outputButton, new GridBagConstraints(8, 0, 1, 1, 0.0, 0.0,
+        radioPanel.add(outputButton, new GridBagConstraints(9, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.NONE,
         		new Insets(5, 2, 5, 0), 0, 0));
         controlPanel.add(radioPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,

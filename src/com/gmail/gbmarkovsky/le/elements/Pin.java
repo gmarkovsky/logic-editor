@@ -3,6 +3,8 @@ package com.gmail.gbmarkovsky.le.elements;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.gbmarkovsky.le.circuit.Signal;
+
 /**
  * Контакт элемента, входной или выходной.
  * Если контакт является входом, то к нему может быть подсоединен один проводник.
@@ -17,11 +19,6 @@ public class Pin {
 	private PinType type;
 	
 	/**
-	 * Провода присоединенные к контакту.
-	 */
-	private List<Wire> wires = new ArrayList<Wire>();
-	
-	/**
 	 * Элемент схемы, которому принадлежит контакт.
 	 */
 	private Element element;
@@ -29,7 +26,12 @@ public class Pin {
 	/**
 	 * Значение сигнала на контакте.
 	 */
-	private boolean signal;
+	private Signal signal;
+	
+	/**
+	 * Провода присоединенные к контакту.
+	 */
+	private List<Wire> wires = new ArrayList<Wire>();
 	
 	private Pin(PinType type, Element element) {
 		this.type = type;
@@ -61,14 +63,6 @@ public class Pin {
 	}
 
 	/**
-	 * Возвращает список проводов, подключенных к контакту.
-	 * @return список проводов, подключенных к контакту
-	 */
-	public List<Wire> getWires() {
-		return wires;
-	}
-
-	/**
 	 * Добавляет новый провод к контакту.
 	 * Если контакт входной, то к нему можно подсоединить не более 1 провода.
 	 * @param wire
@@ -79,26 +73,45 @@ public class Pin {
 		}
 	}
 
+	/**
+	 * Отсоединяет провод <code>wire</code> от контакта.
+	 * @param wire провод для отсоединения
+	 * @return <code>true</code>, если провод <code>wire</code> был подсоединен к контакту,
+	 * иначе <code>false</code>
+	 */
 	public boolean removeWire(Wire wire) {
 		return wires.remove(wire);
 	}
-	
-	public boolean isSignal() {
-		return signal;
-	}
 
-	public void setSignal(boolean signal) {
-		this.signal = signal;
+	/**
+	 * Возвращает список проводов, подключенных к контакту.
+	 * @return список проводов, подключенных к контакту
+	 */
+	public List<Wire> getWires() {
+		return wires;
+	}
+	
+	/**
+	 * Проверяет, возможно ли подсоединить к контакту новый провод.
+	 * @return <code>true</code>, если возможно подсоединить к контакту новый провод,
+	 * иначе <code>false</code>
+	 */
+	public boolean isNewConnectAllowed() {
+		if ((type == PinType.INPUT) && (wires.size() > 0)) {
+			return false;
+		}
+		return true;
 	}
 
 	public Element getElement() {
 		return element;
 	}
 	
-	public boolean isNewConnectAllowed() {
-		if ((type == PinType.INPUT) && (wires.size() > 0)) {
-			return false;
-		}
-		return true;
+	public Signal getSignal() {
+		return signal;
+	}
+
+	public void setSignal(Signal signal) {
+		this.signal = signal;
 	}
 }
