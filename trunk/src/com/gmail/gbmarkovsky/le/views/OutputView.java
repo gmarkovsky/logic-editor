@@ -1,10 +1,13 @@
 package com.gmail.gbmarkovsky.le.views;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
+import java.awt.geom.Ellipse2D;
 
 import com.gmail.gbmarkovsky.le.elements.Element;
 import com.gmail.gbmarkovsky.le.elements.Output;
@@ -49,12 +52,19 @@ public class OutputView implements ElementView {
 	}
 	
 	public void paint(Graphics g) {
-		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setColor(Color.white);
-		g.fillOval(position.x, position.y, WIDTH, HEIGHT);
-		g.setColor(Color.black);
-		g.drawOval(position.x, position.y, WIDTH, HEIGHT);
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		
 		inPin.paint(g);
+		
+		Stroke tmpStroke = g2.getStroke();
+        BasicStroke stroke = new BasicStroke(3.0f);
+        g2.setStroke(stroke);
+		g2.setColor(Color.white);
+		g2.fill(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT)  );
+		g2.setColor(Color.black);
+		g2.draw(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT));
+		g2.setStroke(tmpStroke);
 	}
 
 	@Override

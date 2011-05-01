@@ -2,7 +2,10 @@ package com.gmail.gbmarkovsky.le.views;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,7 +126,13 @@ public class PinView {
 	 * @param g графический контекст для отрисовки контакта
 	 */
 	public void paint(Graphics g) {
-		g.setColor(Color.gray);
-		g.fillRect(center.x - PIN_WIDTH/2, center.y - PIN_HEIGHT/2, PIN_WIDTH, PIN_HEIGHT);
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setColor(Color.gray);
+		g2.fill(new RoundRectangle2D.Double(center.x - PIN_WIDTH/2,
+				center.y - PIN_HEIGHT/2,
+				PIN_WIDTH, PIN_HEIGHT,
+                2, 2));
+		//g.fillRect(center.x - PIN_WIDTH/2, center.y - PIN_HEIGHT/2, PIN_WIDTH, PIN_HEIGHT);
 	}
 }

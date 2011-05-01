@@ -18,7 +18,7 @@ public class WireView {
 	private PinView end;
 	
 	private Line2D line;
-	private Stroke stroke = new BasicStroke(2.0f);
+	private Stroke stroke = new BasicStroke(3.0f);
 	
 	public WireView(Wire wire, PinView start, PinView end) {
 		if (start.getPin().getType() != PinType.OUTPUT || end.getPin().getType() != PinType.INPUT) {
@@ -38,7 +38,7 @@ public class WireView {
 	
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.black);
+		g2.setColor(Color.gray);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		line = new Line2D.Double(start.getBorder().x, start.getBorder().y, end.getBorder().x, end.getBorder().y);
 		Stroke tmpStroke = g2.getStroke();

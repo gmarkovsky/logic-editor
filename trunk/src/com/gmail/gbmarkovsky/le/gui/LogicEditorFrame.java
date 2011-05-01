@@ -14,11 +14,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
+import com.gmail.gbmarkovsky.le.io.CircuitLoadException;
 import com.gmail.gbmarkovsky.le.io.CircuitSerializer;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 
@@ -112,7 +114,14 @@ public class LogicEditorFrame extends JFrame {
 					e.printStackTrace();
 				}
 				ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(bytes);
-				circuitView = CircuitSerializer.parse(arrayInputStream);
+				try {
+					circuitView = CircuitSerializer.parse(arrayInputStream);
+				} catch (CircuitLoadException e) {
+					JOptionPane.showMessageDialog(LogicEditorFrame.this,
+							"Файл " + file.getName() + " имеет неверный формат.",
+							"Ошибка", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				editorPanel.getCircuitEditor().setCircuit(circuitView.getCircuit());
 				editorPanel.getCircuitEditor().setCircuitView(circuitView);
 				editorPanel.getCircuitEditor().repaint();

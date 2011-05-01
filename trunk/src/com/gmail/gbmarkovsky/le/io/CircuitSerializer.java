@@ -19,6 +19,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSException;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSParser;
@@ -162,7 +163,7 @@ public class CircuitSerializer {
 		return doc;
 	}
 	
-	public static CircuitView parse(ByteArrayInputStream stream) {
+	public static CircuitView parse(ByteArrayInputStream stream) throws CircuitLoadException {
 		DOMImplementationRegistry registry;
 		try {
 			registry = DOMImplementationRegistry.newInstance();
@@ -172,13 +173,18 @@ public class CircuitSerializer {
 
 		DOMImplementationLS impl = (DOMImplementationLS) registry.getDOMImplementation("LS");
 
-		LSParser serializer = impl.createLSParser(DOMImplementationLS.MODE_SYNCHRONOUS, null);
+		LSParser parser = impl.createLSParser(DOMImplementationLS.MODE_SYNCHRONOUS, null);
 
 		LSInput in = impl.createLSInput();
 		in.setByteStream(stream);		
-
-		Document doc = serializer.parse(in);
-		serializer.getDomConfig();
+		Document doc = null;
+		
+		try {
+			doc = parser.parse(in);
+			parser.getDomConfig();
+		} catch (LSException lsException) {
+			throw new CircuitLoadException(lsException.code);
+		}
 
 		
 		Circuit circuit = new Circuit();
