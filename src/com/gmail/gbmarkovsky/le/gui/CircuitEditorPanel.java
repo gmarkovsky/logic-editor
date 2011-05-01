@@ -79,8 +79,8 @@ public class CircuitEditorPanel extends JPanel {
 		cursorButton.setToolTipText("Выделение, перемещение");
 		wireButton.setToolTipText("Нарисовать провод");
 		
-		final int bw = 46;
-		final int bh = 30;
+		final int bw = 52;
+		final int bh = 34;
 		
 		andGateButton.setPreferredSize(new Dimension(bw, bh));
 		orGateButton.setPreferredSize(new Dimension(bw, bh));
