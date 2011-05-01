@@ -153,6 +153,12 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void setFantom() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 //	public static void main(String[] args) {
 //		new TestFrame();

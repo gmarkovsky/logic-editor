@@ -40,6 +40,8 @@ public class PinView {
 	
 	private ArrayList<WireView> wires = new ArrayList<WireView>();
 	
+	private int alpha = 255;
+	
 	/**
 	 * Создает представление контакта по заданной точке крепления к гейту <code>position</code>
 	 * на схеме и контакту <code>pin</code>.
@@ -128,11 +130,15 @@ public class PinView {
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setColor(Color.gray);
+		g2.setColor(new Color(128, 128, 128, alpha));
 		g2.fill(new RoundRectangle2D.Double(center.x - PIN_WIDTH/2,
 				center.y - PIN_HEIGHT/2,
 				PIN_WIDTH, PIN_HEIGHT,
                 2, 2));
 		//g.fillRect(center.x - PIN_WIDTH/2, center.y - PIN_HEIGHT/2, PIN_WIDTH, PIN_HEIGHT);
+	}
+	
+	public void setFantom() {
+		alpha = 128;
 	}
 }

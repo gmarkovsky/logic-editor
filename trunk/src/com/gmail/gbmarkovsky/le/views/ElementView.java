@@ -20,4 +20,5 @@ public interface ElementView {
 	public Element getElement();
 	public PinView getInputPinView(Pin pin);
 	public PinView getOutput();
+	public void setFantom();
 }
