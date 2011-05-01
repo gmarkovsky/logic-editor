@@ -17,6 +17,7 @@ public class OutputCreator extends AbstractCircuitTool {
 	public OutputCreator(CircuitEditor circuitEditor) {
 		super(circuitEditor);
 		outputView = new OutputView(new Point(0, 0), new Output());
+		outputView.setFantom();
 	}
 	
 	@Override

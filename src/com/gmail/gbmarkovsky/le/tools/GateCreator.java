@@ -28,6 +28,7 @@ public class GateCreator extends AbstractCircuitTool {
 		this.gateType = gateType;
 		Gate gate = new LogicCell(this.gateType);
 		gateView = new LogicCellView(new Point(0, 0), gate);
+		gateView.setFantom();
 	}
 	
 	public GateType getGateType() {

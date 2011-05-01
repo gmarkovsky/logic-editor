@@ -17,6 +17,7 @@ public class InputCreator extends AbstractCircuitTool {
 	public InputCreator(CircuitEditor circuitEditor) {
 		super(circuitEditor);
 		inputView = new InputView(new Point(0, 0), new Input());
+		inputView.setFantom();
 	}
 
 	@Override

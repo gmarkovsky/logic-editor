@@ -20,6 +20,8 @@ public class OutputView implements ElementView {
 	private PinView inPin;
 	private Output output;
 	
+	private int alpha = 255;
+	
 	public OutputView(Point position, Output output) {
 		this.output = output;
 		this.inPin = new PinView(new Point(), this.output.getPin());
@@ -60,9 +62,9 @@ public class OutputView implements ElementView {
 		Stroke tmpStroke = g2.getStroke();
         BasicStroke stroke = new BasicStroke(3.0f);
         g2.setStroke(stroke);
-		g2.setColor(Color.white);
+        g2.setColor(new Color(255, 255, 255, alpha));
 		g2.fill(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT)  );
-		g2.setColor(Color.black);
+		g2.setColor(new Color(0, 0, 0, alpha));
 		g2.draw(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT));
 		g2.setStroke(tmpStroke);
 	}
@@ -128,5 +130,11 @@ public class OutputView implements ElementView {
 			return inPin;
 		}
 		return null;
+	}
+
+	@Override
+	public void setFantom() {
+		alpha = 128;
+		inPin.setFantom();
 	}
 }
