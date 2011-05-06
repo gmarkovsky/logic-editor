@@ -1,5 +1,7 @@
 package com.gmail.gbmarkovsky.le.elements;
 
+import com.gmail.gbmarkovsky.le.circuit.Signal;
+
 /**
  * Проводник, соединяющий контакты.
  * @author george
@@ -18,6 +20,8 @@ public class Wire {
 	 */
 	private Pin end;
 	
+	private Signal signal = Signal.NONE;
+	
 	public Wire(Pin start, Pin end) {
 		if (start.getType() != PinType.OUTPUT || end.getType() != PinType.INPUT) {
 			throw new RuntimeException("wrong wire connection");
@@ -28,6 +32,9 @@ public class Wire {
 		
 		this.start.addWire(this);
 		this.end.addWire(this);
+		
+		this.setSignal(this.start.getSignal());
+		this.end.setSignal(this.start.getSignal());
 	}
 
 	public Pin getStart() {
@@ -38,11 +45,22 @@ public class Wire {
 		return end;
 	}
 	
+	
+	public Signal getSignal() {
+		return signal;
+	}
+
+	public void setSignal(Signal signal) {
+		this.signal = signal;
+		end.setSignal(this.signal);
+	}
+
 	/**
 	 * Отсоединить провод от контактов, к которым он присоединен.
 	 */
 	public void disconnect() {
 		start.removeWire(this);
 		end.removeWire(this);
+		end.setSignal(Signal.NONE);
 	}
 }

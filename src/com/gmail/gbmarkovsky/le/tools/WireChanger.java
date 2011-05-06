@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 
+import com.gmail.gbmarkovsky.le.circuit.Signal;
 import com.gmail.gbmarkovsky.le.elements.Pin;
 import com.gmail.gbmarkovsky.le.elements.PinType;
 import com.gmail.gbmarkovsky.le.elements.Wire;
@@ -116,7 +117,13 @@ public class WireChanger extends AbstractCircuitTool {
 	public void paint(Graphics g) {
 		if (startPin != null) {
 			Graphics2D g2 = (Graphics2D) g;
-			g2.setColor(Color.gray);
+			if (startPin.getPin().getSignal() == Signal.NONE) {
+				g2.setColor(Color.gray);
+			} else if (startPin.getPin().getSignal() == Signal.TRUE) {
+				g2.setColor(new Color(86, 193, 69));
+			} else if (startPin.getPin().getSignal() == Signal.FALSE) {
+				g2.setColor(new Color(66, 76, 171));
+			}
 			Stroke tmpStroke = g2.getStroke();
 	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	        BasicStroke stroke = new BasicStroke(3.0f);

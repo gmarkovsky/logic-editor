@@ -9,6 +9,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.gbmarkovsky.le.circuit.Signal;
 import com.gmail.gbmarkovsky.le.elements.Pin;
 import com.gmail.gbmarkovsky.le.elements.PinType;
 
@@ -130,7 +131,15 @@ public class PinView {
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setColor(new Color(128, 128, 128, alpha));
+		
+		if (pin.getSignal() == Signal.NONE) {
+			g2.setColor(new Color(128, 128, 128, alpha));
+		} else if (pin.getSignal() == Signal.TRUE) {
+			g2.setColor(new Color(86, 193, 69));
+		} else if (pin.getSignal() == Signal.FALSE) {
+			g2.setColor(new Color(66, 76, 171));
+		}
+		
 		g2.fill(new RoundRectangle2D.Double(center.x - PIN_WIDTH/2,
 				center.y - PIN_HEIGHT/2,
 				PIN_WIDTH, PIN_HEIGHT,

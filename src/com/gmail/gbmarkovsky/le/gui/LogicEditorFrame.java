@@ -30,6 +30,7 @@ import com.gmail.gbmarkovsky.le.views.CircuitView;
  *
  */
 public class LogicEditorFrame extends JFrame {
+	private static final String TITLE = "Редактор логических схем";
 	private static final long serialVersionUID = 8808280554536347790L;
 	private static final int WIDTH = 750;
 	private static final int HEIGHT = 500;
@@ -39,7 +40,7 @@ public class LogicEditorFrame extends JFrame {
 	private CircuitEditorPanel editorPanel;
 	
 	public LogicEditorFrame() {
-		setTitle("Редактор логических схем");
+		setTitle(TITLE);
 		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,12 +63,11 @@ public class LogicEditorFrame extends JFrame {
 				CircuitView circuitView = new CircuitView(circuit);
 				editorPanel.getCircuitEditor().setCircuit(circuit);
 				editorPanel.getCircuitEditor().setCircuitView(circuitView);
-				editorPanel.getCircuitEditor().repaint();	
+				editorPanel.getCircuitEditor().repaint();
+				currentDirectory = null;
+				LogicEditorFrame.this.setTitle(TITLE);
 			}
 		});
-		mFile.add(miNew);
-		miNew.setAccelerator(KeyStroke.getKeyStroke(
-		        KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		JMenuItem miExit = new JMenuItem("Выход");
 		miExit.addActionListener(new ActionListener() {
 			
@@ -79,7 +79,7 @@ public class LogicEditorFrame extends JFrame {
 		miExit.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_X, ActionEvent.ALT_MASK));
 		
-		JMenuItem miOpen = new JMenuItem("Открыть");
+		JMenuItem miOpen = new JMenuItem("Открыть...");
 		miOpen.addActionListener(new ActionListener() {
 			
 			@Override
@@ -128,10 +128,49 @@ public class LogicEditorFrame extends JFrame {
 			}
 		});
 		
-		mFile.add(miOpen);
-		
 		JMenuItem miSave = new JMenuItem("Сохранить");
 		miSave.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				File file = null;
+				if (currentDirectory == null) {
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.addChoosableFileFilter(new XmlFileFilter());
+					fileChooser.setCurrentDirectory(currentDirectory);
+					int returnVal = fileChooser.showSaveDialog(LogicEditorFrame.this);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						file = fileChooser.getSelectedFile();
+						currentDirectory = file;
+					} else {
+						return;
+					}
+				} else {
+					file = currentDirectory;
+				}
+
+				FileOutputStream fw = null;
+				try {
+					XmlFileFilter xmlFileFilter = new XmlFileFilter();
+					if (xmlFileFilter.accept(file.getAbsoluteFile())) {
+						fw = new FileOutputStream(file);
+					} else {
+						fw = new FileOutputStream(file.getAbsoluteFile() + ".xml");
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					CircuitSerializer.write(editorPanel.getCircuitEditor().getCircuitView()).writeTo(fw);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				LogicEditorFrame.this.setTitle(currentDirectory.getAbsolutePath());
+			}
+		});
+		
+		JMenuItem miSaveAs = new JMenuItem("Сохранить как...");
+		miSaveAs.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -163,12 +202,13 @@ public class LogicEditorFrame extends JFrame {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				LogicEditorFrame.this.setTitle(currentDirectory.getAbsolutePath());
 			}
 		});
-		
+		mFile.add(miNew);
+		mFile.add(miOpen);
 		mFile.add(miSave);
-		//miSave.setEnabled(false);
-		//miOpen.setEnabled(false);
+		mFile.add(miSaveAs);
 		mFile.add(new JSeparator());
 		mFile.add(miExit);
 		menuBar.add(mFile);

@@ -2,8 +2,12 @@ package com.gmail.gbmarkovsky.le.elements;
 
 import java.util.List;
 
+import com.gmail.gbmarkovsky.le.circuit.Signal;
+
 public class Output implements Element {
 	private Pin inPin;
+	
+	private Signal signal = Signal.NONE;
 
 	public Output() {
 		this.inPin = Pin.createInput(this);
@@ -48,5 +52,13 @@ public class Output implements Element {
 	@Override
 	public Pin getOutput() {
 		throw new RuntimeException("Can't get output pin for output");
+	}
+	
+	public Signal getSignal() {
+		return signal;
+	}
+
+	public void execute() {
+		signal = inPin.getSignal();
 	}
 }

@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
 
+import com.gmail.gbmarkovsky.le.circuit.Signal;
 import com.gmail.gbmarkovsky.le.elements.PinType;
 import com.gmail.gbmarkovsky.le.elements.Wire;
 
@@ -38,7 +39,13 @@ public class WireView {
 	
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.gray);
+		if (wire.getSignal() == Signal.NONE) {
+			g2.setColor(Color.gray);
+		} else if (wire.getSignal() == Signal.TRUE) {
+			g2.setColor(new Color(86, 193, 69));
+		} else if (wire.getSignal() == Signal.FALSE) {
+			g2.setColor(new Color(66, 76, 171));
+		}
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		line = new Line2D.Double(start.getBorder().x, start.getBorder().y, end.getBorder().x, end.getBorder().y);
 		Stroke tmpStroke = g2.getStroke();
