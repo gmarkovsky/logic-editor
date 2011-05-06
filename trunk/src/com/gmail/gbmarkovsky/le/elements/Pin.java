@@ -26,7 +26,7 @@ public class Pin {
 	/**
 	 * Значение сигнала на контакте.
 	 */
-	private Signal signal;
+	private Signal signal = Signal.NONE;
 	
 	/**
 	 * Провода присоединенные к контакту.
@@ -113,5 +113,16 @@ public class Pin {
 
 	public void setSignal(Signal signal) {
 		this.signal = signal;
+		if (type == PinType.OUTPUT) {
+			for(Wire wire : wires) {
+				wire.setSignal(this.signal);
+			}
+		}
+		if (element instanceof Gate && type == PinType.INPUT) {
+			((Gate) element).execute();
+		}
+		if (element instanceof Output) {
+			((Output) element).execute();
+		}
 	}
 }

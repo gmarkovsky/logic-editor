@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
 
+import com.gmail.gbmarkovsky.le.circuit.Signal;
 import com.gmail.gbmarkovsky.le.elements.Element;
 import com.gmail.gbmarkovsky.le.elements.Output;
 import com.gmail.gbmarkovsky.le.elements.Pin;
@@ -62,7 +63,13 @@ public class OutputView implements ElementView {
 		Stroke tmpStroke = g2.getStroke();
         BasicStroke stroke = new BasicStroke(3.0f);
         g2.setStroke(stroke);
-        g2.setColor(new Color(255, 255, 255, alpha));
+        if (output.getSignal() == Signal.NONE) {
+        	g2.setColor(new Color(255, 255, 255, alpha));
+		} else if (output.getSignal() == Signal.TRUE) {
+			g2.setColor(new Color(86, 193, 69));
+		} else if (output.getSignal() == Signal.FALSE) {
+			g2.setColor(new Color(66, 76, 171));
+		}
 		g2.fill(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT)  );
 		g2.setColor(new Color(0, 0, 0, alpha));
 		g2.draw(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT));

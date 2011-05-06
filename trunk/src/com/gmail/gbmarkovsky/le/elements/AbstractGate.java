@@ -8,9 +8,9 @@ import java.util.ArrayList;
  *
  */
 public abstract class AbstractGate implements Gate {
-	private GateType type;
-	private final ArrayList<Pin> inputs;
-	private final Pin output;
+	protected GateType type;
+	protected final ArrayList<Pin> inputs;
+	protected final Pin output;
 
 	public AbstractGate(GateType type) {
 		this.type = type;
