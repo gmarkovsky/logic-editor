@@ -151,7 +151,7 @@ public class InputView implements ElementView {
 		} else if (input.getSignal() == Signal.TRUE) {
 			input.setSignal(Signal.FALSE);
 		} else if (input.getSignal() == Signal.FALSE) {
-			input.setSignal(Signal.NONE);
+			input.setSignal(Signal.TRUE);
 		}
 	}
 }
