@@ -20,7 +20,7 @@ public class Wire {
 	 */
 	private Pin end;
 	
-	private Signal signal = Signal.NONE;
+	private Signal signal = Signal.FALSE;
 	
 	public Wire(Pin start, Pin end) {
 		if (start.getType() != PinType.OUTPUT || end.getType() != PinType.INPUT) {
@@ -61,6 +61,6 @@ public class Wire {
 	public void disconnect() {
 		start.removeWire(this);
 		end.removeWire(this);
-		end.setSignal(Signal.NONE);
+		end.setSignal(Signal.FALSE);
 	}
 }

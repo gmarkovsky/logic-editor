@@ -63,12 +63,10 @@ public class OutputView implements ElementView {
 		Stroke tmpStroke = g2.getStroke();
         BasicStroke stroke = new BasicStroke(3.0f);
         g2.setStroke(stroke);
-        if (output.getSignal() == Signal.NONE) {
-        	g2.setColor(new Color(255, 255, 255, alpha));
-		} else if (output.getSignal() == Signal.TRUE) {
+        if (output.getSignal() == Signal.TRUE) {
 			g2.setColor(new Color(86, 193, 69));
 		} else if (output.getSignal() == Signal.FALSE) {
-			g2.setColor(new Color(66, 76, 171));
+			g2.setColor(new Color(255, 255, 255, alpha));
 		}
 		g2.fill(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT)  );
 		g2.setColor(new Color(0, 0, 0, alpha));

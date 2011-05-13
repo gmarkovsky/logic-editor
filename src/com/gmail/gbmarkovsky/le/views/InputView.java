@@ -60,12 +60,10 @@ public class InputView implements ElementView {
         BasicStroke stroke = new BasicStroke(3.0f);
         g2.setStroke(stroke);
         
-        if (input.getSignal() == Signal.NONE) {
-        	g2.setColor(new Color(255, 255, 255, alpha));
-		} else if (input.getSignal() == Signal.TRUE) {
+        if (input.getSignal() == Signal.TRUE) {
 			g2.setColor(new Color(86, 193, 69));
 		} else if (input.getSignal() == Signal.FALSE) {
-			g2.setColor(new Color(66, 76, 171));
+			g2.setColor(new Color(255, 255, 255, alpha));
 		}
         
 		g2.fill(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT)  );
@@ -146,9 +144,7 @@ public class InputView implements ElementView {
 	}
 	
 	public void switchSignal() {
-		if (input.getSignal() == Signal.NONE) {
-			input.setSignal(Signal.TRUE);
-		} else if (input.getSignal() == Signal.TRUE) {
+		if (input.getSignal() == Signal.TRUE) {
 			input.setSignal(Signal.FALSE);
 		} else if (input.getSignal() == Signal.FALSE) {
 			input.setSignal(Signal.TRUE);

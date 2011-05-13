@@ -7,7 +7,7 @@ import com.gmail.gbmarkovsky.le.circuit.Signal;
 public class Input implements Element {
 	private Pin outPin;
 	
-	private Signal signal = Signal.NONE;
+	private Signal signal = Signal.FALSE;
 
 	public Input() {
 		this.outPin = Pin.createOutput(this);

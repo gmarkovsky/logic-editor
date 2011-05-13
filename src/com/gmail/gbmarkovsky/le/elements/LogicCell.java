@@ -30,21 +30,16 @@ public class LogicCell extends AbstractGate {
 		if (type == GateType.AND) {
 			Signal result = Signal.TRUE;
 			for(Pin pin : inputs) {
-				if (pin.getSignal() == Signal.NONE) {
-					result = Signal.NONE;
-					break;
-				} else if (pin.getSignal() == Signal.FALSE) {
+				if (pin.getSignal() == Signal.FALSE) {
 					result = Signal.FALSE;
+					break;
 				}
 			}
 			output.setSignal(result);
 		} else if (type == GateType.OR) {
 			Signal result = Signal.FALSE;
 			for(Pin pin : inputs) {
-				if (pin.getSignal() == Signal.NONE) {
-					result = Signal.NONE;
-					break;
-				} else if (pin.getSignal() == Signal.TRUE) {
+				if (pin.getSignal() == Signal.TRUE) {
 					result = Signal.TRUE;
 				}
 			}

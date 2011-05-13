@@ -30,7 +30,7 @@ public class SignalSetuper extends AbstractCircuitTool {
 				((InputView) elementView).switchSignal();
 			}
 		} else if (e.getButton() == MouseEvent.BUTTON3) {
-			((InputView) elementView).getInput().setSignal(Signal.NONE);
+			((InputView) elementView).getInput().setSignal(Signal.FALSE);
 		}
 	}
 
