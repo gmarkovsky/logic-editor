@@ -49,6 +49,10 @@ public class ElementDrugger extends AbstractCircuitTool {
 			int dx = arg0.getX() - prevPosition.x;
 			int dy = arg0.getY() - prevPosition.y;
 			List<ElementView> list = circuitEditor.getSelectedElements();
+			Point p = highLeftPoint(list);
+			if (p.x + dx < 0 || p.y + dy < 0) {
+				return;
+			}
 			for (ElementView ew: list) {
 				Point oldPos = ew.getPosition();
 				ew.setPosition(new Point(oldPos.x + dx, oldPos.y + dy));
@@ -59,6 +63,20 @@ public class ElementDrugger extends AbstractCircuitTool {
 		}
 	}
 
+	private Point highLeftPoint(List<ElementView> list) {
+		int minX = Integer.MAX_VALUE;
+		int minY = Integer.MAX_VALUE;
+		for(ElementView ew: list) {
+			if (ew.getPosition().x < minX) {
+				minX = ew.getPosition().x;
+			}
+			if (ew.getPosition().y < minY) {
+				minY = ew.getPosition().y;
+			}
+		}
+		return new Point(minX, minY);
+	}
+	
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		prevPosition = arg0.getPoint();
