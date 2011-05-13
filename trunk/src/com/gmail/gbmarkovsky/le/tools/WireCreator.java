@@ -110,12 +110,10 @@ public class WireCreator extends AbstractCircuitTool {
 	public void paint(Graphics g) {
 		if (startPin != null) {
 			Graphics2D g2 = (Graphics2D) g;
-			if (startPin.getPin().getSignal() == Signal.NONE) {
-				g2.setColor(Color.gray);
-			} else if (startPin.getPin().getSignal() == Signal.TRUE) {
+			if (startPin.getPin().getSignal() == Signal.TRUE) {
 				g2.setColor(new Color(86, 193, 69));
 			} else if (startPin.getPin().getSignal() == Signal.FALSE) {
-				g2.setColor(new Color(66, 76, 171));
+				g2.setColor(Color.gray);
 			}
 			Stroke tmpStroke = g2.getStroke();
 	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

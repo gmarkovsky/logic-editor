@@ -39,12 +39,10 @@ public class WireView {
 	
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		if (wire.getSignal() == Signal.NONE) {
-			g2.setColor(Color.gray);
-		} else if (wire.getSignal() == Signal.TRUE) {
+		if (wire.getSignal() == Signal.TRUE) {
 			g2.setColor(new Color(86, 193, 69));
 		} else if (wire.getSignal() == Signal.FALSE) {
-			g2.setColor(new Color(66, 76, 171));
+			g2.setColor(Color.gray);
 		}
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		line = new Line2D.Double(start.getBorder().x, start.getBorder().y, end.getBorder().x, end.getBorder().y);
