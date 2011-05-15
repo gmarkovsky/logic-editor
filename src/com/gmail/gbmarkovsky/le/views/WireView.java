@@ -40,7 +40,7 @@ public class WireView {
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		if (wire.getSignal() == Signal.TRUE) {
-			g2.setColor(new Color(86, 193, 69));
+			g2.setColor(new Color(147, 205, 90));
 		} else if (wire.getSignal() == Signal.FALSE) {
 			g2.setColor(Color.gray);
 		}

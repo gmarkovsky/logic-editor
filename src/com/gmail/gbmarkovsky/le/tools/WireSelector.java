@@ -67,7 +67,7 @@ public class WireSelector implements CircuitTool {
 		WireView selectedWire = circuitEditor.getSelectedWireView();
 		if (selectedWire != null) {
 			Graphics2D g2 = (Graphics2D) g;
-			g2.setColor(Color.red);
+			g2.setColor(new Color(250, 75, 75));
 			Stroke tmpStroke = g2.getStroke();
 	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	        BasicStroke stroke = new BasicStroke(2.0f);

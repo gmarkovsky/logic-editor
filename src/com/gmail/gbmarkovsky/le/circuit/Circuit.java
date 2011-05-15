@@ -97,7 +97,7 @@ public class Circuit {
 		return outputs.remove(output);
 	}
 	
-	public Collection<Element> getGates() {
+	public Collection<Element> getElements() {
 		return elements;
 	}
 

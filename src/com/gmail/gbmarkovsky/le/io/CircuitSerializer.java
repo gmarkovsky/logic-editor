@@ -31,11 +31,13 @@ import com.gmail.gbmarkovsky.le.elements.Element;
 import com.gmail.gbmarkovsky.le.elements.Gate;
 import com.gmail.gbmarkovsky.le.elements.GateType;
 import com.gmail.gbmarkovsky.le.elements.Pin;
+import com.gmail.gbmarkovsky.le.elements.SevenSegmentsIndicator;
 import com.gmail.gbmarkovsky.le.elements.Wire;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 import com.gmail.gbmarkovsky.le.views.ConnectorView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
 import com.gmail.gbmarkovsky.le.views.GateView;
+import com.gmail.gbmarkovsky.le.views.SevenSegmentsIndicatorView;
 import com.gmail.gbmarkovsky.le.views.WireView;
 
 public class CircuitSerializer {
@@ -100,7 +102,7 @@ public class CircuitSerializer {
 		// Запись элементов схемы
 		org.w3c.dom.Element elements = doc.createElement("elements");
 		root.appendChild(elements);
-		for (Element celement: circuit.getGates()) {
+		for (Element celement: circuit.getElements()) {
 			gateToIdMap.put(celement, currentId);
 			org.w3c.dom.Element element = doc.createElement("element");
 			element.setAttribute("id", Integer.toString(currentId));
@@ -195,19 +197,29 @@ public class CircuitSerializer {
 		for (int i = 0; i < list.getLength(); i++) {
 			org.w3c.dom.Element element = (org.w3c.dom.Element) list.item(i);
 			int id = Integer.parseInt(element.getAttribute("id"));
-			GateType gateType = GateType.parseGateType(element.getAttribute("type"));
+			String gateT = element.getAttribute("type");
+			GateType gateType = GateType.parseGateType(gateT);
 			NodeList ilist = element.getElementsByTagName("view");
 			org.w3c.dom.Element view = (org.w3c.dom.Element) ilist.item(0);
 			int x = Integer.parseInt(view.getAttribute("x"));
 			int y = Integer.parseInt(view.getAttribute("y"));
 			
-			Gate gate = new Gate(gateType);
-			GateView gateView = new GateView(new Point(x, y), gate);
+			Element gate = null;
+			ElementView gateView = null;
+			if (gateType != null) {
+				gate = new Gate(gateType);
+				gateView = new GateView(new Point(x, y), (Gate) gate);
+			} else {
+				if ("SevenSegment".equals(gateT)) {
+					gate = new SevenSegmentsIndicator();
+					gateView = new SevenSegmentsIndicatorView(new Point(x, y), (SevenSegmentsIndicator) gate);
+				}
+			}
 			
 			idToElementMap.put(id, gate);
 			
 			circuit.addElement(gate);
-			circuitView.addGateView(gateView);
+			circuitView.addElementView(gateView);
 		}
 		
 		// Читаем входы

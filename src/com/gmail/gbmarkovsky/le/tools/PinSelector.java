@@ -65,7 +65,8 @@ public class PinSelector extends AbstractCircuitTool {
 	public void paint(Graphics g) {
 		if (markedPin != null) {
 			Point p = markedPin.getCenter();
-			g.setColor(Color.red);
+			
+			g.setColor(new Color(250, 75, 75));
 			g.drawRect(p.x - PinView.PIN_WIDTH/2 - 1, p.y - PinView.PIN_HEIGHT/2 - 1,
 					PinView.PIN_WIDTH + 1, PinView.PIN_HEIGHT + 1);
 		}

@@ -66,7 +66,7 @@ public class ConnectorView implements ElementView {
         g2.setStroke(stroke);
         
         if (connector.getSignal() == Signal.TRUE) {
-			g2.setColor(new Color(86, 193, 69));
+			g2.setColor(new Color(147, 205, 90));
 		} else if (connector.getSignal() == Signal.FALSE) {
 			g2.setColor(new Color(255, 255, 255, alpha));
 		}

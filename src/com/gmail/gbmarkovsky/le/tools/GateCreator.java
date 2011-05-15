@@ -47,7 +47,7 @@ public class GateCreator extends AbstractCircuitTool {
 			Point toPoint = new Point(arg0.getX() - gateView.getWidth(), arg0.getY() - gateView.getHeight());
 			GateView gateView = new GateView(toPoint, gate);
 			circuit.addElement(gate);
-			circuitView.addGateView(gateView);
+			circuitView.addElementView(gateView);
 			circuitEditor.updateSize();
 			circuitEditor.repaint();
 			canPlace = false;

@@ -1,20 +1,23 @@
 package com.gmail.gbmarkovsky.le.views;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-
+import com.gmail.gbmarkovsky.le.circuit.Signal;
 import com.gmail.gbmarkovsky.le.elements.Element;
 import com.gmail.gbmarkovsky.le.elements.Pin;
 import com.gmail.gbmarkovsky.le.elements.SevenSegmentsIndicator;
+import com.gmail.gbmarkovsky.le.elements.SevenSegmentsIndicator.Segment;
 
 public class SevenSegmentsIndicatorView implements ElementView {
 	private static final int WIDTH = 110;
@@ -23,11 +26,13 @@ public class SevenSegmentsIndicatorView implements ElementView {
 	private static final int MEDIUM_SEGMENT_INSET = 20;
 	private static final int BOTTOM_SEGMENT_INSET = 14;
 	
-	private Collection<Segment> segments = new ArrayList<Segment>();
-	private ArrayList<PinView> outputs = new ArrayList<PinView>();
+	private Map<String, SegmentView> segments = new HashMap<String, SegmentView>();
+	private ArrayList<PinView> inputs = new ArrayList<PinView>();
 	
 	private Point position;
 	private SevenSegmentsIndicator indicator;
+	
+	private int alpha = 255;
 	
 	public SevenSegmentsIndicatorView(Point position,
 			SevenSegmentsIndicator indicator) {
@@ -36,7 +41,7 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		calculatePositions();
 		List<Point> outPos = getInputPositions();
 		for (int i = 0; i < 7; i++) {
-			outputs.add(new PinView(outPos.get(i), Pin.createOutput(null)));
+			inputs.add(new PinView(outPos.get(i), this.indicator.getInput(i)));
 		}
 	}
 
@@ -44,7 +49,7 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		int inputCount = 7;
 		ArrayList<Point> list = new ArrayList<Point>(inputCount);
 		for (int i = 1; i <= inputCount; i++) {
-			list.add(new Point(position.x + WIDTH + 1, position.y + i * HEIGHT / (inputCount + 1)));
+			list.add(new Point(position.x, position.y + i * HEIGHT / (inputCount + 1)));
 		}
 		return list;
 	}
@@ -56,29 +61,37 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		Point mr = new Point(position.x + WIDTH - MEDIUM_SEGMENT_INSET, position.y + HEIGHT/2);
 		Point bl = new Point(position.x + BOTTOM_SEGMENT_INSET, position.y + HEIGHT - 20);
 		Point br = new Point(position.x + WIDTH - TOP_SEGMENT_INSET, position.y + HEIGHT - 20);
-		Segment segment = new Segment(new Point(tl.x + 5, tl.y), new Point(tr.x - 5, tr.y));
-		segment.setLight(true);
-		segments.add(segment);
-		segments.add(new Segment(new Point(ml.x + 5, ml.y), new Point(mr.x - 5, mr.y)));
-		segments.add(new Segment(new Point(bl.x + 5, bl.y), new Point(br.x - 5, br.y)));
+		List<Segment> list = indicator.getSegments();
+		segments.put(list.get(0).getId(), new SegmentView(new Point(tl.x + 5, tl.y), new Point(tr.x - 5, tr.y), list.get(0)));
+		segments.put(list.get(6).getId(), new SegmentView(new Point(ml.x + 5, ml.y), new Point(mr.x - 5, mr.y), list.get(6)));
+		segments.put(list.get(3).getId(), new SegmentView(new Point(bl.x + 5, bl.y), new Point(br.x - 5, br.y), list.get(3)));
 		
-		segments.add(new Segment(new Point(tl.x, tl.y + 5), new Point(ml.x, ml.y - 5)));
-		segments.add(new Segment(new Point(ml.x, ml.y + 5), new Point(bl.x, bl.y - 5)));
+		segments.put(list.get(5).getId(), new SegmentView(new Point(tl.x, tl.y + 5), new Point(ml.x, ml.y - 5), list.get(5)));
+		segments.put(list.get(4).getId(), new SegmentView(new Point(ml.x, ml.y + 5), new Point(bl.x, bl.y - 5), list.get(4)));
 		
-		segments.add(new Segment(new Point(tr.x, tr.y + 5), new Point(mr.x, mr.y - 5)));
-		segments.add(new Segment(new Point(mr.x, mr.y + 5), new Point(br.x, br.y - 5)));
+		segments.put(list.get(1).getId(), new SegmentView(new Point(tr.x, tr.y + 5), new Point(mr.x, mr.y - 5), list.get(1)));
+		segments.put(list.get(2).getId(), new SegmentView(new Point(mr.x, mr.y + 5), new Point(br.x, br.y - 5), list.get(2)));
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		g.setColor(Color.white);
-		g.fillRect(position.x, position.y, WIDTH, HEIGHT);
-		g.setColor(Color.black);
-		g.drawRect(position.x, position.y, WIDTH, HEIGHT);
-		for (Segment segment: segments) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		
+		g2.setColor(new Color(255, 255, 255, alpha));
+		g2.fillRect(position.x, position.y, WIDTH, HEIGHT);
+		
+		g2.setColor(new Color(0, 0, 0, alpha));
+		Stroke tmpStroke = g2.getStroke();
+		Stroke stroke = new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+		g2.setStroke(stroke);
+		g2.draw(new Rectangle2D.Double(position.x, position.y, WIDTH, HEIGHT));
+		g2.setStroke(tmpStroke);
+
+		for (SegmentView segment: segments.values()) {
 			segment.paint(g);
 		}
-		for (PinView pinView: outputs) {
+		for (PinView pinView: inputs) {
 			pinView.paint(g);
 		}
 	}
@@ -90,20 +103,26 @@ public class SevenSegmentsIndicatorView implements ElementView {
 
 	@Override
 	public Point getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return position;
 	}
 
 	@Override
 	public void setPosition(Point position) {
-		// TODO Auto-generated method stub
-		
+		int dx = position.x - this.position.x;
+		int dy = position.y - this.position.y;
+		this.position = position;
+		List<Point> inputPositions = getInputPositions();
+		for (int i = 0; i < inputs.size(); i++) {
+			inputs.get(i).setPosition(inputPositions.get(i));
+		}
+		for (SegmentView sw : segments.values()) {
+			sw.move(dx, dy);
+		}
 	}
 
 	@Override
 	public int getWidth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return WIDTH;
 	}
 
 	@Override
@@ -114,8 +133,7 @@ public class SevenSegmentsIndicatorView implements ElementView {
 
 	@Override
 	public int getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return HEIGHT;
 	}
 
 	@Override
@@ -126,50 +144,74 @@ public class SevenSegmentsIndicatorView implements ElementView {
 
 	@Override
 	public PinView getPinViewForLocation(Point location) {
-		// TODO Auto-generated method stub
+		for (PinView pv: inputs) {
+			if (pv.isPointOnPin(location)) {
+				return pv;
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public boolean isPointInsideView(Point point) {
-		// TODO Auto-generated method stub
+		int x = point.x;
+		int y = point.y;
+		int x0 = position.x;
+		int y0 = position.y;
+		int x1 = position.x + WIDTH;
+		int y1 = position.y + HEIGHT;
+		if ((x <= x1) && (x >= x0) && (y <= y1) && (y >= y0)) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean isInsideRect(Point p, int w, int h) {
-		// TODO Auto-generated method stub
+		if ((position.x - p.x < w - WIDTH) && (position.x > p.x) &&
+				(position.y - p.y < h - HEIGHT) && (position.y > p.y)) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public PinView getInputPinView(Pin pin) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
 	public void setFantom() {
-		// TODO Auto-generated method stub
-		
+		alpha = 128;
+		for(PinView pw: inputs) {
+			pw.setFantom();
+		}
+		for (SegmentView sw : segments.values()) {
+			sw.setFantom();
+		}
 	}
 
 	@Override
 	public PinView getOutputPinView(Pin pin) {
-		// TODO Auto-generated method stub
+		for(PinView pw: inputs) {
+			if (pw.getPin() == pin) {
+				return pw;
+			}
+		}
 		return null;
 	}
 	
-//	public static void main(String[] args) {
-//		new TestFrame();
-//	}
 }
 
-class Segment {
-	private Point[] points = new Point[6];
-	private boolean light;
+class SegmentView {
+	private Segment segment;
 	
-	public Segment(Point p, Point q) {
+	private Point[] points = new Point[6];
+	
+	private int alpha = 255;
+	
+	public SegmentView(Point p, Point q, Segment segment) {
+		this.segment = segment;
 		int height = (int) getNorma(p, q);
 		int width = height / 5;
 		points[0] = new Point(0, 0);
@@ -226,58 +268,64 @@ class Segment {
 		return Math.sqrt((p.x - q.x)*(p.x - q.x)+(p.y - q.y)*(p.y - q.y));
 	}
 	
-	public void setLight(boolean light) {
-		this.light = light;
-	}
-
 	public void paint(Graphics g) {
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setColor(Color.black);
+		g.setColor(new Color(0, 0, 0, alpha));
 		for (int i = 0; i < points.length - 1; i++) {
 			g.drawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
 		}
 		g.drawLine(points[0].x, points[0].y, points[points.length-1].x, points[points.length-1].y);
-		if (light){
+		if (segment.getSignal() == Signal.TRUE){
 			int[] x = new int[6];
 			int[] y = new int[6];
 			for (int i = 0; i < points.length; i++) {
 				x[i] = points[i].x;
 				y[i] = points[i].y;
 			}
-			g.setColor(Color.green);
+			g.setColor(new Color(147, 205, 90, alpha));
 			g.fillPolygon(x, y, 6);
 		}
 	}
-}
-
-class TestComponent extends JComponent {
-	private static final long serialVersionUID = 597844575914526776L;
-	private Segment segment = new Segment(new Point(250, 250), new Point(400, 250));
 	
-	public TestComponent() {
-		super();
-		setSize(500, 500);
+	public void move(int dx, int dy) {
+		for (int i = 0; i < points.length; i++) {
+			points[i] = new Point(points[i].x + dx, points[i].y + dy);
+		}
 	}
 	
-	public void paint(Graphics g) {
-		segment.paint(g);
-		g.setColor(Color.red);
-		g.drawLine(250, 0, 250, 500);
-		g.drawLine(0, 0, 500, 500);
-		g.drawLine(0, 0, 500, 250);
-		g.drawOval(-200, -200, 400, 400);
+	public void setFantom() {
+		alpha = 128;
 	}
 }
 
-class TestFrame extends JFrame {
-	private static final long serialVersionUID = -450421342829114022L;
-
-	public TestFrame() {
-		super();
-		add(new TestComponent());
-		setSize(500, 500);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setVisible(true);
-	}
-}
+//class TestComponent extends JComponent {
+//	private static final long serialVersionUID = 597844575914526776L;
+//	private SegmentView segment = new SegmentView(new Point(250, 250), new Point(400, 250));
+//	
+//	public TestComponent() {
+//		super();
+//		setSize(500, 500);
+//	}
+//	
+//	public void paint(Graphics g) {
+//		segment.paint(g);
+//		g.setColor(Color.red);
+//		g.drawLine(250, 0, 250, 500);
+//		g.drawLine(0, 0, 500, 500);
+//		g.drawLine(0, 0, 500, 250);
+//		g.drawOval(-200, -200, 400, 400);
+//	}
+//}
+//
+//class TestFrame extends JFrame {
+//	private static final long serialVersionUID = -450421342829114022L;
+//
+//	public TestFrame() {
+//		super();
+//		add(new TestComponent());
+//		setSize(500, 500);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setLocationRelativeTo(null);
+//		setVisible(true);
+//	}
+//}
