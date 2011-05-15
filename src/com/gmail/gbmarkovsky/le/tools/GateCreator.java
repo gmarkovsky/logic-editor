@@ -22,6 +22,7 @@ public class GateCreator extends AbstractCircuitTool {
 	private GateType gateType;
 	private GateView gateView;
 	private boolean drawFantom;
+	private boolean canPlace = true;
 	
 	public GateCreator(CircuitEditor circuitEditor, GateType gateType) {
 		super(circuitEditor);
@@ -41,14 +42,18 @@ public class GateCreator extends AbstractCircuitTool {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		Circuit circuit = circuitEditor.getCircuit();
-		CircuitView circuitView = circuitEditor.getCircuitView();
-		Gate gate = new LogicCell(gateType);
-		GateView gateView = new LogicCellView(new Point(arg0.getX(), arg0.getY()), gate);
-		circuit.addGate(gate);
-		circuitView.addGateView(gateView);
-		circuitEditor.updateSize();
-		circuitEditor.repaint();
+		if (canPlace) {
+			Circuit circuit = circuitEditor.getCircuit();
+			CircuitView circuitView = circuitEditor.getCircuitView();
+			Gate gate = new LogicCell(gateType);
+			Point toPoint = new Point(arg0.getX() - gateView.getWidth(), arg0.getY() - gateView.getHeight());
+			GateView gateView = new LogicCellView(toPoint, gate);
+			circuit.addGate(gate);
+			circuitView.addGateView(gateView);
+			circuitEditor.updateSize();
+			circuitEditor.repaint();
+			canPlace = false;
+		}
 	}
 
 	@Override
@@ -79,8 +84,16 @@ public class GateCreator extends AbstractCircuitTool {
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		gateView.setPosition(arg0.getPoint());
+		Point toPoint = new Point(arg0.getX() - gateView.getWidth(), arg0.getY() - gateView.getHeight());
+		gateView.setPosition(toPoint);
 		circuitEditor.repaint();
+		if (arg0.getX() - gateView.getWidth() < 0 || arg0.getY() - gateView.getHeight() < 0) {
+			canPlace = false;
+			drawFantom = false;
+		} else {
+			canPlace = true;
+			drawFantom = true;
+		}
 	}
 	
 	public void paint(Graphics g) {

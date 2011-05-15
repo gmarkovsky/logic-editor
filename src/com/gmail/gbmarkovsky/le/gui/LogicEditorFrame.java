@@ -15,11 +15,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
+import com.gmail.gbmarkovsky.le.exec.CircuitExecutor;
+import com.gmail.gbmarkovsky.le.exec.Task;
 import com.gmail.gbmarkovsky.le.io.CircuitLoadException;
 import com.gmail.gbmarkovsky.le.io.CircuitSerializer;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
@@ -38,6 +39,8 @@ public class LogicEditorFrame extends JFrame {
 	private File currentDirectory;
 	
 	private CircuitEditorPanel editorPanel;
+	
+	private CircuitExecutor circuitExecutor;
 	
 	public LogicEditorFrame() {
 		setTitle(TITLE);
@@ -205,11 +208,69 @@ public class LogicEditorFrame extends JFrame {
 				LogicEditorFrame.this.setTitle(currentDirectory.getAbsolutePath());
 			}
 		});
+		
+		JMenuItem miCheck = new JMenuItem("Проверить");
+		miCheck.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (circuitExecutor == null) {
+					File file = null;
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.addChoosableFileFilter(new XmlFileFilter());
+					fileChooser.setCurrentDirectory(currentDirectory);
+					int returnVal = fileChooser.showOpenDialog(LogicEditorFrame.this);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						file = fileChooser.getSelectedFile();
+					} else {
+						return;
+					}
+					Task task = new Task(file.getAbsolutePath());
+					circuitExecutor = new CircuitExecutor(task);
+				}
+				if  (circuitExecutor.execute(editorPanel.getCircuitEditor().getCircuit())) {
+					JOptionPane.showMessageDialog(LogicEditorFrame.this, "Схема верна");
+				} else {
+					JOptionPane.showMessageDialog(LogicEditorFrame.this, "Схема неверна");
+				}
+			}
+		});
+		
+		JMenuItem miCheckFrom = new JMenuItem("Проверить...");
+		miCheckFrom.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				File file = null;
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.addChoosableFileFilter(new XmlFileFilter());
+				fileChooser.setCurrentDirectory(currentDirectory);
+				int returnVal = fileChooser.showOpenDialog(LogicEditorFrame.this);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					file = fileChooser.getSelectedFile();
+				} else {
+					return;
+				}
+				Task task = new Task(file.getAbsolutePath());
+				circuitExecutor = new CircuitExecutor(task);
+				if  (circuitExecutor.execute(editorPanel.getCircuitEditor().getCircuit())) {
+					JOptionPane.showMessageDialog(LogicEditorFrame.this, "Схема верна");
+				} else {
+					JOptionPane.showMessageDialog(LogicEditorFrame.this, "Схема неверна");
+				}
+			}
+		});
+		
+		
+		
 		mFile.add(miNew);
 		mFile.add(miOpen);
 		mFile.add(miSave);
 		mFile.add(miSaveAs);
-		mFile.add(new JSeparator());
+		mFile.addSeparator();
+		mFile.add(miCheck); miCheck.setEnabled(false);
+		mFile.add(miCheckFrom); miCheckFrom.setEnabled(false);
+		mFile.addSeparator();
 		mFile.add(miExit);
 		menuBar.add(mFile);
 		
