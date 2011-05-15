@@ -1,10 +1,15 @@
 package com.gmail.gbmarkovsky.le.tools;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
@@ -76,21 +81,32 @@ public class ElementSelector extends AbstractCircuitTool {
 	}
 
 	public void paint(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		
 		List<ElementView> selectedElements = circuitEditor.getSelectedElements();
 		for (ElementView selectedElement: selectedElements) {
-			g.setColor(Color.red);
+			g.setColor(new Color(250, 75, 75));
 			if (selectedElement instanceof ConnectorView) {
-				g.drawOval(selectedElement.getPosition().x - 1, selectedElement.getPosition().y - 1, 
+				g2.drawOval(selectedElement.getPosition().x - 1, selectedElement.getPosition().y - 1, 
 						selectedElement.getWidth() + 2, selectedElement.getHeight() + 2);
 			} else {
-				g.drawRect(selectedElement.getPosition().x - 1, selectedElement.getPosition().y - 1, 
+				g2.drawRect(selectedElement.getPosition().x - 1, selectedElement.getPosition().y - 1, 
 						selectedElement.getWidth() + 2, selectedElement.getHeight() + 2);
 			}
 		}
 		if (basePoint != null) {
 			Rectangle rect = normalizeRect(basePoint, currentPoint);
-			g.setColor(Color.blue);
-			g.drawRect(rect.x, rect.y, rect.width, rect.height);
+			
+			g2.setColor(new Color(134, 171, 217, 45));
+			g2.fillRect(rect.x, rect.y, rect.width, rect.height);
+			
+			g2.setColor(new Color(134, 171, 217));
+			Stroke tmpStroke = g2.getStroke();
+			Stroke stroke = new BasicStroke(1.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+			g2.setStroke(stroke);
+			g2.draw(new Rectangle2D.Double(rect.x, rect.y, rect.width, rect.height));
+			g2.setStroke(tmpStroke);
 		}
 	}
 	

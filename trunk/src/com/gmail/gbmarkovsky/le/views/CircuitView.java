@@ -12,7 +12,6 @@ import com.gmail.gbmarkovsky.le.circuit.Circuit;
 import com.gmail.gbmarkovsky.le.elements.Connector;
 import com.gmail.gbmarkovsky.le.elements.Connector.ConnectorType;
 import com.gmail.gbmarkovsky.le.elements.Element;
-import com.gmail.gbmarkovsky.le.elements.Gate;
 import com.gmail.gbmarkovsky.le.elements.Wire;
 
 /**
@@ -22,7 +21,7 @@ import com.gmail.gbmarkovsky.le.elements.Wire;
  */
 public class CircuitView implements PropertyChangeListener {
 	private Circuit circuit;
-	private HashMap<Gate, GateView> gateViews = new HashMap<Gate, GateView>();
+	//private HashMap<Gate, GateView> gateViews = new HashMap<Gate, GateView>();
 	private HashMap<Connector, ConnectorView> inputViews = new HashMap<Connector, ConnectorView>();
 	private HashMap<Connector, ConnectorView> outputViews = new HashMap<Connector, ConnectorView>();
 	private HashMap<Wire, WireView> wireViews = new HashMap<Wire, WireView>();
@@ -37,9 +36,9 @@ public class CircuitView implements PropertyChangeListener {
 	}
 	
 	public void paint(Graphics g) {
-		for (GateView gv: gateViews.values()) {
-			gv.paint(g);
-		}
+		//for (GateView gv: gateViews.values()) {
+		//	gv.paint(g);
+		//}
 		for (ConnectorView iv: inputViews.values()) {
 			iv.paint(g);
 		}
@@ -49,15 +48,15 @@ public class CircuitView implements PropertyChangeListener {
 		for (WireView wv: wireViews.values()) {
 			wv.paint(g);
 		}
-//		for (ElementView ew: elementViews.values()) {
-//			ew.paint(g);
-//		}
+		for (ElementView ew: elementViews.values()) {
+			ew.paint(g);
+		}
 	}
 
-	public void addGateView(GateView gateView) {
-		gateViews.put(gateView.getGate(), gateView);
-		addElementView(gateView);
-	}
+	//public void addGateView(GateView gateView) {
+	//	gateViews.put(gateView.getGate(), gateView);
+	//	addElementView(gateView);
+	//}
 	
 	public void addInputView(ConnectorView inputView) {
 		inputViews.put((Connector) inputView.getElement(), inputView);
@@ -78,7 +77,12 @@ public class CircuitView implements PropertyChangeListener {
 	}
 	
 	public ElementView getElementViewForLocation(Point location) {
-		for (GateView gv: gateViews.values()) {
+		//for (GateView gv: gateViews.values()) {
+		//	if (gv.isPointInsideView(location)) {
+		//		return gv;
+		//	}
+		//}
+		for (ElementView gv: elementViews.values()) {
 			if (gv.isPointInsideView(location)) {
 				return gv;
 			}
@@ -97,7 +101,13 @@ public class CircuitView implements PropertyChangeListener {
 	}
 	
 	public PinView getPinViewForLocation(Point location) {
-		for (GateView gv: gateViews.values()) {
+		//for (GateView gv: gateViews.values()) {
+		//	PinView pv = gv.getPinViewForLocation(location);
+		//	if (pv != null) {
+		//		return pv;
+		//	}
+		//}
+		for (ElementView gv: elementViews.values()) {
 			PinView pv = gv.getPinViewForLocation(location);
 			if (pv != null) {
 				return pv;
@@ -130,9 +140,10 @@ public class CircuitView implements PropertyChangeListener {
 	
 	public List<ElementView> getElements() {
 		ArrayList<ElementView> list = new ArrayList<ElementView>();
-		list.addAll(gateViews.values());
+		//list.addAll(gateViews.values());
 		list.addAll(inputViews.values());
 		list.addAll(outputViews.values());
+		list.addAll(elementViews.values());
 		return list;
 	}
 	
@@ -156,7 +167,8 @@ public class CircuitView implements PropertyChangeListener {
 				circuit.deleteOutput((Connector) elementView.getElement());
 			}
 		} else {
-			gateViews.remove(elementView.getElement());
+			//gateViews.remove(elementView.getElement());
+			elementViews.remove(elementView.getElement());
 			circuit.deleteElement(elementView.getElement());
 		}
 	}

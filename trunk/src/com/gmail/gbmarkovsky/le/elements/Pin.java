@@ -127,6 +127,9 @@ public class Pin {
 			if (element instanceof Connector) {
 				((Connector) element).execute();
 			}
+			if (element instanceof SevenSegmentsIndicator) {
+				((SevenSegmentsIndicator) element).execute();
+			}
 		//}
 	}
 }

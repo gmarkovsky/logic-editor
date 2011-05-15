@@ -118,7 +118,7 @@ public class WireChanger extends AbstractCircuitTool {
 		if (startPin != null) {
 			Graphics2D g2 = (Graphics2D) g;
 			if (startPin.getPin().getSignal() == Signal.TRUE) {
-				g2.setColor(new Color(86, 193, 69));
+				g2.setColor(new Color(147, 205, 90));
 			} else if (startPin.getPin().getSignal() == Signal.FALSE) {
 				g2.setColor(Color.gray);
 			}

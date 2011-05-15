@@ -133,7 +133,7 @@ public class PinView {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		if (pin.getSignal() == Signal.TRUE) {
-			g2.setColor(new Color(86, 193, 69));
+			g2.setColor(new Color(147, 205, 90));
 		} else if (pin.getSignal() == Signal.FALSE) {
 			g2.setColor(new Color(128, 128, 128, alpha));
 		}

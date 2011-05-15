@@ -40,8 +40,10 @@ public class CircuitEditor extends JComponent {
 		setDoubleBuffered(true);
 		setBackground(Color.white);
 		setForeground(Color.white);
+//		SevenSegmentsIndicator indicator = new SevenSegmentsIndicator();
+//		circuit.addElement(indicator);
 //		circuitView.addElementView(new SevenSegmentsIndicatorView(new Point(40, 50),
-//				new SevenSegmentsIndicator()));
+//				indicator));
 	}
 
 	public void setSelectedElement(ElementView selectedElement) {
