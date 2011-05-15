@@ -13,8 +13,11 @@ import java.util.List;
 public interface Element {
 	public List<Pin> getInputs();
 	public List<Pin> getOutputs();
-	public GateType getType();
 	public int getInputIndex(Pin pin);
 	public Pin getInput(int index);
-	public Pin getOutput();
+	public int getOutputIndex(Pin pin);
+	public Pin getOutput(int index);
+	public Object getType();
+	//public Pin getOutput();
+	//public GateType getType();
 }

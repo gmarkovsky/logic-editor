@@ -10,46 +10,47 @@ import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
 
 import com.gmail.gbmarkovsky.le.circuit.Signal;
+import com.gmail.gbmarkovsky.le.elements.Connector;
+import com.gmail.gbmarkovsky.le.elements.Connector.ConnectorType;
 import com.gmail.gbmarkovsky.le.elements.Element;
-import com.gmail.gbmarkovsky.le.elements.Output;
 import com.gmail.gbmarkovsky.le.elements.Pin;
 
-public class OutputView implements ElementView {
+public class ConnectorView implements ElementView {
 	private static final int HEIGHT = 16;
 	private static final int WIDTH = 16;
 	private Point position;
-	private PinView inPin;
-	private Output output;
+	private PinView pin;
+	private Connector connector;
 	
 	private int alpha = 255;
 	
-	public OutputView(Point position, Output output) {
-		this.output = output;
-		this.inPin = new PinView(new Point(), this.output.getPin());
+	public ConnectorView(Point position, Connector connector) {
+		this.connector = connector;
+		if (connector.getType().equals(ConnectorType.INPUT)) {
+			this.pin = new PinView(new Point(), this.connector.getOutput(0));
+		} else if (connector.getType().equals(ConnectorType.OUTPUT)) {
+			this.pin = new PinView(new Point(), this.connector.getInput(0));
+		}
 		setPosition(position);
 	}
 	
 	public void setPosition(Point position) {
 		this.position = position;
-		inPin.setPosition(new Point(position.x, position.y + HEIGHT/2));
+		if (connector.getType().equals(ConnectorType.INPUT)) {
+			pin.setPosition(new Point(position.x + WIDTH + 1, position.y + HEIGHT/2));
+		} else if (connector.getType().equals(ConnectorType.OUTPUT)) {
+			pin.setPosition(new Point(position.x, position.y + HEIGHT/2));
+		}
 	}
-	
-	public PinView getOutput() {
-		return null;
-	}
-	
-	public Output getOutputE() {
-		return output;
-	}
-	
+
 	/**
 	 * Возвращает PinView включающий точку <code>location</code>.
 	 * @param location точка
 	 * @return PinView под точкой <code>location</code>, если такого нет, то null
 	 */
 	public PinView getPinViewForLocation(Point location) {
-		if (inPin.isPointOnPin(location)) {
-			return inPin;
+		if (pin.isPointOnPin(location)) {
+			return pin;
 		}
 		return null;
 	}
@@ -58,16 +59,18 @@ public class OutputView implements ElementView {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		inPin.paint(g);
+		pin.paint(g2);
 		
 		Stroke tmpStroke = g2.getStroke();
         BasicStroke stroke = new BasicStroke(3.0f);
         g2.setStroke(stroke);
-        if (output.getSignal() == Signal.TRUE) {
+        
+        if (connector.getSignal() == Signal.TRUE) {
 			g2.setColor(new Color(86, 193, 69));
-		} else if (output.getSignal() == Signal.FALSE) {
+		} else if (connector.getSignal() == Signal.FALSE) {
 			g2.setColor(new Color(255, 255, 255, alpha));
 		}
+        
 		g2.fill(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT)  );
 		g2.setColor(new Color(0, 0, 0, alpha));
 		g2.draw(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT));
@@ -117,7 +120,7 @@ public class OutputView implements ElementView {
 
 	@Override
 	public Element getElement() {
-		return output;
+		return connector;
 	}
 
 	@Override
@@ -131,15 +134,34 @@ public class OutputView implements ElementView {
 
 	@Override
 	public PinView getInputPinView(Pin pin) {
-		if (pin == inPin.getPin()) {
-			return inPin;
-		}
-		return null;
+		return (connector.getType().equals(ConnectorType.OUTPUT)) ?this.pin:null;
+		//throw new RuntimeException("Can't get input pin view for inputview");
+	}
+
+	public PinView getPin() {
+		return pin;
 	}
 
 	@Override
 	public void setFantom() {
 		alpha = 128;
-		inPin.setFantom();
+		pin.setFantom();
+	}
+	
+	public void switchSignal() {
+		if (connector.getSignal() == Signal.TRUE) {
+			connector.setSignal(Signal.FALSE);
+		} else if (connector.getSignal() == Signal.FALSE) {
+			connector.setSignal(Signal.TRUE);
+		}
+	}
+
+	public ConnectorType getType() {
+		return connector.getType();
+	}
+
+	@Override
+	public PinView getOutputPinView(Pin pin) {
+		return (connector.getType().equals(ConnectorType.INPUT)) ?this.pin:null;
 	}
 }

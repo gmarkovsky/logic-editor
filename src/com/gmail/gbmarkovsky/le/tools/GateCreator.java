@@ -7,11 +7,9 @@ import java.awt.event.MouseEvent;
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
 import com.gmail.gbmarkovsky.le.elements.Gate;
 import com.gmail.gbmarkovsky.le.elements.GateType;
-import com.gmail.gbmarkovsky.le.elements.LogicCell;
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 import com.gmail.gbmarkovsky.le.views.GateView;
-import com.gmail.gbmarkovsky.le.views.LogicCellView;
 
 /**
  * Предназначен для создания логических элементов в ответ на действия пользователя.
@@ -27,8 +25,8 @@ public class GateCreator extends AbstractCircuitTool {
 	public GateCreator(CircuitEditor circuitEditor, GateType gateType) {
 		super(circuitEditor);
 		this.gateType = gateType;
-		Gate gate = new LogicCell(this.gateType);
-		gateView = new LogicCellView(new Point(0, 0), gate);
+		Gate gate = new Gate(this.gateType);
+		gateView = new GateView(new Point(0, 0), gate);
 		gateView.setFantom();
 	}
 	
@@ -45,10 +43,10 @@ public class GateCreator extends AbstractCircuitTool {
 		if (canPlace) {
 			Circuit circuit = circuitEditor.getCircuit();
 			CircuitView circuitView = circuitEditor.getCircuitView();
-			Gate gate = new LogicCell(gateType);
+			Gate gate = new Gate(gateType);
 			Point toPoint = new Point(arg0.getX() - gateView.getWidth(), arg0.getY() - gateView.getHeight());
-			GateView gateView = new LogicCellView(toPoint, gate);
-			circuit.addGate(gate);
+			GateView gateView = new GateView(toPoint, gate);
+			circuit.addElement(gate);
 			circuitView.addGateView(gateView);
 			circuitEditor.updateSize();
 			circuitEditor.repaint();

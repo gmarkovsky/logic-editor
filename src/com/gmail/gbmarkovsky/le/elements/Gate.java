@@ -1,16 +1,45 @@
 package com.gmail.gbmarkovsky.le.elements;
 
-import java.util.ArrayList;
+import com.gmail.gbmarkovsky.le.circuit.Signal;
+
 
 /**
- * Логический элемент схемы.
+ * Реализация логического элемента.
  * @author george
  *
  */
-public interface Gate extends Element {
+public class Gate extends AbstractElement {
+	protected GateType type;
 
-	public GateType getType();
-	public Pin getOutput();
-	public ArrayList<Pin> getInputs();
-	public void execute();
+	public Gate(GateType type) {
+		super(type.getInputCount(), type.getOutputCount());
+		this.type = type;
+	}
+	
+	public GateType getType() {
+		return type;
+	}
+	
+	public void execute() {
+		if (type == GateType.AND) {
+			Signal result = Signal.TRUE;
+			for(Pin pin : inputs) {
+				if (pin.getSignal() == Signal.FALSE) {
+					result = Signal.FALSE;
+					break;
+				}
+			}
+			outputs.get(0).setSignal(result);
+		} else if (type == GateType.OR) {
+			Signal result = Signal.FALSE;
+			for(Pin pin : inputs) {
+				if (pin.getSignal() == Signal.TRUE) {
+					result = Signal.TRUE;
+				}
+			}
+			outputs.get(0).setSignal(result);
+		} else if (type == GateType.NOT) {
+			outputs.get(0).setSignal(Signal.not(inputs.get(0).getSignal()));
+		}
+	}
 }

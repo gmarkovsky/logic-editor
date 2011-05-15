@@ -124,8 +124,8 @@ public class Pin {
 			if (element instanceof Gate && type == PinType.INPUT) {
 				((Gate) element).execute();
 			}
-			if (element instanceof Output) {
-				((Output) element).execute();
+			if (element instanceof Connector) {
+				((Connector) element).execute();
 			}
 		//}
 	}

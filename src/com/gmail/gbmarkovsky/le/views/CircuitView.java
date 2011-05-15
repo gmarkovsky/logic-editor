@@ -9,10 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
+import com.gmail.gbmarkovsky.le.elements.Connector;
+import com.gmail.gbmarkovsky.le.elements.Connector.ConnectorType;
 import com.gmail.gbmarkovsky.le.elements.Element;
 import com.gmail.gbmarkovsky.le.elements.Gate;
-import com.gmail.gbmarkovsky.le.elements.Input;
-import com.gmail.gbmarkovsky.le.elements.Output;
 import com.gmail.gbmarkovsky.le.elements.Wire;
 
 /**
@@ -23,8 +23,8 @@ import com.gmail.gbmarkovsky.le.elements.Wire;
 public class CircuitView implements PropertyChangeListener {
 	private Circuit circuit;
 	private HashMap<Gate, GateView> gateViews = new HashMap<Gate, GateView>();
-	private HashMap<Input, InputView> inputViews = new HashMap<Input, InputView>();
-	private HashMap<Output, OutputView> outputViews = new HashMap<Output, OutputView>();
+	private HashMap<Connector, ConnectorView> inputViews = new HashMap<Connector, ConnectorView>();
+	private HashMap<Connector, ConnectorView> outputViews = new HashMap<Connector, ConnectorView>();
 	private HashMap<Wire, WireView> wireViews = new HashMap<Wire, WireView>();
 	private HashMap<Element, ElementView> elementViews = new HashMap<Element, ElementView>();
 	
@@ -40,10 +40,10 @@ public class CircuitView implements PropertyChangeListener {
 		for (GateView gv: gateViews.values()) {
 			gv.paint(g);
 		}
-		for (InputView iv: inputViews.values()) {
+		for (ConnectorView iv: inputViews.values()) {
 			iv.paint(g);
 		}
-		for (OutputView ov: outputViews.values()) {
+		for (ConnectorView ov: outputViews.values()) {
 			ov.paint(g);
 		}
 		for (WireView wv: wireViews.values()) {
@@ -59,13 +59,13 @@ public class CircuitView implements PropertyChangeListener {
 		addElementView(gateView);
 	}
 	
-	public void addInputView(InputView inputView) {
-		inputViews.put(inputView.getInput(), inputView);
+	public void addInputView(ConnectorView inputView) {
+		inputViews.put((Connector) inputView.getElement(), inputView);
 		addElementView(inputView);
 	}
 	
-	public void addOutputView(OutputView outputView) {
-		outputViews.put(outputView.getOutputE(), outputView);
+	public void addOutputView(ConnectorView outputView) {
+		outputViews.put((Connector) outputView.getElement(), outputView);
 		addElementView(outputView);
 	}
 	
@@ -83,12 +83,12 @@ public class CircuitView implements PropertyChangeListener {
 				return gv;
 			}
 		}
-		for (InputView iv: inputViews.values()) {
+		for (ConnectorView iv: inputViews.values()) {
 			if (iv.isPointInsideView(location)) {
 				return iv;
 			}
 		}
-		for (OutputView ov: outputViews.values()) {
+		for (ConnectorView ov: outputViews.values()) {
 			if (ov.isPointInsideView(location)) {
 				return ov;
 			}
@@ -103,13 +103,13 @@ public class CircuitView implements PropertyChangeListener {
 				return pv;
 			}
 		}
-		for (InputView iv: inputViews.values()) {
+		for (ConnectorView iv: inputViews.values()) {
 			PinView pv = iv.getPinViewForLocation(location);
 			if (pv != null) {
 				return pv;
 			}
 		}
-		for (OutputView ov: outputViews.values()) {
+		for (ConnectorView ov: outputViews.values()) {
 			PinView pv = ov.getPinViewForLocation(location);
 			if (pv != null) {
 				return pv;
@@ -146,15 +146,18 @@ public class CircuitView implements PropertyChangeListener {
 	
 	public void deleteElementView(ElementView elementView) {
 		elementViews.remove(elementView.getElement());
-		if (elementView instanceof InputView) {
-			inputViews.remove(elementView.getElement());
-			circuit.deleteInput((Input) elementView.getElement());
-		} else if (elementView instanceof OutputView) {
-			outputViews.remove(elementView.getElement());
-			circuit.deleteOutput((Output) elementView.getElement());
+		if (elementView instanceof ConnectorView) {
+			ConnectorView connectorView = (ConnectorView) elementView;
+			if (connectorView.getType().equals(ConnectorType.INPUT)) {
+				inputViews.remove(elementView.getElement());
+				circuit.deleteInput((Connector) elementView.getElement());
+			} else if (connectorView.getType().equals(ConnectorType.OUTPUT)) {
+				outputViews.remove(elementView.getElement());
+				circuit.deleteOutput((Connector) elementView.getElement());
+			}
 		} else {
 			gateViews.remove(elementView.getElement());
-			circuit.deleteGate((Gate) elementView.getElement());
+			circuit.deleteElement(elementView.getElement());
 		}
 	}
 

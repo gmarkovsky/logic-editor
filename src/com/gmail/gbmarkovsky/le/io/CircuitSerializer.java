@@ -26,20 +26,16 @@ import org.w3c.dom.ls.LSParser;
 import org.w3c.dom.ls.LSSerializer;
 
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
+import com.gmail.gbmarkovsky.le.elements.Connector;
 import com.gmail.gbmarkovsky.le.elements.Element;
 import com.gmail.gbmarkovsky.le.elements.Gate;
 import com.gmail.gbmarkovsky.le.elements.GateType;
-import com.gmail.gbmarkovsky.le.elements.Input;
-import com.gmail.gbmarkovsky.le.elements.LogicCell;
-import com.gmail.gbmarkovsky.le.elements.Output;
 import com.gmail.gbmarkovsky.le.elements.Pin;
 import com.gmail.gbmarkovsky.le.elements.Wire;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
+import com.gmail.gbmarkovsky.le.views.ConnectorView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
 import com.gmail.gbmarkovsky.le.views.GateView;
-import com.gmail.gbmarkovsky.le.views.InputView;
-import com.gmail.gbmarkovsky.le.views.LogicCellView;
-import com.gmail.gbmarkovsky.le.views.OutputView;
 import com.gmail.gbmarkovsky.le.views.WireView;
 
 public class CircuitSerializer {
@@ -121,7 +117,7 @@ public class CircuitSerializer {
 		//Запись входов
 		org.w3c.dom.Element inputs = doc.createElement("inputs");
 		root.appendChild(inputs);
-		for (Input cinput: circuit.getInputs()) {
+		for (Connector cinput: circuit.getInputs()) {
 			gateToIdMap.put(cinput, currentId);
 			org.w3c.dom.Element input = doc.createElement("input");
 			input.setAttribute("id", Integer.toString(currentId));
@@ -137,7 +133,7 @@ public class CircuitSerializer {
 		//Запись выходов
 		org.w3c.dom.Element outputs = doc.createElement("outputs");
 		root.appendChild(outputs);
-		for (Output coutput: circuit.getOutputs()) {
+		for (Connector coutput: circuit.getOutputs()) {
 			gateToIdMap.put(coutput, currentId);
 			org.w3c.dom.Element output = doc.createElement("output");
 			output.setAttribute("id", Integer.toString(currentId));
@@ -158,6 +154,7 @@ public class CircuitSerializer {
 			wire.setAttribute("start", gateToIdMap.get(cwire.getStart().getElement()).toString());
 			wire.setAttribute("end", gateToIdMap.get(cwire.getEnd().getElement()).toString());
 			wire.setAttribute("inputIndex", Integer.toString(cwire.getEnd().getElement().getInputIndex(cwire.getEnd())));
+			wire.setAttribute("outputIndex", Integer.toString(cwire.getStart().getElement().getOutputIndex(cwire.getStart())));
 			wires.appendChild(wire);
 		}
 		return doc;
@@ -204,12 +201,12 @@ public class CircuitSerializer {
 			int x = Integer.parseInt(view.getAttribute("x"));
 			int y = Integer.parseInt(view.getAttribute("y"));
 			
-			Gate gate = new LogicCell(gateType);
-			GateView gateView = new LogicCellView(new Point(x, y), gate);
+			Gate gate = new Gate(gateType);
+			GateView gateView = new GateView(new Point(x, y), gate);
 			
 			idToElementMap.put(id, gate);
 			
-			circuit.addGate(gate);
+			circuit.addElement(gate);
 			circuitView.addGateView(gateView);
 		}
 		
@@ -223,8 +220,8 @@ public class CircuitSerializer {
 			int x = Integer.parseInt(view.getAttribute("x"));
 			int y = Integer.parseInt(view.getAttribute("y"));
 			
-			Input input = new Input();
-			InputView inputView = new InputView(new Point(x, y), input);
+			Connector input = Connector.createInput();
+			ConnectorView inputView = new ConnectorView(new Point(x, y), input);
 			
 			idToElementMap.put(id, input);
 			
@@ -243,8 +240,8 @@ public class CircuitSerializer {
 			int x = Integer.parseInt(view.getAttribute("x"));
 			int y = Integer.parseInt(view.getAttribute("y"));
 			
-			Output output = new Output();
-			OutputView outputView = new OutputView(new Point(x, y), output);
+			Connector output = Connector.createOutput();
+			ConnectorView outputView = new ConnectorView(new Point(x, y), output);
 			
 			idToElementMap.put(id, output);
 			
@@ -259,18 +256,19 @@ public class CircuitSerializer {
 			int start = Integer.parseInt(element.getAttribute("start"));
 			int end = Integer.parseInt(element.getAttribute("end"));
 			int inpIndex = Integer.parseInt(element.getAttribute("inputIndex"));
+			int outIndex = Integer.parseInt(element.getAttribute("outputIndex"));
 			
 			Element startElement = idToElementMap.get(start);
 			Element endElement = idToElementMap.get(end);
 			
-			Pin startPin = startElement.getOutput();
+			Pin startPin = startElement.getOutput(outIndex);
 			Pin endPin = endElement.getInput(inpIndex);
 			
 			ElementView startElementView = circuitView.getElementView(startElement);
 			ElementView endElementView = circuitView.getElementView(endElement);
 			
 			Wire wire = new Wire(startPin, endPin);
-			WireView wireView = new WireView(wire, startElementView.getOutput(), endElementView.getInputPinView(endPin));
+			WireView wireView = new WireView(wire, startElementView.getOutputPinView(startPin), endElementView.getInputPinView(endPin));
 			circuit.addWire(wire);
 			circuitView.addWireView(wireView);
 		}

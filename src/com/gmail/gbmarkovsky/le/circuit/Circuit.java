@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.gmail.gbmarkovsky.le.elements.Gate;
-import com.gmail.gbmarkovsky.le.elements.Input;
-import com.gmail.gbmarkovsky.le.elements.Output;
+import com.gmail.gbmarkovsky.le.elements.Connector;
+import com.gmail.gbmarkovsky.le.elements.Element;
 import com.gmail.gbmarkovsky.le.elements.Pin;
 import com.gmail.gbmarkovsky.le.elements.Wire;
 
@@ -20,9 +19,9 @@ import com.gmail.gbmarkovsky.le.elements.Wire;
 public class Circuit {
 	public static final String WIRE_DELETE = "wireDelete";
 	
-	private Collection<Gate> gates = new ArrayList<Gate>();
-	private Collection<Input> inputs = new ArrayList<Input>();
-	private Collection<Output> outputs = new ArrayList<Output>();
+	private Collection<Element> elements = new ArrayList<Element>();
+	private List<Connector> inputs = new ArrayList<Connector>();
+	private List<Connector> outputs = new ArrayList<Connector>();
 	private Collection<Wire> wires = new ArrayList<Wire>();
 	
 	private PropertyChangeSupport propertyChangeSupport;
@@ -31,15 +30,15 @@ public class Circuit {
 		propertyChangeSupport = new PropertyChangeSupport(this);
 	}
 	
-	public void addGate(Gate gate) {
-		gates.add(gate);
+	public void addElement(Element element) {
+		elements.add(element);
 	}
 	
-	public void addInput(Input input) {
+	public void addInput(Connector input) {
 		inputs.add(input);
 	}
 	
-	public void addOutput(Output output) {
+	public void addOutput(Connector output) {
 		outputs.add(output);
 	}
 	
@@ -52,10 +51,12 @@ public class Circuit {
 	 * @param gate
 	 * @return <code>true</code> если такой гейт есть в схеме, иначе <code>false</code>
 	 */
-	public boolean deleteGate(Gate gate) {
+	public boolean deleteElement(Element element) {
 		List<Wire> wiresToDisconnect = new ArrayList<Wire>();
-		wiresToDisconnect.addAll(gate.getOutput().getWires());
-		for (Pin pin: gate.getInputs()) {
+		for (Pin pin: element.getOutputs()) {
+			wiresToDisconnect.addAll(pin.getWires());
+		}
+		for (Pin pin: element.getInputs()) {
 			wiresToDisconnect.addAll(pin.getWires());
 		}
 		for (Wire wire: wiresToDisconnect) {
@@ -63,7 +64,7 @@ public class Circuit {
 			wire.disconnect();
 			firePropertyChange(WIRE_DELETE, wire, null);
 		}
-		return gates.remove(gate);
+		return elements.remove(element);
 	}
 	
 	/**
@@ -71,8 +72,8 @@ public class Circuit {
 	 * @param gate
 	 * @return <code>true</code> если такой вход есть в схеме, иначе <code>false</code>
 	 */
-	public boolean deleteInput(Input input) {
-		List<Wire> wiresToDisconnect = new ArrayList<Wire>(input.getPin().getWires());
+	public boolean deleteInput(Connector input) {
+		List<Wire> wiresToDisconnect = new ArrayList<Wire>(input.getOutputs().get(0).getWires());
 		for (Wire wire: wiresToDisconnect) {
 			wires.remove(wire);
 			wire.disconnect();
@@ -86,8 +87,8 @@ public class Circuit {
 	 * @param gate
 	 * @return <code>true</code> если такой выход есть в схеме, иначе <code>false</code>
 	 */
-	public boolean deleteOutput(Output output) {
-		List<Wire> wiresToDisconnect = new ArrayList<Wire>(output.getPin().getWires());
+	public boolean deleteOutput(Connector output) {
+		List<Wire> wiresToDisconnect = new ArrayList<Wire>(output.getInputs().get(0).getWires());
 		for (Wire wire: wiresToDisconnect) {
 			wires.remove(wire);
 			wire.disconnect();
@@ -96,15 +97,15 @@ public class Circuit {
 		return outputs.remove(output);
 	}
 	
-	public Collection<Gate> getGates() {
-		return gates;
+	public Collection<Element> getGates() {
+		return elements;
 	}
 
-	public Collection<Input> getInputs() {
+	public List<Connector> getInputs() {
 		return inputs;
 	}
 
-	public Collection<Output> getOutputs() {
+	public List<Connector> getOutputs() {
 		return outputs;
 	}
 

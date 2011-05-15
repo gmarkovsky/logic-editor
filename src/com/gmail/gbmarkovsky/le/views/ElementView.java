@@ -16,9 +16,9 @@ public interface ElementView {
 	public PinView getPinViewForLocation(Point location);
 	public boolean isPointInsideView(Point point);
 	public boolean isInsideRect(Point p, int w, int h);
-	public void paint(Graphics g);
 	public Element getElement();
 	public PinView getInputPinView(Pin pin);
-	public PinView getOutput();
+	public PinView getOutputPinView(Pin pin);
 	public void setFantom();
+	public void paint(Graphics g);
 }

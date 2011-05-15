@@ -125,6 +125,7 @@ public class LogicEditorFrame extends JFrame {
 							"Ошибка", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				circuitView.getCircuit().addPropertyChangeListener(circuitView);
 				editorPanel.getCircuitEditor().setCircuit(circuitView.getCircuit());
 				editorPanel.getCircuitEditor().setCircuitView(circuitView);
 				editorPanel.getCircuitEditor().repaint();
@@ -260,8 +261,6 @@ public class LogicEditorFrame extends JFrame {
 				}
 			}
 		});
-		
-		
 		
 		mFile.add(miNew);
 		mFile.add(miOpen);
