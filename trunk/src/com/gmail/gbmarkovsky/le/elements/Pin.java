@@ -112,9 +112,9 @@ public class Pin {
 	}
 
 	public void setSignal(Signal signal) {
-		if (this.signal == signal) {
-			return;
-		} else {
+		//if (this.signal == signal) {
+			//return;
+		//} else {
 			this.signal = signal;
 			if (type == PinType.OUTPUT) {
 				for(Wire wire : wires) {
@@ -127,6 +127,6 @@ public class Pin {
 			if (element instanceof Output) {
 				((Output) element).execute();
 			}
-		}
+		//}
 	}
 }

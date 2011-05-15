@@ -13,6 +13,7 @@ import com.gmail.gbmarkovsky.le.views.OutputView;
 public class OutputCreator extends AbstractCircuitTool {
 	private OutputView outputView;
 	private boolean drawFantom;
+	private boolean canPlace = true;
 	
 	public OutputCreator(CircuitEditor circuitEditor) {
 		super(circuitEditor);
@@ -22,14 +23,18 @@ public class OutputCreator extends AbstractCircuitTool {
 	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		Circuit circuit = circuitEditor.getCircuit();
-		CircuitView circuitView = circuitEditor.getCircuitView();
-		Output output = new Output();
-		OutputView outputView = new OutputView(new Point(arg0.getX(), arg0.getY()), output);
-		circuit.addOutput(output);
-		circuitView.addOutputView(outputView);
-		circuitEditor.updateSize();
-		circuitEditor.repaint();
+		if (canPlace) {
+			Circuit circuit = circuitEditor.getCircuit();
+			CircuitView circuitView = circuitEditor.getCircuitView();
+			Output output = new Output();
+			Point toPoint = new Point(arg0.getX() - outputView.getWidth(), arg0.getY() - outputView.getHeight());
+			OutputView outputView = new OutputView(toPoint, output);
+			circuit.addOutput(output);
+			circuitView.addOutputView(outputView);
+			circuitEditor.updateSize();
+			circuitEditor.repaint();
+			canPlace = false;
+		}
 	}
 
 	@Override
@@ -60,8 +65,16 @@ public class OutputCreator extends AbstractCircuitTool {
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		outputView.setPosition(arg0.getPoint());
+		Point toPoint = new Point(arg0.getX() - outputView.getWidth(), arg0.getY() - outputView.getHeight());
+		outputView.setPosition(toPoint);
 		circuitEditor.repaint();
+		if (arg0.getX() - outputView.getWidth() < 0 || arg0.getY() - outputView.getHeight() < 0) {
+			canPlace = false;
+			drawFantom = false;
+		} else {
+			canPlace = true;
+			drawFantom = true;
+		}
 	}
 
 	@Override
