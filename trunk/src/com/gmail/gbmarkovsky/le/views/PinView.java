@@ -142,7 +142,6 @@ public class PinView {
 				center.y - PIN_HEIGHT/2,
 				PIN_WIDTH, PIN_HEIGHT,
                 2, 2));
-		//g.fillRect(center.x - PIN_WIDTH/2, center.y - PIN_HEIGHT/2, PIN_WIDTH, PIN_HEIGHT);
 	}
 	
 	public void setFantom() {

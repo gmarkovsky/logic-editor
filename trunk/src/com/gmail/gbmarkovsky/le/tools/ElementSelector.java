@@ -8,9 +8,8 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
+import com.gmail.gbmarkovsky.le.views.ConnectorView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
-import com.gmail.gbmarkovsky.le.views.InputView;
-import com.gmail.gbmarkovsky.le.views.OutputView;
 
 public class ElementSelector extends AbstractCircuitTool {
 	private Point basePoint;
@@ -80,7 +79,7 @@ public class ElementSelector extends AbstractCircuitTool {
 		List<ElementView> selectedElements = circuitEditor.getSelectedElements();
 		for (ElementView selectedElement: selectedElements) {
 			g.setColor(Color.red);
-			if (selectedElement instanceof InputView || selectedElement instanceof OutputView) {
+			if (selectedElement instanceof ConnectorView) {
 				g.drawOval(selectedElement.getPosition().x - 1, selectedElement.getPosition().y - 1, 
 						selectedElement.getWidth() + 2, selectedElement.getHeight() + 2);
 			} else {

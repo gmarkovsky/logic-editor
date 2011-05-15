@@ -16,12 +16,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JToggleButton;
 
+import com.gmail.gbmarkovsky.le.elements.Connector.ConnectorType;
 import com.gmail.gbmarkovsky.le.elements.GateType;
+import com.gmail.gbmarkovsky.le.tools.ConnectorCreator;
 import com.gmail.gbmarkovsky.le.tools.ElementDrugger;
 import com.gmail.gbmarkovsky.le.tools.ElementSelector;
 import com.gmail.gbmarkovsky.le.tools.GateCreator;
-import com.gmail.gbmarkovsky.le.tools.InputCreator;
-import com.gmail.gbmarkovsky.le.tools.OutputCreator;
 import com.gmail.gbmarkovsky.le.tools.PinSelector;
 import com.gmail.gbmarkovsky.le.tools.SignalSetuper;
 import com.gmail.gbmarkovsky.le.tools.WireChanger;
@@ -193,7 +193,7 @@ public class CircuitEditorPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				circuitEditor.clearCircuitTools();
-				circuitEditor.addCircuitTool(new InputCreator(circuitEditor));
+				circuitEditor.addCircuitTool(new ConnectorCreator(circuitEditor, ConnectorType.INPUT));
 			}
 		});
         outputButton.addActionListener(new ActionListener() {
@@ -201,7 +201,7 @@ public class CircuitEditorPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				circuitEditor.clearCircuitTools();
-				circuitEditor.addCircuitTool(new OutputCreator(circuitEditor));
+				circuitEditor.addCircuitTool(new ConnectorCreator(circuitEditor, ConnectorType.OUTPUT));
 			}
 		});
 	}

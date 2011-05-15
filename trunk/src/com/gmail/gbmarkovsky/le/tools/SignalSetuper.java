@@ -4,10 +4,11 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-import com.gmail.gbmarkovsky.le.circuit.Signal;
+import com.gmail.gbmarkovsky.le.elements.Connector;
+import com.gmail.gbmarkovsky.le.elements.Connector.ConnectorType;
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
+import com.gmail.gbmarkovsky.le.views.ConnectorView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
-import com.gmail.gbmarkovsky.le.views.InputView;
 
 public class SignalSetuper extends AbstractCircuitTool {
 
@@ -26,11 +27,12 @@ public class SignalSetuper extends AbstractCircuitTool {
 		Point p = e.getPoint();
 		ElementView elementView = circuitEditor.getCircuitView().getElementViewForLocation(p);
 		if (e.getButton() == MouseEvent.BUTTON1) {
-			if (elementView instanceof InputView) {
-				((InputView) elementView).switchSignal();
+			if (elementView instanceof ConnectorView) {
+				ConnectorView connectorView = (ConnectorView) elementView;
+				if (((Connector) connectorView.getElement()).getType() == ConnectorType.INPUT) {
+					connectorView.switchSignal();
+				}
 			}
-		} else if (e.getButton() == MouseEvent.BUTTON3) {
-			((InputView) elementView).getInput().setSignal(Signal.FALSE);
 		}
 	}
 

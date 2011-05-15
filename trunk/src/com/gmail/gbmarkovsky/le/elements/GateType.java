@@ -17,7 +17,7 @@ public enum GateType {
 	private String name;
 	private String symbol;
 	private int inputCount;
-	private int outputCount;
+	private int outputCount = 1;
 
 	public String getName() {
 		return name;

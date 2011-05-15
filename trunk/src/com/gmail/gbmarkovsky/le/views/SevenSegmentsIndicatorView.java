@@ -147,17 +147,17 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public PinView getOutput() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public void setFantom() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public PinView getOutputPinView(Pin pin) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 //	public static void main(String[] args) {

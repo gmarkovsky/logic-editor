@@ -2,8 +2,7 @@ package com.gmail.gbmarkovsky.le.exec;
 
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
 import com.gmail.gbmarkovsky.le.circuit.Signal;
-import com.gmail.gbmarkovsky.le.elements.Input;
-import com.gmail.gbmarkovsky.le.elements.Output;
+import com.gmail.gbmarkovsky.le.elements.Connector;
 
 public class CircuitExecutor {
 	private Task task;
@@ -16,13 +15,13 @@ public class CircuitExecutor {
 		for(String inputs : task.getTable().keySet()) {
 			char[] inp = inputs.toCharArray();
 			int i = 0;
-			for(Input input : circuit.getInputs()) {
+			for(Connector input : circuit.getInputs()) {
 				input.setSignal(convert(inp[i]));
 				i++;
 			}
 			char[] sym = new char[circuit.getOutputs().size()];
 			i = 0;
-			for(Output output : circuit.getOutputs()) {
+			for(Connector output : circuit.getOutputs()) {
 				if (output.getSignal() == Signal.TRUE) {
 					sym[i] = '1';
 				} else {
