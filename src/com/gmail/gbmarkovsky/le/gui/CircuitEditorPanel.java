@@ -22,6 +22,7 @@ import com.gmail.gbmarkovsky.le.tools.ConnectorCreator;
 import com.gmail.gbmarkovsky.le.tools.ElementDrugger;
 import com.gmail.gbmarkovsky.le.tools.ElementSelector;
 import com.gmail.gbmarkovsky.le.tools.GateCreator;
+import com.gmail.gbmarkovsky.le.tools.IndicatorCreator;
 import com.gmail.gbmarkovsky.le.tools.PinSelector;
 import com.gmail.gbmarkovsky.le.tools.SignalSetuper;
 import com.gmail.gbmarkovsky.le.tools.WireChanger;
@@ -41,6 +42,7 @@ public class CircuitEditorPanel extends JPanel {
 	private JToggleButton notGateButton;
 	private JToggleButton inputButton;
 	private JToggleButton outputButton;
+	private JToggleButton indicatorButton;
 	
 	CircuitEditorPanel() {
 		initControls();
@@ -77,6 +79,7 @@ public class CircuitEditorPanel extends JPanel {
 		notGateButton = new JToggleButton("NOT");
 		inputButton = new JToggleButton("In");
 		outputButton = new JToggleButton("Out");
+		indicatorButton = new JToggleButton("Ind");
 		
 		cursorButton.setToolTipText("Выделение, перемещение");
 		wireButton.setToolTipText("Нарисовать провод");
@@ -98,11 +101,14 @@ public class CircuitEditorPanel extends JPanel {
         group.add(notGateButton);
         group.add(inputButton);
         group.add(outputButton);
+        group.add(indicatorButton);
+        
         JPanel radioPanel = new JPanel(new GridBagLayout());
         //radioPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         radioPanel.add(cursorButton, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(0, 0, 0, 0), 0, 0));
+        
         JSeparator jSeparator = new JSeparator(JSeparator.VERTICAL);
         jSeparator.setPreferredSize(new Dimension(1, 1));
 		radioPanel.add(jSeparator, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
@@ -111,6 +117,7 @@ public class CircuitEditorPanel extends JPanel {
         radioPanel.add(wireButton, new GridBagConstraints(2, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(0, 0, 0, 0), 0, 0));
+        
         jSeparator = new JSeparator(JSeparator.VERTICAL);
         jSeparator.setPreferredSize(new Dimension(1, 1));
 		radioPanel.add(jSeparator, new GridBagConstraints(3, 0, 1, 1, 1.0, 1.0,
@@ -125,6 +132,7 @@ public class CircuitEditorPanel extends JPanel {
         radioPanel.add(notGateButton, new GridBagConstraints(6, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
+        
         jSeparator = new JSeparator(JSeparator.VERTICAL);
         jSeparator.setPreferredSize(new Dimension(1, 1));
 		radioPanel.add(jSeparator, new GridBagConstraints(7, 0, 1, 1, 0.0, 0.0,
@@ -136,6 +144,16 @@ public class CircuitEditorPanel extends JPanel {
         radioPanel.add(outputButton, new GridBagConstraints(9, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
+        
+        jSeparator = new JSeparator(JSeparator.VERTICAL);
+        jSeparator.setPreferredSize(new Dimension(1, 1));
+		radioPanel.add(jSeparator, new GridBagConstraints(10, 0, 1, 1, 0.0, 0.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+        		new Insets(5, 3, 5, 3), 0, 0));
+        radioPanel.add(indicatorButton, new GridBagConstraints(11, 0, 1, 1, 1.0, 1.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+        		new Insets(5, 2, 5, 0), 0, 0));
+        
         controlPanel.add(radioPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.NONE,
         		new Insets(0, 0, 0, 0), 0, 0));
@@ -202,6 +220,14 @@ public class CircuitEditorPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				circuitEditor.clearCircuitTools();
 				circuitEditor.addCircuitTool(new ConnectorCreator(circuitEditor, ConnectorType.OUTPUT));
+			}
+		});
+        indicatorButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				circuitEditor.clearCircuitTools();
+				circuitEditor.addCircuitTool(new IndicatorCreator(circuitEditor));
 			}
 		});
 	}

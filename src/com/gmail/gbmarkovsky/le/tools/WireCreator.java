@@ -61,6 +61,7 @@ public class WireCreator extends AbstractCircuitTool {
 				} else {
 					waitForPinType = PinType.INPUT;
 				}
+				circuitEditor.setDraggedSignal(startPin.getPin().getSignal());
 			}
 		} else {
 			if (pinViewForLocation != null) {
@@ -84,7 +85,9 @@ public class WireCreator extends AbstractCircuitTool {
 				circuitEditor.getCircuitView().addWireView(wireView);
 				circuitEditor.getCircuit().addWire(wire);
 				startPin = null;
+				circuitEditor.setDraggedSignal(null);
 			} else {
+				circuitEditor.setDraggedSignal(null);
 				startPin = null;
 			}
 		}
