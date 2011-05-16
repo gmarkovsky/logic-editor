@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
+import com.gmail.gbmarkovsky.le.circuit.Signal;
+import com.gmail.gbmarkovsky.le.elements.PinType;
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.PinView;
 
@@ -56,7 +58,18 @@ public class PinSelector extends AbstractCircuitTool {
 		PinView pinViewForLocation = circuitEditor.getCircuitView().getPinViewForLocation(pressPosition);
 		if (pinViewForLocation != null) {
 			markedPin = pinViewForLocation;
+			if (circuitEditor.getDraggedSignal() != null && 
+					markedPin.getPin().getType() == PinType.INPUT &&
+					markedPin.getPin().isNewConnectAllowed()) {
+				markedPin.getPin().setSignal(circuitEditor.getDraggedSignal());
+			}
 		} else {
+			if (markedPin != null) {	
+				if (circuitEditor.getDraggedSignal() != null &&
+					markedPin.getPin().getType() == PinType.INPUT) {
+					markedPin.getPin().setSignal(Signal.FALSE);
+				}
+			}
 			markedPin = null;
 		}
 		circuitEditor.repaint();

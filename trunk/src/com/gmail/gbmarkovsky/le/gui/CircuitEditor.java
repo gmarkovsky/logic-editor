@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JComponent;
 
 import com.gmail.gbmarkovsky.le.circuit.Circuit;
+import com.gmail.gbmarkovsky.le.circuit.Signal;
 import com.gmail.gbmarkovsky.le.tools.CircuitTool;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
@@ -28,6 +29,7 @@ public class CircuitEditor extends JComponent {
 	private CircuitView circuitView;
 	
 	private WireView selectedWireView;
+	private Signal draggedSignal;
 	private List<ElementView> selectedElements = new ArrayList<ElementView>();
 	
 	private ArrayList<CircuitTool> tools = new ArrayList<CircuitTool>();
@@ -40,10 +42,6 @@ public class CircuitEditor extends JComponent {
 		setDoubleBuffered(true);
 		setBackground(Color.white);
 		setForeground(Color.white);
-//		SevenSegmentsIndicator indicator = new SevenSegmentsIndicator();
-//		circuit.addElement(indicator);
-//		circuitView.addElementView(new SevenSegmentsIndicatorView(new Point(40, 50),
-//				indicator));
 	}
 
 	public void setSelectedElement(ElementView selectedElement) {
@@ -128,7 +126,15 @@ public class CircuitEditor extends JComponent {
 	public void setSelectedWireView(WireView selectedWireView) {
 		this.selectedWireView = selectedWireView;
 	}
-	
+
+	public Signal getDraggedSignal() {
+		return draggedSignal;
+	}
+
+	public void setDraggedSignal(Signal draggedSignal) {
+		this.draggedSignal = draggedSignal;
+	}
+
 	public void deleteSelectedWire() {
 		if (selectedWireView != null) {
 			circuitView.deleteWire(selectedWireView);

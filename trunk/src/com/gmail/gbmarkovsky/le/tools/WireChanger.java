@@ -66,6 +66,7 @@ public class WireChanger extends AbstractCircuitTool {
 					} else {
 						waitForPinType = PinType.INPUT;
 					}
+					circuitEditor.setDraggedSignal(wireView.getWire().getSignal());
 					circuitEditor.getCircuitView().deleteWire(wireView);
 				}
 			}
@@ -90,6 +91,7 @@ public class WireChanger extends AbstractCircuitTool {
 				}
 				circuitEditor.getCircuitView().addWireView(wireView);
 				circuitEditor.getCircuit().addWire(wire);
+				circuitEditor.setDraggedSignal(null);
 				startPin = null;
 			} else {
 				startPin = null;

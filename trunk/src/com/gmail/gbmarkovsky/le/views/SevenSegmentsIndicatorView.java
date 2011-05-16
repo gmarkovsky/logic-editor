@@ -20,8 +20,12 @@ import com.gmail.gbmarkovsky.le.elements.SevenSegmentsIndicator;
 import com.gmail.gbmarkovsky.le.elements.SevenSegmentsIndicator.Segment;
 
 public class SevenSegmentsIndicatorView implements ElementView {
-	private static final int WIDTH = 110;
-	private static final int HEIGHT = 180;
+	private static final int WIDTH = 135;
+	private static final int HEIGHT = 190;
+	private static final int WIDTH_LED = 110;
+	private static final int HEIGHT_LED = 180;
+	private static final int X_OFFSET = 15;
+	private static final int Y_OFFSET = 5;
 	private static final int TOP_SEGMENT_INSET = 26;
 	private static final int MEDIUM_SEGMENT_INSET = 20;
 	private static final int BOTTOM_SEGMENT_INSET = 14;
@@ -49,28 +53,26 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		int inputCount = 7;
 		ArrayList<Point> list = new ArrayList<Point>(inputCount);
 		for (int i = 1; i <= inputCount; i++) {
-			list.add(new Point(position.x, position.y + i * HEIGHT / (inputCount + 1)));
+			list.add(new Point(position.x, position.y + i * (HEIGHT + 10) / (inputCount + 1)));
 		}
 		return list;
 	}
 	
 	private void calculatePositions() {
-		Point tl = new Point(position.x + TOP_SEGMENT_INSET, position.y + 20);
-		Point tr = new Point(position.x + WIDTH - BOTTOM_SEGMENT_INSET, position.y + 20);
-		Point ml = new Point(position.x + MEDIUM_SEGMENT_INSET, position.y + HEIGHT/2);
-		Point mr = new Point(position.x + WIDTH - MEDIUM_SEGMENT_INSET, position.y + HEIGHT/2);
-		Point bl = new Point(position.x + BOTTOM_SEGMENT_INSET, position.y + HEIGHT - 20);
-		Point br = new Point(position.x + WIDTH - TOP_SEGMENT_INSET, position.y + HEIGHT - 20);
+		Point tl = new Point(position.x + TOP_SEGMENT_INSET + X_OFFSET, position.y + 20 + Y_OFFSET);
+		Point tr = new Point(position.x + WIDTH_LED - BOTTOM_SEGMENT_INSET + X_OFFSET, position.y + 20 + Y_OFFSET);
+		Point ml = new Point(position.x + MEDIUM_SEGMENT_INSET + X_OFFSET, position.y + HEIGHT_LED/2 + Y_OFFSET);
+		Point mr = new Point(position.x + WIDTH_LED - MEDIUM_SEGMENT_INSET + X_OFFSET, position.y + HEIGHT_LED/2 + Y_OFFSET);
+		Point bl = new Point(position.x + BOTTOM_SEGMENT_INSET + X_OFFSET, position.y + HEIGHT_LED - 20 + Y_OFFSET);
+		Point br = new Point(position.x + WIDTH_LED - TOP_SEGMENT_INSET + X_OFFSET, position.y + HEIGHT_LED - 20 + Y_OFFSET);
 		List<Segment> list = indicator.getSegments();
-		segments.put(list.get(0).getId(), new SegmentView(new Point(tl.x + 5, tl.y), new Point(tr.x - 5, tr.y), list.get(0)));
-		segments.put(list.get(6).getId(), new SegmentView(new Point(ml.x + 5, ml.y), new Point(mr.x - 5, mr.y), list.get(6)));
-		segments.put(list.get(3).getId(), new SegmentView(new Point(bl.x + 5, bl.y), new Point(br.x - 5, br.y), list.get(3)));
-		
-		segments.put(list.get(5).getId(), new SegmentView(new Point(tl.x, tl.y + 5), new Point(ml.x, ml.y - 5), list.get(5)));
+		segments.put(list.get(0).getId(), new SegmentView(new Point(tr.x, tr.y + 5), new Point(mr.x, mr.y - 5), list.get(0)));
+		segments.put(list.get(1).getId(), new SegmentView(new Point(tl.x + 5, tl.y), new Point(tr.x - 5, tr.y), list.get(1)));
+		segments.put(list.get(2).getId(), new SegmentView(new Point(tl.x, tl.y + 5), new Point(ml.x, ml.y - 5), list.get(2)));
+		segments.put(list.get(3).getId(), new SegmentView(new Point(ml.x + 5, ml.y), new Point(mr.x - 5, mr.y), list.get(3)));
 		segments.put(list.get(4).getId(), new SegmentView(new Point(ml.x, ml.y + 5), new Point(bl.x, bl.y - 5), list.get(4)));
-		
-		segments.put(list.get(1).getId(), new SegmentView(new Point(tr.x, tr.y + 5), new Point(mr.x, mr.y - 5), list.get(1)));
-		segments.put(list.get(2).getId(), new SegmentView(new Point(mr.x, mr.y + 5), new Point(br.x, br.y - 5), list.get(2)));
+		segments.put(list.get(5).getId(), new SegmentView(new Point(bl.x + 5, bl.y), new Point(br.x - 5, br.y), list.get(5)));
+		segments.put(list.get(6).getId(), new SegmentView(new Point(mr.x, mr.y + 5), new Point(br.x, br.y - 5), list.get(6)));
 	}
 
 	@Override
@@ -79,6 +81,7 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		g2.setColor(new Color(255, 255, 255, alpha));
+
 		g2.fillRect(position.x, position.y, WIDTH, HEIGHT);
 		
 		g2.setColor(new Color(0, 0, 0, alpha));
@@ -94,8 +97,66 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		for (PinView pinView: inputs) {
 			pinView.paint(g);
 		}
+		
+		drawWires(g);
 	}
 
+	private void drawWires(Graphics g) {
+		g.setColor(new Color(128, 128, 128, alpha));
+		
+		Point p = getInputPositions().get(1);
+		SegmentView s = segments.get("b");
+		int[] xs = new int[] {p.x, cX(35), s.getCenter().x, s.getCenter().x};
+		int[] ys = new int[] {p.y, cY(15), cY(15), s.getCenter().y};
+		g.drawPolyline(xs, ys, 4);
+		
+		p = getInputPositions().get(0);
+		s = segments.get("a");
+		xs = new int[] {p.x, cX(20), cX(125), cX(125), s.getCenter().x};
+		ys = new int[] {p.y, cY(8), cY(8), s.getCenter().y, s.getCenter().y};
+		g.drawPolyline(xs, ys, 5);
+		
+		
+		p = getInputPositions().get(2);
+		s = segments.get("c");
+		xs = new int[] {p.x, cX(20), s.getCenter().x};
+		ys = new int[] {p.y, s.getCenter().y, s.getCenter().y};
+		g.drawPolyline(xs, ys, 3);
+		
+		p = getInputPositions().get(3);
+		s = segments.get("d");
+		xs = new int[] {p.x, cX(20), s.getCenter().x};
+		ys = new int[] {p.y, s.getCenter().y, s.getCenter().y};
+		g.drawPolyline(xs, ys, 3);
+		
+		p = getInputPositions().get(4);
+		s = segments.get("e");
+		xs = new int[] {p.x, cX(20), s.getCenter().x};
+		ys = new int[] {p.y, s.getCenter().y, s.getCenter().y};
+		g.drawPolyline(xs, ys, 3);
+		
+		p = getInputPositions().get(5);
+		s = segments.get("f");
+		xs = new int[] {p.x, cX(35), s.getCenter().x, s.getCenter().x};
+		ys = new int[] {p.y, s.getCenter().y+11, s.getCenter().y+11, s.getCenter().y};
+		g.drawPolyline(xs, ys, 4);
+		
+		
+		p = getInputPositions().get(6);
+		s = segments.get("g");
+		xs = new int[] {p.x, cX(20), cX(117), cX(117), s.getCenter().x};
+		ys = new int[] {p.y, cY(183), cY(183), s.getCenter().y, s.getCenter().y};
+		g.drawPolyline(xs, ys, 5);
+	}
+	
+	private int cX(int x) {
+		return position.x + x;
+	}
+	
+	private int cY(int y) {
+		return position.y + y;
+	}
+	
 	@Override
 	public Element getElement() {
 		return indicator;
@@ -177,6 +238,11 @@ public class SevenSegmentsIndicatorView implements ElementView {
 
 	@Override
 	public PinView getInputPinView(Pin pin) {
+		for (PinView pv : inputs) {
+			if (pv.getPin() == pin){
+				return pv;
+			}
+		}
 		return null;
 	}
 	
@@ -295,6 +361,10 @@ class SegmentView {
 	
 	public void setFantom() {
 		alpha = 128;
+	}
+	
+	public Point getCenter() {
+		return new Point((points[0].x + points[3].x)/2,(points[0].y + points[3].y)/2);
 	}
 }
 
