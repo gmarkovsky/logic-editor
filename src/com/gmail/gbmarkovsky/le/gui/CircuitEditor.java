@@ -60,6 +60,8 @@ public class CircuitEditor extends JComponent {
 	}
 
 	public void paint(Graphics g) {
+		g.setColor(Color.white);
+		g.fillRect(0, 0, getSize().width, getSize().height);
 		circuitView.paint(g);
 		for (MouseListener ml: getMouseListeners()) {
 			if (ml instanceof CircuitTool) {
