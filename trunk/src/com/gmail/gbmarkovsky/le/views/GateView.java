@@ -2,6 +2,7 @@ package com.gmail.gbmarkovsky.le.views;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -27,7 +28,7 @@ public class GateView implements ElementView {
 	 */
 	protected Point position;
 	protected int width = 30;
-	protected int height = 45;
+	protected int height = 40;
 	protected ArrayList<PinView> inputs;
 	protected PinView output;
 
@@ -151,7 +152,6 @@ public class GateView implements ElementView {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		//g2.setColor(Color.white);
 		g2.setColor(new Color(255, 255, 255, alpha));
 		g2.fillRect(position.x, position.y, width, height);
 		
@@ -168,7 +168,18 @@ public class GateView implements ElementView {
 		g2.setStroke(tmpStroke);
 		
 		g2.setColor(new Color(0, 0, 0, alpha));
-		g2.drawString(gate.getType().getSymbol(), position.x + 6,  position.y + 16);
+		
+		Font tmpFont = g2.getFont();
+		String symbol = gate.getType().getSymbol();
+		
+		g2.setFont(new Font(tmpFont.getFontName(), tmpFont.getStyle(), 14));
+		Rectangle2D r = g2.getFontMetrics().getStringBounds(symbol, g2);
+		
+		int xTextPos = position.x + (int)(width - r.getWidth())/2;
+		int yTextPos = position.y + (int)(height - r.getHeight())/5 + (int) r.getHeight();
+		g2.drawString(symbol, xTextPos,  yTextPos);
+		
+		g2.setFont(tmpFont);
 	}
 
 	@Override
