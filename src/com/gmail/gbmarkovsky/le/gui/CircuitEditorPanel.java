@@ -81,14 +81,14 @@ public class CircuitEditorPanel extends JPanel {
 		cursorButton.setToolTipText("Выделение, перемещение");
 		wireButton.setToolTipText("Нарисовать провод");
 		
-		final int bw = 52;
-		final int bh = 34;
-		
-		andGateButton.setPreferredSize(new Dimension(bw, bh));
-		orGateButton.setPreferredSize(new Dimension(bw, bh));
-		notGateButton.setPreferredSize(new Dimension(bw, bh));
-		inputButton.setPreferredSize(new Dimension(bw, bh));
-		outputButton.setPreferredSize(new Dimension(bw, bh));
+//		final int bw = 52;
+//		final int bh = 34;
+//		
+//		andGateButton.setPreferredSize(new Dimension(bw, bh));		
+//		orGateButton.setPreferredSize(new Dimension(bw, bh));
+//		notGateButton.setPreferredSize(new Dimension(bw, bh));
+//		inputButton.setPreferredSize(new Dimension(bw, bh));
+//		outputButton.setPreferredSize(new Dimension(bw, bh));
 		
         ButtonGroup group = new ButtonGroup();
         group.add(cursorButton);
@@ -100,41 +100,41 @@ public class CircuitEditorPanel extends JPanel {
         group.add(outputButton);
         JPanel radioPanel = new JPanel(new GridBagLayout());
         //radioPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        radioPanel.add(cursorButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.NONE,
+        radioPanel.add(cursorButton, new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(0, 0, 0, 0), 0, 0));
         JSeparator jSeparator = new JSeparator(JSeparator.VERTICAL);
         jSeparator.setPreferredSize(new Dimension(1, 1));
 		radioPanel.add(jSeparator, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
         		new Insets(5, 3, 5, 3), 0, 0));
-        radioPanel.add(wireButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.NONE,
+        radioPanel.add(wireButton, new GridBagConstraints(2, 0, 1, 1, 1.0, 1.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(0, 0, 0, 0), 0, 0));
         jSeparator = new JSeparator(JSeparator.VERTICAL);
         jSeparator.setPreferredSize(new Dimension(1, 1));
-		radioPanel.add(jSeparator, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+		radioPanel.add(jSeparator, new GridBagConstraints(3, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
         		new Insets(5, 3, 5, 3), 0, 0));
-        radioPanel.add(andGateButton, new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.NONE,
+        radioPanel.add(andGateButton, new GridBagConstraints(4, 0, 1, 1, 1.0, 1.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 0, 5, 0), 0, 0));
-        radioPanel.add(orGateButton, new GridBagConstraints(5, 0, 1, 1, 0.0, 0.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.NONE,
+        radioPanel.add(orGateButton, new GridBagConstraints(5, 0, 1, 1, 1.0, 1.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(notGateButton, new GridBagConstraints(6, 0, 1, 1, 0.0, 0.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.NONE,
+        radioPanel.add(notGateButton, new GridBagConstraints(6, 0, 1, 1, 1.0, 1.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
         jSeparator = new JSeparator(JSeparator.VERTICAL);
         jSeparator.setPreferredSize(new Dimension(1, 1));
 		radioPanel.add(jSeparator, new GridBagConstraints(7, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
         		new Insets(5, 3, 5, 3), 0, 0));
-        radioPanel.add(inputButton, new GridBagConstraints(8, 0, 1, 1, 0.0, 0.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.NONE,
+        radioPanel.add(inputButton, new GridBagConstraints(8, 0, 1, 1, 1.0, 1.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(outputButton, new GridBagConstraints(9, 0, 1, 1, 0.0, 0.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.NONE,
+        radioPanel.add(outputButton, new GridBagConstraints(9, 0, 1, 1, 1.0, 1.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
         controlPanel.add(radioPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.NONE,
