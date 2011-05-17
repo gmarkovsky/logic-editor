@@ -110,7 +110,7 @@ public class ElementSelector extends AbstractCircuitTool {
 		}
 	}
 	
-	private Rectangle normalizeRect(Point basePoint, Point currentPoint) {
+	public static Rectangle normalizeRect(Point basePoint, Point currentPoint) {
 		Point p;
 		int w;
 		int h;

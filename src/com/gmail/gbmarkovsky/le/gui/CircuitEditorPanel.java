@@ -28,6 +28,7 @@ import com.gmail.gbmarkovsky.le.tools.PinSelector;
 import com.gmail.gbmarkovsky.le.tools.SignalSetuper;
 import com.gmail.gbmarkovsky.le.tools.WireChanger;
 import com.gmail.gbmarkovsky.le.tools.WireCreator;
+import com.gmail.gbmarkovsky.le.tools.WireCutter;
 import com.gmail.gbmarkovsky.le.tools.WireSelector;
 
 public class CircuitEditorPanel extends JPanel {
@@ -184,6 +185,7 @@ public class CircuitEditorPanel extends JPanel {
 				circuitEditor.addCircuitTool(new ElementDrugger(circuitEditor));
 				circuitEditor.addCircuitTool(new ElementSelector(circuitEditor));
 				circuitEditor.addCircuitTool(new PinSelector(circuitEditor));
+				
 				circuitEditor.addCircuitTool(new WireChanger(circuitEditor));
 				circuitEditor.addCircuitTool(new WireSelector(circuitEditor));
 				circuitEditor.addCircuitTool(new SignalSetuper(circuitEditor));
@@ -205,6 +207,7 @@ public class CircuitEditorPanel extends JPanel {
 				circuitEditor.clearCircuitTools();
 				circuitEditor.addCircuitTool(new WireCreator(circuitEditor));
 				circuitEditor.addCircuitTool(new PinSelector(circuitEditor));
+				circuitEditor.addCircuitTool(new WireCutter(circuitEditor));
 			}
 		});
         andGateButton.addActionListener(new ActionListener() {

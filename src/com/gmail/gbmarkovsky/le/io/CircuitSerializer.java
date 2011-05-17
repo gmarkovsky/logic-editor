@@ -37,6 +37,7 @@ import com.gmail.gbmarkovsky.le.views.AbstractGateView;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 import com.gmail.gbmarkovsky.le.views.ConnectorView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
+import com.gmail.gbmarkovsky.le.views.FractureView;
 import com.gmail.gbmarkovsky.le.views.SevenSegmentsIndicatorView;
 import com.gmail.gbmarkovsky.le.views.WireView;
 
@@ -157,6 +158,18 @@ public class CircuitSerializer {
 			wire.setAttribute("end", gateToIdMap.get(cwire.getEnd().getElement()).toString());
 			wire.setAttribute("inputIndex", Integer.toString(cwire.getEnd().getElement().getInputIndex(cwire.getEnd())));
 			wire.setAttribute("outputIndex", Integer.toString(cwire.getStart().getElement().getOutputIndex(cwire.getStart())));
+			
+			org.w3c.dom.Element view = doc.createElement("view");
+			
+			wire.appendChild(view);
+			
+			for (FractureView fw : circuitView.getWireView(cwire).getFractures()) {
+				org.w3c.dom.Element fracture = doc.createElement("fracture");
+				fracture.setAttribute("x", Integer.toString(fw.getPoint().x));
+				fracture.setAttribute("y", Integer.toString(fw.getPoint().y));
+				view.appendChild(fracture);
+			}
+			
 			wires.appendChild(wire);
 		}
 		return doc;
@@ -281,6 +294,18 @@ public class CircuitSerializer {
 			
 			Wire wire = new Wire(startPin, endPin);
 			WireView wireView = new WireView(wire, startElementView.getOutputPinView(startPin), endElementView.getInputPinView(endPin));
+			
+			NodeList ilist = element.getElementsByTagName("view");
+			org.w3c.dom.Element view = (org.w3c.dom.Element) ilist.item(0);
+			
+			ilist = view.getElementsByTagName("fracture");
+			for (int j = 0; j < ilist.getLength(); j++) {
+				org.w3c.dom.Element elem = (org.w3c.dom.Element) ilist.item(j);
+				int x = Integer.parseInt(elem.getAttribute("x"));
+				int y = Integer.parseInt(elem.getAttribute("y"));
+				wireView.addLast(new FractureView(new Point(x, y), wireView));
+			}
+			
 			circuit.addWire(wire);
 			circuitView.addWireView(wireView);
 		}

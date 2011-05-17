@@ -124,6 +124,13 @@ public class CircuitEditor extends JComponent {
 	}
 	
 	public void setSelectedWireView(WireView selectedWireView) {
+		if (selectedWireView == null) {
+			if (this.selectedWireView != null)
+				this.selectedWireView.setSelected(false);
+		} else {
+			if (this.selectedWireView != null)
+				this.selectedWireView.setSelected(true);
+		}
 		this.selectedWireView = selectedWireView;
 	}
 
