@@ -40,6 +40,8 @@ public class Gate extends AbstractElement {
 			outputs.get(0).setSignal(result);
 		} else if (type == GateType.NOT) {
 			outputs.get(0).setSignal(Signal.not(inputs.get(0).getSignal()));
-		}
+		} else if (type == GateType.CONST) {
+				outputs.get(0).setSignal(inputs.get(0).getSignal());
+			}
 	}
 }

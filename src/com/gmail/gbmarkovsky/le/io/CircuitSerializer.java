@@ -33,10 +33,10 @@ import com.gmail.gbmarkovsky.le.elements.GateType;
 import com.gmail.gbmarkovsky.le.elements.Pin;
 import com.gmail.gbmarkovsky.le.elements.SevenSegmentsIndicator;
 import com.gmail.gbmarkovsky.le.elements.Wire;
+import com.gmail.gbmarkovsky.le.views.AbstractGateView;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
 import com.gmail.gbmarkovsky.le.views.ConnectorView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
-import com.gmail.gbmarkovsky.le.views.GateView;
 import com.gmail.gbmarkovsky.le.views.SevenSegmentsIndicatorView;
 import com.gmail.gbmarkovsky.le.views.WireView;
 
@@ -208,7 +208,7 @@ public class CircuitSerializer {
 			ElementView gateView = null;
 			if (gateType != null) {
 				gate = new Gate(gateType);
-				gateView = new GateView(new Point(x, y), (Gate) gate);
+				gateView = AbstractGateView.createFor(new Point(x, y), (Gate) gate);
 			} else {
 				if ("SevenSegment".equals(gateT)) {
 					gate = new SevenSegmentsIndicator();

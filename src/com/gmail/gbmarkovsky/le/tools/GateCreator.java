@@ -9,7 +9,7 @@ import com.gmail.gbmarkovsky.le.elements.Gate;
 import com.gmail.gbmarkovsky.le.elements.GateType;
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.CircuitView;
-import com.gmail.gbmarkovsky.le.views.GateView;
+import com.gmail.gbmarkovsky.le.views.AbstractGateView;
 
 /**
  * Предназначен для создания логических элементов в ответ на действия пользователя.
@@ -18,7 +18,7 @@ import com.gmail.gbmarkovsky.le.views.GateView;
  */
 public class GateCreator extends AbstractCircuitTool {
 	private GateType gateType;
-	private GateView gateView;
+	private AbstractGateView gateView;
 	private boolean drawFantom;
 	private boolean canPlace = true;
 	
@@ -26,7 +26,7 @@ public class GateCreator extends AbstractCircuitTool {
 		super(circuitEditor);
 		this.gateType = gateType;
 		Gate gate = new Gate(this.gateType);
-		gateView = new GateView(new Point(0, 0), gate);
+		gateView = AbstractGateView.createFor(new Point(0, 0), gate);
 		gateView.setFantom();
 	}
 	
@@ -45,7 +45,7 @@ public class GateCreator extends AbstractCircuitTool {
 			CircuitView circuitView = circuitEditor.getCircuitView();
 			Gate gate = new Gate(gateType);
 			Point toPoint = new Point(arg0.getX() - gateView.getWidth(), arg0.getY() - gateView.getHeight());
-			GateView gateView = new GateView(toPoint, gate);
+			AbstractGateView gateView = AbstractGateView.createFor(toPoint, gate);
 			circuit.addElement(gate);
 			circuitView.addElementView(gateView);
 			circuitEditor.updateSize();
