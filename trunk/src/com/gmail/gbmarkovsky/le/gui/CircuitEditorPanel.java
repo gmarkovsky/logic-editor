@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -36,11 +37,13 @@ public class CircuitEditorPanel extends JPanel {
 	private JPanel controlPanel;
 	
 	private JToggleButton cursorButton;
+	private JButton deleteButton;
 	private JToggleButton wireButton;
 	private JToggleButton andGateButton;
 	private JToggleButton orGateButton;
 	private JToggleButton notGateButton;
 	private JToggleButton inputButton;
+	private JToggleButton constButton;
 	private JToggleButton outputButton;
 	private JToggleButton indicatorButton;
 	
@@ -70,14 +73,17 @@ public class CircuitEditorPanel extends JPanel {
 		controlPanel = new JPanel(new GridBagLayout());
 		controlPanel.setBorder(BorderFactory.createBevelBorder(1));
 		
-		ImageIcon imageIcon = new ImageIcon(CircuitEditorPanel.class.getResource("cursor.png"));
+		ImageIcon imageIcon = new ImageIcon(CircuitEditorPanel.class.getResource("select.png"));
 		ImageIcon wireIcon = new ImageIcon(CircuitEditorPanel.class.getResource("wire.png"));
+		ImageIcon deleteIcon = new ImageIcon(CircuitEditorPanel.class.getResource("cancel.png"));
 		cursorButton = new JToggleButton(imageIcon, true);
 		wireButton = new JToggleButton(wireIcon);
+		deleteButton = new JButton(deleteIcon);
 		andGateButton = new JToggleButton("AND");
 		orGateButton = new JToggleButton("OR");
 		notGateButton = new JToggleButton("NOT");
 		inputButton = new JToggleButton("In");
+		constButton = new JToggleButton("Const");
 		outputButton = new JToggleButton("Out");
 		indicatorButton = new JToggleButton("Ind");
 		
@@ -100,6 +106,7 @@ public class CircuitEditorPanel extends JPanel {
         group.add(orGateButton);
         group.add(notGateButton);
         group.add(inputButton);
+        group.add(constButton); 
         group.add(outputButton);
         group.add(indicatorButton);
         
@@ -109,48 +116,57 @@ public class CircuitEditorPanel extends JPanel {
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(0, 0, 0, 0), 0, 0));
         
+        radioPanel.add(deleteButton, new GridBagConstraints(1, 0, 1, 1, 1.0, 1.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+        		new Insets(0, 0, 0, 0), 0, 0));
+        
         JSeparator jSeparator = new JSeparator(JSeparator.VERTICAL);
         jSeparator.setPreferredSize(new Dimension(1, 1));
-		radioPanel.add(jSeparator, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+		radioPanel.add(jSeparator, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
         		new Insets(5, 3, 5, 3), 0, 0));
-        radioPanel.add(wireButton, new GridBagConstraints(2, 0, 1, 1, 1.0, 1.0,
+		
+        radioPanel.add(wireButton, new GridBagConstraints(3, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(0, 0, 0, 0), 0, 0));
         
         jSeparator = new JSeparator(JSeparator.VERTICAL);
         jSeparator.setPreferredSize(new Dimension(1, 1));
-		radioPanel.add(jSeparator, new GridBagConstraints(3, 0, 1, 1, 1.0, 1.0,
+		radioPanel.add(jSeparator, new GridBagConstraints(4, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
         		new Insets(5, 3, 5, 3), 0, 0));
-        radioPanel.add(andGateButton, new GridBagConstraints(4, 0, 1, 1, 1.0, 1.0,
+        radioPanel.add(andGateButton, new GridBagConstraints(5, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 0, 5, 0), 0, 0));
-        radioPanel.add(orGateButton, new GridBagConstraints(5, 0, 1, 1, 1.0, 1.0,
+        radioPanel.add(orGateButton, new GridBagConstraints(6, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(notGateButton, new GridBagConstraints(6, 0, 1, 1, 1.0, 1.0,
+        radioPanel.add(notGateButton, new GridBagConstraints(7, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
-        
-        jSeparator = new JSeparator(JSeparator.VERTICAL);
-        jSeparator.setPreferredSize(new Dimension(1, 1));
-		radioPanel.add(jSeparator, new GridBagConstraints(7, 0, 1, 1, 0.0, 0.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
-        		new Insets(5, 3, 5, 3), 0, 0));
-        radioPanel.add(inputButton, new GridBagConstraints(8, 0, 1, 1, 1.0, 1.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-        		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(outputButton, new GridBagConstraints(9, 0, 1, 1, 1.0, 1.0,
+        radioPanel.add(constButton, new GridBagConstraints(8, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
         
         jSeparator = new JSeparator(JSeparator.VERTICAL);
         jSeparator.setPreferredSize(new Dimension(1, 1));
-		radioPanel.add(jSeparator, new GridBagConstraints(10, 0, 1, 1, 0.0, 0.0,
+		radioPanel.add(jSeparator, new GridBagConstraints(9, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
         		new Insets(5, 3, 5, 3), 0, 0));
-        radioPanel.add(indicatorButton, new GridBagConstraints(11, 0, 1, 1, 1.0, 1.0,
+        radioPanel.add(inputButton, new GridBagConstraints(10, 0, 1, 1, 1.0, 1.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+        		new Insets(5, 2, 5, 0), 0, 0));
+
+        radioPanel.add(outputButton, new GridBagConstraints(11, 0, 1, 1, 1.0, 1.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+        		new Insets(5, 2, 5, 0), 0, 0));
+        
+        jSeparator = new JSeparator(JSeparator.VERTICAL);
+        jSeparator.setPreferredSize(new Dimension(1, 1));
+		radioPanel.add(jSeparator, new GridBagConstraints(12, 0, 1, 1, 0.0, 0.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+        		new Insets(5, 3, 5, 3), 0, 0));
+        radioPanel.add(indicatorButton, new GridBagConstraints(13, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
         
@@ -171,6 +187,15 @@ public class CircuitEditorPanel extends JPanel {
 				circuitEditor.addCircuitTool(new WireChanger(circuitEditor));
 				circuitEditor.addCircuitTool(new WireSelector(circuitEditor));
 				circuitEditor.addCircuitTool(new SignalSetuper(circuitEditor));
+			}
+		});
+        deleteButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				circuitEditor.deleteSelectedElements();
+				circuitEditor.deleteSelectedWire();
+				circuitEditor.repaint();
 			}
 		});
         wireButton.addActionListener(new ActionListener() {
@@ -204,6 +229,14 @@ public class CircuitEditorPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				circuitEditor.clearCircuitTools();
 				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.NOT));
+			}
+		});
+        constButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				circuitEditor.clearCircuitTools();
+				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.CONST));
 			}
 		});
         inputButton.addActionListener(new ActionListener() {
