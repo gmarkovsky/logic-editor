@@ -165,8 +165,8 @@ public class CircuitSerializer {
 			
 			for (FractureView fw : circuitView.getWireView(cwire).getFractures()) {
 				org.w3c.dom.Element fracture = doc.createElement("fracture");
-				fracture.setAttribute("x", Integer.toString(fw.getPoint().x));
-				fracture.setAttribute("y", Integer.toString(fw.getPoint().y));
+				fracture.setAttribute("x", Integer.toString(fw.getPosition().x));
+				fracture.setAttribute("y", Integer.toString(fw.getPosition().y));
 				view.appendChild(fracture);
 			}
 			

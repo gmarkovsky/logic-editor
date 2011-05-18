@@ -23,14 +23,6 @@ public class FractureView {
 		this.point = point;
 		this.wireView = wireView;
 	}
-
-	public Point getPoint() {
-		return point;
-	}
-
-	public void setPoint(Point point) {
-		this.point = point;
-	}
 	
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
@@ -63,5 +55,13 @@ public class FractureView {
 	
 	private Ellipse2D buildEllipse() {
 		return new Ellipse2D.Double(this.point.x - WIDTH/2, this.point.y - HEIGHT/2, WIDTH, HEIGHT);
+	}
+
+	public Point getPosition() {
+		return point;
+	}
+
+	public void setPosition(Point position) {
+		this.point = position;
 	}
 }

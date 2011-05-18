@@ -86,8 +86,8 @@ public class WireCutter extends AbstractCircuitTool {
 			int dx = e.getX() - prevPosition.x;
 			int dy = e.getY() - prevPosition.y;
 			
-			Point oldPos = draggedFracture.getPoint();
-			draggedFracture.setPoint(new Point(oldPos.x + dx, oldPos.y + dy));
+			Point oldPos = draggedFracture.getPosition();
+			draggedFracture.setPosition(new Point(oldPos.x + dx, oldPos.y + dy));
 			
 			circuitEditor.updateSize();
 			prevPosition = e.getPoint();

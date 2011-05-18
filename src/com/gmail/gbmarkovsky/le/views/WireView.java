@@ -5,17 +5,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
 import com.gmail.gbmarkovsky.le.circuit.Signal;
 import com.gmail.gbmarkovsky.le.elements.PinType;
 import com.gmail.gbmarkovsky.le.elements.Wire;
-import com.gmail.gbmarkovsky.le.tools.ElementSelector;
 
 public class WireView {
 	private Wire wire;
@@ -68,8 +65,8 @@ public class WireView {
 		
 		int i = 1;
 		for (FractureView p : fractures) {
-			xs[i] = p.getPoint().x;
-			ys[i] = p.getPoint().y;
+			xs[i] = p.getPosition().x;
+			ys[i] = p.getPosition().y;
 			i++;
 		}
 		
@@ -110,47 +107,87 @@ public class WireView {
 		fractures.addLast(fractureView);
 	}
 	
+//	public void addFracture(FractureView fractureView) {
+//		if (fractures.isEmpty()) {
+//			fractures.add(fractureView);
+//		} else {
+//
+//			Rectangle r = ElementSelector.normalizeRect(new Point(start.getBorder().x, start.getBorder().y),
+//					new Point(fractures.getFirst().getPoint().x,
+//							fractures.getFirst().getPoint().y));
+//			Rectangle2D rect = new Rectangle2D.Double(r.x, r.y, r.width, r.height);
+//			if (rect.contains(fractureView.getPoint())) {
+//				fractures.addFirst(fractureView);
+//				return;
+//			}
+//			
+//			r = ElementSelector.normalizeRect(new Point(fractures.getLast().getPoint().x,
+//					fractures.getLast().getPoint().y),
+//					new Point(end.getBorder().x, end.getBorder().y));
+//			rect = new Rectangle2D.Double(r.x, r.y, r.width, r.height);
+//			if (rect.contains(fractureView.getPoint())) {
+//				fractures.addLast(fractureView);
+//				return;
+//			}
+//
+//			Object[] o = fractures.toArray();
+//			
+//			for (int i = 0; i < o.length - 1; i++) {
+//				FractureView f1 = (FractureView) o[i];
+//				FractureView f2 = (FractureView) o[i+1];
+//				
+//				r = ElementSelector.normalizeRect(new Point(f1.getPoint().x,
+//						f1.getPoint().y),
+//						new Point(f2.getPoint().x,
+//								f2.getPoint().y));
+//				rect = new Rectangle2D.Double(r.x, r.y, r.width, r.height);
+//				if (rect.contains(fractureView.getPoint())) {
+//					fractures.add(i, fractureView);
+//					return;
+//				}
+//			}
+//
+//		}
+//	}
+	
+	
 	public void addFracture(FractureView fractureView) {
 		if (fractures.isEmpty()) {
 			fractures.add(fractureView);
 		} else {
-
-			Rectangle r = ElementSelector.normalizeRect(new Point(start.getBorder().x, start.getBorder().y),
-					new Point(fractures.getFirst().getPoint().x,
-							fractures.getFirst().getPoint().y));
-			Rectangle2D rect = new Rectangle2D.Double(r.x, r.y, r.width, r.height);
-			if (rect.contains(fractureView.getPoint())) {
-				fractures.addFirst(fractureView);
-				return;
-			}
-			
-			r = ElementSelector.normalizeRect(new Point(fractures.getLast().getPoint().x,
-					fractures.getLast().getPoint().y),
-					new Point(end.getBorder().x, end.getBorder().y));
-			rect = new Rectangle2D.Double(r.x, r.y, r.width, r.height);
-			if (rect.contains(fractureView.getPoint())) {
-				fractures.addLast(fractureView);
-				return;
-			}
-
-			Object[] o = fractures.toArray();
-			
-			for (int i = 0; i < o.length - 1; i++) {
-				FractureView f1 = (FractureView) o[i];
-				FractureView f2 = (FractureView) o[i+1];
-				
-				r = ElementSelector.normalizeRect(new Point(f1.getPoint().x,
-						f1.getPoint().y),
-						new Point(f2.getPoint().x,
-								f2.getPoint().y));
-				rect = new Rectangle2D.Double(r.x, r.y, r.width, r.height);
-				if (rect.contains(fractureView.getPoint())) {
-					fractures.add(i, fractureView);
-					return;
-				}
-			}
-
+		
+		Line2D line = new Line2D.Double(start.getBorder().x, start.getBorder().y, fractures.getFirst().getPosition().x,
+				fractures.getFirst().getPosition().y);	
+		if (line.ptSegDist(fractureView.getPosition()) < 3) {
+			fractures.addFirst(fractureView);
+			return;
 		}
+		
+		line = new Line2D.Double(new Point(fractures.getLast().getPosition().x,
+				fractures.getLast().getPosition().y),
+				new Point(end.getBorder().x, end.getBorder().y));
+		if (line.ptSegDist(fractureView.getPosition()) < 3) {
+			fractures.addLast(fractureView);
+			return;
+		}
+
+		Object[] o = fractures.toArray();
+		
+		for (int i = 0; i < o.length - 1; i++) {
+			FractureView f1 = (FractureView) o[i];
+			FractureView f2 = (FractureView) o[i+1];
+			
+			line = new Line2D.Double(new Point(f1.getPosition().x,
+					f1.getPosition().y),
+					new Point(f2.getPosition().x,
+							f2.getPosition().y));
+			if (line.ptSegDist(fractureView.getPosition()) < 3) {
+				fractures.add(i+1, fractureView);
+				return;
+			}
+		}
+
+	}
 	}
 	
 	public boolean removeFracture(FractureView fractureView) {
@@ -169,8 +206,8 @@ public class WireView {
 		
 		int i = 1;
 		for (FractureView p : fractures) {
-			xs[i] = p.getPoint().x;
-			ys[i] = p.getPoint().y;
+			xs[i] = p.getPosition().x;
+			ys[i] = p.getPosition().y;
 			i++;
 		}
 		for (int j = 0; j < ys.length - 1; j++) {
