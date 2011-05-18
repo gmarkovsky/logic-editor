@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -31,7 +33,7 @@ import com.gmail.gbmarkovsky.le.tools.WireCreator;
 import com.gmail.gbmarkovsky.le.tools.WireCutter;
 import com.gmail.gbmarkovsky.le.tools.WireSelector;
 
-public class CircuitEditorPanel extends JPanel {
+public class CircuitEditorPanel extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = -2541499089778347322L;
 	
 	private CircuitEditor circuitEditor;
@@ -65,6 +67,8 @@ public class CircuitEditorPanel extends JPanel {
 		circuitEditor.addCircuitTool(new WireSelector(circuitEditor));
 		circuitEditor.addCircuitTool(new SignalSetuper(circuitEditor));
 		
+		circuitEditor.addPropertyChangeListener(this);
+		
 		JScrollPane scrollPane = new JScrollPane(circuitEditor);
 		add(scrollPane, BorderLayout.CENTER);
 		add(controlPanel, BorderLayout.NORTH);
@@ -88,8 +92,11 @@ public class CircuitEditorPanel extends JPanel {
 		outputButton = new JToggleButton("Out");
 		indicatorButton = new JToggleButton("Ind");
 		
+		deleteButton.setToolTipText("Удалить выделенные элементы");
 		cursorButton.setToolTipText("Выделение, перемещение");
 		wireButton.setToolTipText("Нарисовать провод");
+		
+		deleteButton.setEnabled(false);
 		
 //		final int bw = 52;
 //		final int bh = 34;
@@ -270,5 +277,14 @@ public class CircuitEditorPanel extends JPanel {
 
 	public CircuitEditor getCircuitEditor() {
 		return circuitEditor;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equals(CircuitEditor.SELECTION_APPEARED)) {
+			deleteButton.setEnabled(true);
+		} else if (evt.getPropertyName().equals(CircuitEditor.SELECTION_CLEARED)) {
+			deleteButton.setEnabled(false);
+		}
 	}
 }

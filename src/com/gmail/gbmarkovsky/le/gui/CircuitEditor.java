@@ -51,6 +51,9 @@ public class CircuitEditor extends JComponent {
 		selectedElements.clear();
 		if (selectedElement != null) {
 			selectedElement.setSelected(true);
+			this.firePropertyChange(SELECTION_APPEARED, false, true);
+		} else {
+			this.firePropertyChange(SELECTION_CLEARED, true, false);
 		}
 		selectedElements.add(selectedElement);
 	}
@@ -118,6 +121,7 @@ public class CircuitEditor extends JComponent {
 				repaint();
 			}
 			selectedElements.clear();
+			this.firePropertyChange(SELECTION_CLEARED, true, false);
 		}
 	}
 	
@@ -131,13 +135,18 @@ public class CircuitEditor extends JComponent {
 	
 	public void setSelectedWireView(WireView selectedWireView) {
 		if (selectedWireView == null) {
-			if (this.selectedWireView != null)
+			if (this.selectedWireView != null){
 				this.selectedWireView.setSelected(false);
+				this.firePropertyChange(SELECTION_CLEARED, true, false);
+			}
 		} else {
-			if (this.selectedWireView != null)
-				this.selectedWireView.setSelected(true);
+			if (this.selectedWireView != null){
+				this.selectedWireView.setSelected(false);
+			}
+			this.selectedWireView = selectedWireView;
+			this.selectedWireView.setSelected(true);
+			this.firePropertyChange(SELECTION_APPEARED, false, true);
 		}
-		this.selectedWireView = selectedWireView;
 	}
 
 	public Signal getDraggedSignal() {
@@ -148,11 +157,33 @@ public class CircuitEditor extends JComponent {
 		this.draggedSignal = draggedSignal;
 	}
 
+	public void appearSelection(List<ElementView> list) {
+		selectedElements = list;
+		for(ElementView ev : selectedElements) {
+			ev.setSelected(true);
+		}
+		if (!selectedElements.isEmpty()) {
+			this.firePropertyChange(SELECTION_APPEARED, false, true);
+		}
+	}
+	
+	public void clearSelection() {
+		for(ElementView ev : selectedElements) {
+			ev.setSelected(false);
+		}
+		selectedElements.clear();
+		this.firePropertyChange(SELECTION_CLEARED, true, false);
+	}
+	
 	public void deleteSelectedWire() {
 		if (selectedWireView != null) {
 			circuitView.deleteWire(selectedWireView);
 			selectedWireView = null;
+			this.firePropertyChange(SELECTION_CLEARED, true, false);
 			repaint();
 		}
 	}
+	
+	public static final String SELECTION_CLEARED = "selectionCleared";
+	public static final String SELECTION_APPEARED = "selectionAppeared";
 }

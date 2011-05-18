@@ -50,7 +50,7 @@ public class ElementSelector extends AbstractCircuitTool {
 			//circuitEditor.setSelection(true);
 		}
 		if (selectedElement == null) {
-			clearSelected(circuitEditor.getSelectedElements());
+			circuitEditor.clearSelection();
 		}
 		circuitEditor.repaint();
 	}
@@ -66,27 +66,12 @@ public class ElementSelector extends AbstractCircuitTool {
 	public void mouseDragged(MouseEvent e) {
 		if (basePoint != null) {
 			currentPoint = e.getPoint();
-			List<ElementView> list = circuitEditor.getSelectedElements();
 			Rectangle rect = normalizeRect(basePoint, currentPoint);
-			clearSelected(list);
+			circuitEditor.clearSelection();
 			List<ElementView> elementsInsideRect = circuitEditor.getCircuitView().getElementsInsideRect(rect.getLocation(), rect.width, rect.height);
-			setSelection(elementsInsideRect);
-			list.addAll(elementsInsideRect);
+			circuitEditor.appearSelection(elementsInsideRect);
 			circuitEditor.repaint();
 		}
-	}
-
-	private void setSelection(List<ElementView> list) {
-		for(ElementView ev : list) {
-			ev.setSelected(true);
-		}
-	}
-	
-	private void clearSelected(List<ElementView> list) {
-		for(ElementView ev : list) {
-			ev.setSelected(false);
-		}
-		list.clear();
 	}
 	
 	@Override
