@@ -41,6 +41,8 @@ public class PinView {
 	
 	private ArrayList<WireView> wires = new ArrayList<WireView>();
 	
+	private boolean highlight;
+	
 	private int alpha = 255;
 	
 	/**
@@ -142,9 +144,21 @@ public class PinView {
 				center.y - PIN_HEIGHT/2,
 				PIN_WIDTH, PIN_HEIGHT,
                 2, 2));
+		
+		if (highlight) {
+			g2.setColor(Color.red);
+			g2.draw(new RoundRectangle2D.Double(center.x - PIN_WIDTH/2,
+					center.y - PIN_HEIGHT/2,
+					PIN_WIDTH, PIN_HEIGHT,
+	                2, 2));
+		}
 	}
 	
 	public void setFantom() {
 		alpha = 128;
+	}
+	
+	public void setHighlighted(boolean highlight) {
+		this.highlight = highlight;
 	}
 }

@@ -97,6 +97,20 @@ public class CircuitView implements PropertyChangeListener {
 				return ov;
 			}
 		}
+		for (WireView wv : wireViews.values()) {
+			FractureView fv = wv.getFractureForLocation(location);
+			if (fv != null)
+			return fv;
+		}
+		return null;
+	}
+	
+	public FractureView getFractureViewForLocation(Point location) {
+		for (WireView wv : wireViews.values()) {
+			FractureView fv = wv.getFractureForLocation(location);
+			if (fv != null)
+			return fv;
+		}
 		return null;
 	}
 	
@@ -133,6 +147,13 @@ public class CircuitView implements PropertyChangeListener {
 		for (ElementView ew: elementViews.values()) {
 			if (ew.isInsideRect(p, w, h)) {
 				list.add(ew);
+			}
+		}
+		for (WireView wv : wireViews.values()) {
+			List<FractureView> localList = wv.getFracturesInsideRect(p, w, h);
+			
+			if (!localList.isEmpty()) {
+				list.addAll(localList);
 			}
 		}
 		return list;

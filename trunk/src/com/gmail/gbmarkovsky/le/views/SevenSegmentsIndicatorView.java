@@ -36,6 +36,8 @@ public class SevenSegmentsIndicatorView implements ElementView {
 	private Point position;
 	private SevenSegmentsIndicator indicator;
 	
+	private boolean selected;
+	
 	private int alpha = 255;
 	
 	public SevenSegmentsIndicatorView(Point position,
@@ -96,6 +98,11 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		}
 		for (PinView pinView: inputs) {
 			pinView.paint(g);
+		}
+		
+		if (selected) {
+			g.setColor(Color.red);
+			g.drawRect(position.x, position.y, WIDTH, HEIGHT);
 		}
 		
 		drawWires(g);
@@ -265,6 +272,11 @@ public class SevenSegmentsIndicatorView implements ElementView {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 	
 }

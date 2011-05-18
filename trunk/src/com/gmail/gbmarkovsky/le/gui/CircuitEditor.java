@@ -45,7 +45,13 @@ public class CircuitEditor extends JComponent {
 	}
 
 	public void setSelectedElement(ElementView selectedElement) {
+		for(ElementView ev : selectedElements) {
+			ev.setSelected(false);
+		}
 		selectedElements.clear();
+		if (selectedElement != null) {
+			selectedElement.setSelected(true);
+		}
 		selectedElements.add(selectedElement);
 	}
 
