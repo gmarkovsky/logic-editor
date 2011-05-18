@@ -115,6 +115,7 @@ public class PinView {
 	}
 	
 	public void removeWireView(WireView wireView) {
+		pin.removeWire(wireView.getWire());
 		wires.remove(wireView);
 	}
 	
