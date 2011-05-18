@@ -45,7 +45,19 @@ public class Wire {
 		return end;
 	}
 	
-	
+	public void setStart(Pin start) {
+		this.start.removeWire(this);
+		this.start = start;
+		this.start.addWire(this);
+		this.setSignal(this.start.getSignal());
+	}
+
+	public void setEnd(Pin end) {
+		this.end.removeWire(this);
+		this.end = end;
+		this.end.addWire(this);
+	}
+
 	public Signal getSignal() {
 		return signal;
 	}

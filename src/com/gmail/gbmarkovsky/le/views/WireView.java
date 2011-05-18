@@ -44,6 +44,20 @@ public class WireView {
 		return wire;
 	}
 	
+	public void setStart(PinView pinView) {
+		this.start.removeWireView(this);
+		this.start = pinView;
+		wire.setStart(pinView.getPin());
+		this.start.addWireView(this);
+	}
+	
+	public void setEnd(PinView pinView) {
+		this.end.removeWireView(this);
+		this.end = pinView;
+		wire.setEnd(pinView.getPin());
+		this.end.addWireView(this);
+	}
+	
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		if (selected) {

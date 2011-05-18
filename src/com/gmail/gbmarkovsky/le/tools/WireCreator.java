@@ -1,15 +1,9 @@
 package com.gmail.gbmarkovsky.le.tools;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 
-import com.gmail.gbmarkovsky.le.circuit.Signal;
 import com.gmail.gbmarkovsky.le.elements.Pin;
 import com.gmail.gbmarkovsky.le.elements.PinType;
 import com.gmail.gbmarkovsky.le.elements.Wire;
@@ -23,9 +17,9 @@ import com.gmail.gbmarkovsky.le.views.WireView;
  *
  */
 public class WireCreator extends AbstractCircuitTool {
-	private Point mousePosition;
 	private PinView startPin;
 	private PinType waitForPinType;
+	private WireView wireView;
 	
 	public WireCreator(CircuitEditor circuitEditor) {
 		super(circuitEditor);
@@ -56,6 +50,29 @@ public class WireCreator extends AbstractCircuitTool {
 					return;
 				}
 				startPin = pinViewForLocation;
+				
+				Pin start = startPin.getPin();
+
+				
+				Wire wire = null;
+				
+				
+				
+				if (start.getType() == PinType.OUTPUT) {
+					Pin end = Pin.createInput(null);
+					Point point = new Point(startPin.getCenter().x + PinView.PIN_WIDTH, startPin.getCenter().y);
+					PinView pinV = new PinView(point, end);
+					wire = new Wire(start, end);
+					wireView = new WireView(wire, startPin, pinV);
+				} else {
+					Pin end = Pin.createOutput(null);
+					Point point = new Point(startPin.getCenter().x - PinView.PIN_WIDTH, startPin.getCenter().y);
+					PinView pinV = new PinView(point, end);
+					wire = new Wire(end, start);
+					wireView = new WireView(wire, pinV, startPin);
+				}
+				
+				
 				if (startPin.getPin().getType().equals(PinType.INPUT)) {
 					waitForPinType = PinType.OUTPUT;
 				} else {
@@ -71,24 +88,24 @@ public class WireCreator extends AbstractCircuitTool {
 				if (!pinViewForLocation.getPin().isNewConnectAllowed()) {
 					return;
 				}
-				Pin start = startPin.getPin();
+
 				Pin end = pinViewForLocation.getPin();
-				Wire wire = null;
-				WireView wireView = null;
-				if (start.getType() == PinType.OUTPUT && end.getType() == PinType.INPUT) {
-					wire = new Wire(start, end);
-					wireView = new WireView(wire, startPin, pinViewForLocation);
+				
+				if (end.getType() == PinType.INPUT) {
+					wireView.setEnd(pinViewForLocation);
 				} else {
-					wire = new Wire(end, start);
-					wireView = new WireView(wire, pinViewForLocation, startPin);
+					wireView.setStart(pinViewForLocation);
 				}
+				
 				circuitEditor.getCircuitView().addWireView(wireView);
-				circuitEditor.getCircuit().addWire(wire);
+				circuitEditor.getCircuit().addWire(wireView.getWire());
 				startPin = null;
+				wireView = null;
 				circuitEditor.setDraggedSignal(null);
 			} else {
 				circuitEditor.setDraggedSignal(null);
 				startPin = null;
+				wireView = null;
 			}
 		}
 		circuitEditor.repaint();
@@ -106,24 +123,48 @@ public class WireCreator extends AbstractCircuitTool {
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		mousePosition = arg0.getPoint();
+		if (wireView != null) {
+			if (startPin.getPin().getType() == PinType.OUTPUT) {
+				Pin end = Pin.createInput(null);
+				Point point = new Point(arg0.getPoint().x + PinView.PIN_WIDTH, arg0.getPoint().y);
+				PinView pinV = new PinView(point, end);
+				wireView.setEnd(pinV);
+			} else {
+				Pin start = Pin.createOutput(null);
+
+				Point point = new Point(arg0.getPoint().x - PinView.PIN_WIDTH, arg0.getPoint().y);
+				PinView pinV = new PinView(point, start);
+				wireView.setStart(pinV);
+				PinView pinViewForLocation = circuitEditor.getCircuitView().getPinViewForLocation(arg0.getPoint());
+				if (pinViewForLocation != null) {
+					if (pinViewForLocation.getPin().getType() == PinType.OUTPUT) {
+						wireView.getWire().setSignal(pinViewForLocation.getPin().getSignal());
+					}
+				}
+			}
+		}
+		
 		circuitEditor.repaint();
 	}
 
 	public void paint(Graphics g) {
-		if (startPin != null) {
-			Graphics2D g2 = (Graphics2D) g;
-			if (startPin.getPin().getSignal() == Signal.TRUE) {
-				g2.setColor(new Color(147, 205, 90));
-			} else if (startPin.getPin().getSignal() == Signal.FALSE) {
-				g2.setColor(Color.gray);
-			}
-			Stroke tmpStroke = g2.getStroke();
-	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	        BasicStroke stroke = new BasicStroke(3.0f);
-	        g2.setStroke(stroke);
-			g2.drawLine(startPin.getBorder().x, startPin.getBorder().y, mousePosition.x, mousePosition.y);
-			g2.setStroke(tmpStroke);
+//		if (startPin != null) {
+//			Graphics2D g2 = (Graphics2D) g;
+//			if (startPin.getPin().getSignal() == Signal.TRUE) {
+//				g2.setColor(new Color(147, 205, 90));
+//			} else if (startPin.getPin().getSignal() == Signal.FALSE) {
+//				g2.setColor(Color.gray);
+//			}
+//			Stroke tmpStroke = g2.getStroke();
+//	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//	        BasicStroke stroke = new BasicStroke(3.0f);
+//	        g2.setStroke(stroke);
+//			g2.drawLine(startPin.getBorder().x, startPin.getBorder().y, mousePosition.x, mousePosition.y);
+//			g2.setStroke(tmpStroke);
+//		}
+		
+		if (wireView != null) {
+			wireView.paint(g);
 		}
 	}
 }
