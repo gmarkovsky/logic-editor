@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import com.gmail.gbmarkovsky.le.circuit.Signal;
 import com.gmail.gbmarkovsky.le.elements.PinType;
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
+import com.gmail.gbmarkovsky.le.views.FractureView;
 import com.gmail.gbmarkovsky.le.views.PinView;
 
 /**
@@ -17,6 +18,7 @@ import com.gmail.gbmarkovsky.le.views.PinView;
  */
 public class PinSelector extends AbstractCircuitTool {
 	private PinView markedPin;
+	private FractureView markedFracture;
 
 	public PinSelector(CircuitEditor circuitEditor) {
 		super(circuitEditor);
@@ -54,10 +56,10 @@ public class PinSelector extends AbstractCircuitTool {
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		Point pressPosition = arg0.getPoint();
-		PinView pinViewForLocation = circuitEditor.getCircuitView().getPinViewForLocation(pressPosition);
+		Point position = arg0.getPoint();
+		PinView pinViewForLocation = circuitEditor.getCircuitView().getPinViewForLocation(position);
 		if (pinViewForLocation != null) {
-			markedPin = pinViewForLocation;
+			setPinHighlight(pinViewForLocation);
 			if (circuitEditor.getDraggedSignal() != null && 
 					markedPin.getPin().getType() == PinType.INPUT &&
 					markedPin.getPin().isNewConnectAllowed()) {
@@ -70,11 +72,41 @@ public class PinSelector extends AbstractCircuitTool {
 					markedPin.getPin().setSignal(Signal.FALSE);
 				}
 			}
-			markedPin = null;
+			resetPinHighlight();
+			FractureView fractViewLoc = circuitEditor.getCircuitView().getFractureViewForLocation(position);
+			if (fractViewLoc != null) {
+				setFractureHighlight(fractViewLoc);
+			} else {
+				resetFractureHighlight();
+			}
 		}
 		circuitEditor.repaint();
 	}
 
+	private void setPinHighlight(PinView pinView) {
+		pinView.setHighlighted(true);
+		markedPin = pinView;
+	}
+	
+	private void resetPinHighlight() {
+		if (markedPin != null) {
+			markedPin.setHighlighted(false);
+		}
+		markedPin = null;
+	}
+	
+	private void setFractureHighlight(FractureView fractureView) {
+		fractureView.setHighlighted(true);
+		markedFracture = fractureView;
+	}
+	
+	private void resetFractureHighlight() {
+		if (markedFracture != null) {
+			markedFracture.setHighlighted(false);
+		}
+		markedFracture = null;
+	}
+	
 	public void paint(Graphics g) {
 		if (markedPin != null) {
 			Point p = markedPin.getCenter();
@@ -82,6 +114,9 @@ public class PinSelector extends AbstractCircuitTool {
 			g.setColor(new Color(250, 75, 75));
 			g.drawRect(p.x - PinView.PIN_WIDTH/2 - 1, p.y - PinView.PIN_HEIGHT/2 - 1,
 					PinView.PIN_WIDTH + 1, PinView.PIN_HEIGHT + 1);
+		}
+		if (markedFracture != null) {
+			
 		}
 	}
 }

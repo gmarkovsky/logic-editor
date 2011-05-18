@@ -23,6 +23,8 @@ public class SevenSegmentsDetectorView implements ElementView {
 	private Map<String, SegmentView> segments = new HashMap<String, SegmentView>();
 	private ArrayList<PinView> outputs = new ArrayList<PinView>();
 	
+	private boolean selected;
+	
 	private Point position;
 	private SevenSegmentsDetector indicator;
 	
@@ -76,6 +78,10 @@ public class SevenSegmentsDetectorView implements ElementView {
 		}
 		for (PinView pinView: outputs) {
 			pinView.paint(g);
+		}
+		if (selected) {
+			g.setColor(Color.red);
+			g.drawRect(position.x, position.y, WIDTH, HEIGHT);
 		}
 	}
 
@@ -174,6 +180,11 @@ public class SevenSegmentsDetectorView implements ElementView {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 	
 }

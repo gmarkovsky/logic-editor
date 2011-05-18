@@ -8,7 +8,9 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import com.gmail.gbmarkovsky.le.circuit.Signal;
 import com.gmail.gbmarkovsky.le.elements.PinType;
@@ -222,7 +224,7 @@ public class WireView {
 	
 	public boolean isPointOnFracture(Point point) {
 		for (FractureView p : fractures) {
-			if (p.contsins(point)) {
+			if (p.isPointInsideView(point)) {
 				return true;
 			}
 		}
@@ -231,11 +233,21 @@ public class WireView {
 	
 	public FractureView getFractureForLocation(Point point) {
 		for (FractureView p : fractures) {
-			if (p.contsins(point)) {
+			if (p.isPointInsideView(point)) {
 				return p;
 			}
 		}
 		return null;
+	}
+	
+	public List<FractureView> getFracturesInsideRect(Point p, int w, int h) {
+		List<FractureView> resultList = new ArrayList<FractureView>();
+		for (FractureView fv : fractures) {
+			if (fv.isInsideRect(p, w, h)) {
+				resultList.add(fv);
+			}
+		}
+		return resultList;
 	}
 	
 	public void disconnect() {

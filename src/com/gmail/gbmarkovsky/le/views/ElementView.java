@@ -20,5 +20,6 @@ public interface ElementView {
 	public PinView getInputPinView(Pin pin);
 	public PinView getOutputPinView(Pin pin);
 	public void setFantom();
+	public void setSelected(boolean selected);
 	public void paint(Graphics g);
 }

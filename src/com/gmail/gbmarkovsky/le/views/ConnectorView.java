@@ -21,6 +21,7 @@ public class ConnectorView implements ElementView {
 	private Point position;
 	private PinView pin;
 	private Connector connector;
+	private boolean selected;
 	
 	private int alpha = 255;
 	
@@ -75,6 +76,11 @@ public class ConnectorView implements ElementView {
 		g2.setColor(new Color(0, 0, 0, alpha));
 		g2.draw(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT));
 		g2.setStroke(tmpStroke);
+		
+		if (selected) {
+			g2.setColor(Color.red);
+			g2.draw(new Ellipse2D.Double(position.x, position.y, WIDTH, HEIGHT));
+		}
 	}
 
 	@Override
@@ -163,5 +169,10 @@ public class ConnectorView implements ElementView {
 	@Override
 	public PinView getOutputPinView(Pin pin) {
 		return (connector.getType().equals(ConnectorType.INPUT)) ?this.pin:null;
+	}
+
+	@Override
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 }

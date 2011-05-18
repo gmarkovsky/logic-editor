@@ -35,6 +35,8 @@ public abstract class AbstractGateView implements ElementView {
 
 	protected boolean drawSymbol;
 	
+	private boolean selected;
+	
 	private int alpha = 255;
 	
 	
@@ -201,6 +203,11 @@ public abstract class AbstractGateView implements ElementView {
 		
 			g2.setFont(tmpFont);
 		}
+		
+		if (selected) {
+			g2.setColor(Color.red);
+			g2.draw(new Rectangle2D.Double(position.x, position.y, width, height));
+		}
 	}
 
 	@Override
@@ -214,5 +221,10 @@ public abstract class AbstractGateView implements ElementView {
 			return output;
 		}
 		return null;
+	}
+	
+	@Override
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 }

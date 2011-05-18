@@ -13,7 +13,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
-import com.gmail.gbmarkovsky.le.views.ConnectorView;
 import com.gmail.gbmarkovsky.le.views.ElementView;
 
 public class ElementSelector extends AbstractCircuitTool {
@@ -51,7 +50,7 @@ public class ElementSelector extends AbstractCircuitTool {
 			//circuitEditor.setSelection(true);
 		}
 		if (selectedElement == null) {
-			circuitEditor.getSelectedElements().clear();
+			clearSelected(circuitEditor.getSelectedElements());
 		}
 		circuitEditor.repaint();
 	}
@@ -69,12 +68,27 @@ public class ElementSelector extends AbstractCircuitTool {
 			currentPoint = e.getPoint();
 			List<ElementView> list = circuitEditor.getSelectedElements();
 			Rectangle rect = normalizeRect(basePoint, currentPoint);
-			list.clear();
-			list.addAll(circuitEditor.getCircuitView().getElementsInsideRect(rect.getLocation(), rect.width, rect.height));
+			clearSelected(list);
+			List<ElementView> elementsInsideRect = circuitEditor.getCircuitView().getElementsInsideRect(rect.getLocation(), rect.width, rect.height);
+			setSelection(elementsInsideRect);
+			list.addAll(elementsInsideRect);
 			circuitEditor.repaint();
 		}
 	}
 
+	private void setSelection(List<ElementView> list) {
+		for(ElementView ev : list) {
+			ev.setSelected(true);
+		}
+	}
+	
+	private void clearSelected(List<ElementView> list) {
+		for(ElementView ev : list) {
+			ev.setSelected(false);
+		}
+		list.clear();
+	}
+	
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		
@@ -84,17 +98,16 @@ public class ElementSelector extends AbstractCircuitTool {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		List<ElementView> selectedElements = circuitEditor.getSelectedElements();
-		for (ElementView selectedElement: selectedElements) {
-			g.setColor(new Color(250, 75, 75));
-			if (selectedElement instanceof ConnectorView) {
-				g2.drawOval(selectedElement.getPosition().x - 1, selectedElement.getPosition().y - 1, 
-						selectedElement.getWidth() + 2, selectedElement.getHeight() + 2);
-			} else {
-				g2.drawRect(selectedElement.getPosition().x - 1, selectedElement.getPosition().y - 1, 
-						selectedElement.getWidth() + 2, selectedElement.getHeight() + 2);
-			}
-		}
+//		List<ElementView> selectedElements = circuitEditor.getSelectedElements();
+//		for (ElementView selectedElement: selectedElements) {
+//			g.setColor(new Color(250, 75, 75));
+//			if (selectedElement instanceof ConnectorView) {
+//				g2.drawOval(selectedElement.getPosition().x - 1, selectedElement.getPosition().y - 1, 
+//						selectedElement.getWidth() + 2, selectedElement.getHeight() + 2);
+//			} else {
+//				g2.drawRect(selectedElement.getPosition().x - 1, selectedElement.getPosition().y - 1, 
+//			}
+//		}
 		if (basePoint != null) {
 			Rectangle rect = normalizeRect(basePoint, currentPoint);
 			
