@@ -14,6 +14,7 @@ public class Gate extends AbstractElement {
 	public Gate(GateType type) {
 		super(type.getInputCount(), type.getOutputCount());
 		this.type = type;
+		execute();
 	}
 	
 	public GateType getType() {
