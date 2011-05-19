@@ -103,6 +103,7 @@ public class WireCreator extends AbstractCircuitTool {
 				wireView = null;
 				circuitEditor.setDraggedSignal(null);
 			} else {
+				wireView.disconnect();
 				circuitEditor.setDraggedSignal(null);
 				startPin = null;
 				wireView = null;

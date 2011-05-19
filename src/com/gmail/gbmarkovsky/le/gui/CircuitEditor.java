@@ -134,15 +134,7 @@ public class CircuitEditor extends JComponent {
 	}
 	
 	public void setSelectedWireView(WireView selectedWireView) {
-		if (selectedWireView == null) {
-			if (this.selectedWireView != null){
-				this.selectedWireView.setSelected(false);
-				this.firePropertyChange(SELECTION_CLEARED, true, false);
-			}
-		} else {
-			if (this.selectedWireView != null){
-				this.selectedWireView.setSelected(false);
-			}
+		if (selectedWireView != null) {
 			this.selectedWireView = selectedWireView;
 			this.selectedWireView.setSelected(true);
 			this.firePropertyChange(SELECTION_APPEARED, false, true);
@@ -172,6 +164,12 @@ public class CircuitEditor extends JComponent {
 			ev.setSelected(false);
 		}
 		selectedElements.clear();
+		
+		if (selectedWireView != null){
+			selectedWireView.setSelected(false);
+		}
+		selectedWireView = null;
+		
 		this.firePropertyChange(SELECTION_CLEARED, true, false);
 	}
 	

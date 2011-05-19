@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 import com.gmail.gbmarkovsky.le.views.ElementView;
+import com.gmail.gbmarkovsky.le.views.WireView;
 
 public class ElementSelector extends AbstractCircuitTool {
 	private Point basePoint;
@@ -39,19 +40,58 @@ public class ElementSelector extends AbstractCircuitTool {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-		ElementView selectedElement = circuitEditor.getCircuitView().getElementViewForLocation(arg0.getPoint());
+	public void mousePressed(MouseEvent event) {
+		Point point = event.getPoint();
+		
+		ElementView selectedElement = circuitEditor.getCircuitView().getElementViewForLocation(point);
+		WireView selectedWire = circuitEditor.getCircuitView().getWireViewForLocation(point);
+		
+		if (selectedElement == null) {
+			if (selectedWire == null) {
+				basePoint = point;
+				currentPoint = basePoint;
+				circuitEditor.clearSelection();
+			} else {
+				circuitEditor.clearSelection();
+				circuitEditor.setSelectedWireView(selectedWire);
+			}
+		} else {
+			if (selectedWire == null) {
+				if (!circuitEditor.getSelectedElements().contains(selectedElement) ) {
+					circuitEditor.clearSelection();
+					circuitEditor.setSelectedElement(selectedElement);
+				}
+			} else {
+				circuitEditor.setSelectedWireView(selectedWire);
+			}
+		}
+		
+		
+		
+		
+		if (selectedElement == null) {
+			basePoint = point;
+			currentPoint = basePoint;
+			circuitEditor.clearSelection();
+		}
+		
+		circuitEditor.setSelectedWireView(null);
+		
+		if (selectedWire != null) {
+			circuitEditor.setSelectedWireView(selectedWire);
+			return;
+		}
+		
+		if (selectedElement == null && selectedWire == null) {
+			circuitEditor.clearSelection();
+			return;
+		}
+		
 		if (selectedElement != null && !circuitEditor.getSelectedElements().contains(selectedElement) ) {
 			circuitEditor.setSelectedElement(selectedElement);
 		}
-		if (selectedElement == null) {
-			basePoint = arg0.getPoint();
-			currentPoint = basePoint;
-			//circuitEditor.setSelection(true);
-		}
-		if (selectedElement == null) {
-			circuitEditor.clearSelection();
-		}
+
+		
 		circuitEditor.repaint();
 	}
 
