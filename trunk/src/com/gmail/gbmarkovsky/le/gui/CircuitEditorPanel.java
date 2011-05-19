@@ -31,7 +31,6 @@ import com.gmail.gbmarkovsky.le.tools.SignalSetuper;
 import com.gmail.gbmarkovsky.le.tools.WireChanger;
 import com.gmail.gbmarkovsky.le.tools.WireCreator;
 import com.gmail.gbmarkovsky.le.tools.WireCutter;
-import com.gmail.gbmarkovsky.le.tools.WireSelector;
 
 public class CircuitEditorPanel extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = -2541499089778347322L;
@@ -64,7 +63,6 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 		circuitEditor.addCircuitTool(new ElementSelector(circuitEditor));
 		circuitEditor.addCircuitTool(new PinSelector(circuitEditor));
 		circuitEditor.addCircuitTool(new WireChanger(circuitEditor));
-		circuitEditor.addCircuitTool(new WireSelector(circuitEditor));
 		circuitEditor.addCircuitTool(new SignalSetuper(circuitEditor));
 		
 		circuitEditor.addPropertyChangeListener(this);
@@ -192,9 +190,8 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 				circuitEditor.addCircuitTool(new ElementDrugger(circuitEditor));
 				circuitEditor.addCircuitTool(new ElementSelector(circuitEditor));
 				circuitEditor.addCircuitTool(new PinSelector(circuitEditor));
-				
 				circuitEditor.addCircuitTool(new WireChanger(circuitEditor));
-				circuitEditor.addCircuitTool(new WireSelector(circuitEditor));
+				//circuitEditor.addCircuitTool(new WireSelector(circuitEditor));
 				circuitEditor.addCircuitTool(new SignalSetuper(circuitEditor));
 			}
 		});

@@ -142,6 +142,15 @@ public class CircuitView implements PropertyChangeListener {
 		return null;
 	}
 	
+	public WireView getWireViewForLocation(Point location) {
+		for (WireView wv: wireViews.values()) {
+			if (wv.isPointOnWire(location)) {
+				return wv;
+			}
+		}
+		return null;
+	}
+	
 	public List<ElementView> getElementsInsideRect(Point p, int w, int h) {
 		List<ElementView> list = new ArrayList<ElementView>();
 		for (ElementView ew: elementViews.values()) {
