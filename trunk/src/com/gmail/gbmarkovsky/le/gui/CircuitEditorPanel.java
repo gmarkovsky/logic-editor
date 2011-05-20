@@ -45,7 +45,7 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 	private JToggleButton orGateButton;
 	private JToggleButton notGateButton;
 	private JToggleButton inputButton;
-	private JToggleButton constButton;
+	private JToggleButton yesButton;
 	private JToggleButton outputButton;
 	private JToggleButton indicatorButton;
 	
@@ -86,9 +86,17 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 		orGateButton = new JToggleButton("OR");
 		notGateButton = new JToggleButton("NOT");
 		inputButton = new JToggleButton("In");
-		constButton = new JToggleButton("Const");
+		yesButton = new JToggleButton("YES");
 		outputButton = new JToggleButton("Out");
-		indicatorButton = new JToggleButton("Ind");
+		indicatorButton = new JToggleButton("Indicator");
+		
+		andGateButton.setToolTipText("И");
+		orGateButton.setToolTipText("ИЛИ");
+		notGateButton.setToolTipText("Отрицание");
+		inputButton.setToolTipText("Вход схемы");
+		yesButton.setToolTipText("Тождественная функция");
+		outputButton.setToolTipText("Выход схемы");
+		indicatorButton.setToolTipText("Семисегментный индикатор");
 		
 		deleteButton.setToolTipText("Удалить выделенные элементы");
 		cursorButton.setToolTipText("Выделение, перемещение");
@@ -112,7 +120,7 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
         group.add(orGateButton);
         group.add(notGateButton);
         group.add(inputButton);
-        group.add(constButton); 
+        group.add(yesButton); 
         group.add(outputButton);
         group.add(indicatorButton);
         
@@ -150,7 +158,7 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
         radioPanel.add(notGateButton, new GridBagConstraints(7, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(constButton, new GridBagConstraints(8, 0, 1, 1, 1.0, 1.0,
+        radioPanel.add(yesButton, new GridBagConstraints(8, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
         
@@ -238,7 +246,7 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.NOT));
 			}
 		});
-        constButton.addActionListener(new ActionListener() {
+        yesButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
