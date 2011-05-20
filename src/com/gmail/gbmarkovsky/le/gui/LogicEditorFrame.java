@@ -229,11 +229,13 @@ public class LogicEditorFrame extends JFrame {
 					Task task = new Task(file.getAbsolutePath());
 					circuitExecutor = new CircuitExecutor(task);
 				}
+				String message = null;
 				if  (circuitExecutor.execute(editorPanel.getCircuitEditor().getCircuit())) {
-					JOptionPane.showMessageDialog(LogicEditorFrame.this, "Схема верна");
+					message = "Схема верна";
 				} else {
-					JOptionPane.showMessageDialog(LogicEditorFrame.this, "Схема неверна");
+					message = "Схема неверна";
 				}
+				JOptionPane.showMessageDialog(LogicEditorFrame.this, message, "Проверка", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
@@ -254,11 +256,13 @@ public class LogicEditorFrame extends JFrame {
 				}
 				Task task = new Task(file.getAbsolutePath());
 				circuitExecutor = new CircuitExecutor(task);
+				String message = null;
 				if  (circuitExecutor.execute(editorPanel.getCircuitEditor().getCircuit())) {
-					JOptionPane.showMessageDialog(LogicEditorFrame.this, "Схема верна");
+					message = "Схема верна";
 				} else {
-					JOptionPane.showMessageDialog(LogicEditorFrame.this, "Схема неверна");
+					message = "Схема неверна";
 				}
+				JOptionPane.showMessageDialog(LogicEditorFrame.this, message, "Проверка", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
