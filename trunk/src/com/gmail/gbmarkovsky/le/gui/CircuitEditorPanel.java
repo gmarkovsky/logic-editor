@@ -82,13 +82,13 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 		cursorButton = new JToggleButton(imageIcon, true);
 		wireButton = new JToggleButton(wireIcon);
 		deleteButton = new JButton(deleteIcon);
-		andGateButton = new JToggleButton("AND");
-		orGateButton = new JToggleButton("OR");
-		notGateButton = new JToggleButton("NOT");
-		inputButton = new JToggleButton("In");
-		yesButton = new JToggleButton("YES");
-		outputButton = new JToggleButton("Out");
-		indicatorButton = new JToggleButton("Indicator");
+		andGateButton = new JToggleButton(" И ");
+		orGateButton = new JToggleButton("ИЛИ");
+		notGateButton = new JToggleButton("НЕ");
+		inputButton = new JToggleButton("Вход");
+		yesButton = new JToggleButton("ДА");
+		outputButton = new JToggleButton("Выход");
+		indicatorButton = new JToggleButton("Индикатор");
 		
 		andGateButton.setToolTipText("И");
 		orGateButton.setToolTipText("ИЛИ");
