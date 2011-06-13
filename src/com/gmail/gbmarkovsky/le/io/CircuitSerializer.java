@@ -29,9 +29,9 @@
 package com.gmail.gbmarkovsky.le.io;
 
 import java.awt.Point;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -203,7 +203,7 @@ public class CircuitSerializer {
 		return doc;
 	}
 	
-	public static CircuitView parse(ByteArrayInputStream stream) throws CircuitLoadException {
+	public static CircuitView parse(InputStream stream) throws CircuitLoadException {
 		DOMImplementationRegistry registry;
 		try {
 			registry = DOMImplementationRegistry.newInstance();

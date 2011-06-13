@@ -77,11 +77,11 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 	private JToggleButton outputButton;
 	private JToggleButton indicatorButton;
 	
-	CircuitEditorPanel() {
+	public CircuitEditorPanel() {
 		initControls();
 		initListeners();
 	}
-	
+
 	private void initControls() {
 		setLayout(new BorderLayout());
 		circuitEditor =  new CircuitEditor();

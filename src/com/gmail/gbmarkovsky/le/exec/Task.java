@@ -31,6 +31,7 @@ package com.gmail.gbmarkovsky.le.exec;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,10 @@ public class Task {
 	
 	private int inputs;
 	private int outputs;
+	
+	public Task(InputStream input) {
+		parse(input);
+	}
 	
 	public Task(String fileName) {
 		FileInputStream fw = null;
@@ -81,7 +86,7 @@ public class Task {
 		return outputs;
 	}
 
-	private void parse(ByteArrayInputStream stream)  {
+	private void parse(InputStream stream)  {
 		DOMImplementationRegistry registry;
 		try {
 			registry = DOMImplementationRegistry.newInstance();
