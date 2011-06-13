@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<circuit>
+    <elements/>
+    <inputs>
+        <input id="0">
+            <view x="105" y="84"/>
+        </input>
+        <input id="1">
+            <view x="112" y="279"/>
+        </input>
+    </inputs>
+    <outputs>
+        <output id="2">
+            <view x="617" y="135"/>
+        </output>
+    </outputs>
+    <wires/>
+</circuit>
