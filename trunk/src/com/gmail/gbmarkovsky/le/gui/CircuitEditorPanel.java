@@ -200,7 +200,7 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
         		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
         		new Insets(5, 3, 5, 3), 0, 0));
 		
-		JPanel gatesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+		JPanel gatesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 2));
 		
 		for (JToggleButton button : buttons.values()) {
 			gatesPanel.add(button);
@@ -208,7 +208,7 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 		
       radioPanel.add(gatesPanel, new GridBagConstraints(5, 0, 1, 1, 1.0, 1.0,
 		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-		new Insets(0, 0, 0, 0), 0, 0));
+		new Insets(5, 0, 5, 0), 0, 0));
 		
 //        radioPanel.add(andGateButton, new GridBagConstraints(5, 0, 1, 1, 1.0, 1.0,
 //        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
