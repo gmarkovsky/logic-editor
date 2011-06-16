@@ -3,15 +3,15 @@
     <elements/>
     <inputs>
         <input id="0">
-            <view x="105" y="84"/>
+            <view x="105" y="84" readOnly="true" />
         </input>
         <input id="1">
-            <view x="112" y="279"/>
+            <view x="112" y="279" readOnly="true" />
         </input>
     </inputs>
     <outputs>
         <output id="2">
-            <view x="617" y="135"/>
+            <view x="617" y="135" readOnly="true" />
         </output>
     </outputs>
     <wires/>

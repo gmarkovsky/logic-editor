@@ -145,8 +145,10 @@ public class CircuitEditor extends JComponent {
 	public void deleteSelectedElements() {
 		if (!selectedElements.isEmpty()) {
 			for (ElementView ew: selectedElements) {
-				circuitView.deleteElementView(ew);
-				repaint();
+				if (!ew.isReadOnly()) {
+					circuitView.deleteElementView(ew);
+					repaint();
+				}
 			}
 			selectedElements.clear();
 			this.firePropertyChange(SELECTION_CLEARED, true, false);

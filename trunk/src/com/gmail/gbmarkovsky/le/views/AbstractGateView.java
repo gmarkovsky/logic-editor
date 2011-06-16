@@ -63,6 +63,8 @@ public abstract class AbstractGateView implements ElementView {
 
 	protected boolean drawSymbol;
 	
+	private boolean readOnly;
+	
 	private boolean selected;
 	
 	private int alpha = 255;
@@ -88,7 +90,7 @@ public abstract class AbstractGateView implements ElementView {
 	}
 	
 	public static AbstractGateView createFor(Point position, Gate gate) {
-		if (gate.getType().equals(GateType.CONST)) {
+		if (gate.getType().equals(GateType.YES)) {
 			return new ConstGateView(position, gate);
 		} else {
 			return new GateView(position, gate);
@@ -254,5 +256,13 @@ public abstract class AbstractGateView implements ElementView {
 	@Override
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 }

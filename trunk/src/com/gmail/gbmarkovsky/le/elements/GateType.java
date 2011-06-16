@@ -34,7 +34,7 @@ package com.gmail.gbmarkovsky.le.elements;
  *
  */
 public enum GateType {
-	AND("AND", "&", 2), OR("OR", "1", 2), NOT("NOT", "~", 1), CONST("CONST", "=", 1);
+	AND("AND", "&", 2), OR("OR", "1", 2), NOT("NOT", "~", 1), YES("YES", "=", 1);
 	
 	private GateType(String name, String symbol, int inputCount) {
 		this.name = name;
@@ -70,8 +70,8 @@ public enum GateType {
 			return OR;
 		} else if (string.equals("NOT")) {
 			return NOT;
-		} else if (string.equals("CONST")) {
-			return CONST;
+		} else if (string.equals("YES")) {
+			return YES;
 		}
 		return null;
 	}

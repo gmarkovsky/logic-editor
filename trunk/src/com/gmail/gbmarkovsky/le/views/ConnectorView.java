@@ -51,6 +51,8 @@ public class ConnectorView implements ElementView {
 	private Connector connector;
 	private boolean selected;
 	
+	private boolean readOnly;
+	
 	private int alpha = 255;
 	
 	public ConnectorView(Point position, Connector connector) {
@@ -202,5 +204,15 @@ public class ConnectorView implements ElementView {
 	@Override
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	
+	@Override
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+	
+	@Override
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 }

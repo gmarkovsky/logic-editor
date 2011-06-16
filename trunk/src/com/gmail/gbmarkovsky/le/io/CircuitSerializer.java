@@ -256,7 +256,7 @@ public class CircuitSerializer {
 					gateView = new SevenSegmentsIndicatorView(new Point(x, y), (SevenSegmentsIndicator) gate);
 				}
 			}
-			
+
 			idToElementMap.put(id, gate);
 			
 			circuit.addElement(gate);
@@ -273,10 +273,13 @@ public class CircuitSerializer {
 			int x = Integer.parseInt(view.getAttribute("x"));
 			int y = Integer.parseInt(view.getAttribute("y"));
 			
+			boolean readOnly = Boolean.parseBoolean(view.getAttribute("readOnly"));
 			Connector input = Connector.createInput();
 			ConnectorView inputView = new ConnectorView(new Point(x, y), input);
 			
 			idToElementMap.put(id, input);
+			
+			inputView.setReadOnly(readOnly);
 			
 			circuit.addInput(input);
 			circuitView.addInputView(inputView);
@@ -293,10 +296,14 @@ public class CircuitSerializer {
 			int x = Integer.parseInt(view.getAttribute("x"));
 			int y = Integer.parseInt(view.getAttribute("y"));
 			
+			boolean readOnly = Boolean.parseBoolean(view.getAttribute("readOnly"));
+			
 			Connector output = Connector.createOutput();
 			ConnectorView outputView = new ConnectorView(new Point(x, y), output);
 			
 			idToElementMap.put(id, output);
+			
+			outputView.setReadOnly(readOnly);
 			
 			circuit.addOutput(output);
 			circuitView.addOutputView(outputView);
