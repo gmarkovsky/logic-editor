@@ -62,6 +62,7 @@ public class Pin {
 	private List<Wire> wires = new ArrayList<Wire>();
 	
 	private Pin(PinType type, Element element) {
+		//Preconditions.checkNotNull(element);
 		this.type = type;
 		this.element = element;
 	}

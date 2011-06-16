@@ -61,25 +61,17 @@ public abstract class AbstractGateView implements ElementView {
 	protected ArrayList<PinView> inputs;
 	protected PinView output;
 
-	protected boolean drawSymbol;
+	private boolean selected;
 	
 	private boolean readOnly;
 	
-	private boolean selected;
-	
 	private int alpha = 255;
-	
-	
+
 	public AbstractGateView(Point position, Gate gate, int width, int height) {
-		this(position, gate, width, height, true);
-	}
-	
-	public AbstractGateView(Point position, Gate gate, int width, int height, boolean drawSymbol) {
 		this.gate = gate;
 		this.position = position;
 		this.width = width;
 		this.height = height;
-		this.drawSymbol = drawSymbol;
 		output = new PinView(new Point(position.x + width + 1, position.y + height/2), gate.getOutputs().get(0));
 		inputs = new ArrayList<PinView>();
 		List<Pin> pins = gate.getInputs();
@@ -90,8 +82,8 @@ public abstract class AbstractGateView implements ElementView {
 	}
 	
 	public static AbstractGateView createFor(Point position, Gate gate) {
-		if (gate.getType().equals(GateType.YES)) {
-			return new ConstGateView(position, gate);
+		if (gate.getType().equals(GateType.YES) || gate.getType().equals(GateType.NOT)) {
+			return new SmallGateView(position, gate);
 		} else {
 			return new GateView(position, gate);
 		}
@@ -220,19 +212,18 @@ public abstract class AbstractGateView implements ElementView {
 		
 		g2.setColor(new Color(0, 0, 0, alpha));
 		
-		if (drawSymbol) {
-			Font tmpFont = g2.getFont();
-			String symbol = gate.getType().getSymbol();
+		Font tmpFont = g2.getFont();
+		String symbol = gate.getType().getSymbol();
 		
-			g2.setFont(new Font(tmpFont.getFontName(), tmpFont.getStyle(), 14));
-			Rectangle2D r = g2.getFontMetrics().getStringBounds(symbol, g2);
+		g2.setFont(new Font(tmpFont.getFontName(), tmpFont.getStyle(), 14));
 		
-			int xTextPos = position.x + (int)(width - r.getWidth())/2;
-			int yTextPos = position.y + (int)(height - r.getHeight())/5 + (int) r.getHeight();
-			g2.drawString(symbol, xTextPos,  yTextPos);
+		Rectangle2D r = g2.getFontMetrics().getStringBounds(symbol, g2);
 		
-			g2.setFont(tmpFont);
-		}
+		int xTextPos = position.x + (int)(width - r.getWidth())/2;
+		int yTextPos = position.y + (int)(height + r.getHeight()/2)/2;
+		g2.drawString(symbol, xTextPos,  yTextPos);
+		
+		g2.setFont(tmpFont);
 		
 		if (selected) {
 			g2.setColor(Color.red);

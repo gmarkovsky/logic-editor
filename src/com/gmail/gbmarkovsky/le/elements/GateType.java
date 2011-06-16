@@ -70,7 +70,7 @@ public enum GateType {
 			return OR;
 		} else if (string.equals("NOT")) {
 			return NOT;
-		} else if (string.equals("YES")) {
+		} else if (string.equals("CONST")) {
 			return YES;
 		}
 		return null;
