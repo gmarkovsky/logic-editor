@@ -51,10 +51,6 @@ public class Wire {
 	private Signal signal = Signal.FALSE;
 	
 	public Wire(Pin start, Pin end) {
-		if (start.getType() != PinType.OUTPUT || end.getType() != PinType.INPUT) {
-			throw new RuntimeException("wrong wire connection");
-		}
-		
 		this.start = start;
 		this.end = end;
 		

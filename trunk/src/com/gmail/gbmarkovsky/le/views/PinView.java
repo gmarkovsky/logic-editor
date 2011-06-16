@@ -172,7 +172,7 @@ public class PinView {
 		g2.fill(new RoundRectangle2D.Double(center.x - PIN_WIDTH/2,
 				center.y - PIN_HEIGHT/2,
 				PIN_WIDTH, PIN_HEIGHT,
-                2, 2));
+                5, 5));
 		
 		if (highlight) {
 			g2.setColor(Color.red);
