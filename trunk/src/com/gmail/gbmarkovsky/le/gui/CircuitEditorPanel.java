@@ -169,7 +169,7 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 		EnumSet<GateType> elems = EnumSet.allOf(GateType.class);
 		
 		for (GateType gateType : elems) {
-			JToggleButton button = new JToggleButton(gateType.getName());
+			JToggleButton button = new JToggleButton(gateType.getLabel());
 			group.add(button);
 			buttons.put(gateType, button);
 		}
@@ -200,7 +200,7 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
         		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
         		new Insets(5, 3, 5, 3), 0, 0));
 		
-		JPanel gatesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 2));
+		JPanel gatesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 0));
 		
 		for (JToggleButton button : buttons.values()) {
 			gatesPanel.add(button);

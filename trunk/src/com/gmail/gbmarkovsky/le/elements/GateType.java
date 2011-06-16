@@ -34,15 +34,18 @@ package com.gmail.gbmarkovsky.le.elements;
  *
  */
 public enum GateType {
-	AND("AND", "&", 2), OR("OR", "1", 2), NOT("NOT", "~", 1), YES("YES", "=", 1);
+	AND("AND", "&", " И ", 2), OR("OR", "1", "ИЛИ", 2),
+	NOT("NOT", "~", "НЕ", 1), YES("YES", "=", "ДА", 1);
 	
-	private GateType(String name, String symbol, int inputCount) {
+	private GateType(String name, String symbol, String label, int inputCount) {
 		this.name = name;
+		this.label = label;
 		this.symbol = symbol;
 		this.inputCount = inputCount;
 	}
 	
 	private String name;
+	private String label;
 	private String symbol;
 	private int inputCount;
 	private int outputCount = 1;
@@ -53,6 +56,10 @@ public enum GateType {
 	
 	public String getSymbol() {
 		return symbol;
+	}
+
+	public String getLabel() {
+		return label;
 	}
 
 	public int getInputCount() {
