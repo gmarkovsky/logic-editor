@@ -67,6 +67,7 @@ public class SevenSegmentsIndicatorView implements ElementView {
 	private boolean selected;
 	
 	private int alpha = 255;
+	private boolean readOnly;
 	
 	public SevenSegmentsIndicatorView(Point position,
 			SevenSegmentsIndicator indicator) {
@@ -307,6 +308,15 @@ public class SevenSegmentsIndicatorView implements ElementView {
 		this.selected = selected;
 	}
 	
+	@Override
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+	
+	@Override
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
+	}
 }
 
 class SegmentView {

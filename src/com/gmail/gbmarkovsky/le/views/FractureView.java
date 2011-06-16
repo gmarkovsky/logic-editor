@@ -168,4 +168,16 @@ public class FractureView implements ElementView {
 	public void setHighlighted(boolean highlight) {
 		this.highlight = highlight;
 	}
+
+	@Override
+	public void setReadOnly(boolean readOnly) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isReadOnly() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

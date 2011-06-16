@@ -32,7 +32,9 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Document;
@@ -44,6 +46,8 @@ import org.w3c.dom.ls.LSParser;
 
 public class Task {
 	private Map<String, String> table = new HashMap<String, String>();
+	
+	private List<String> elements = new ArrayList<String>();
 	
 	private int inputs;
 	private int outputs;
@@ -86,6 +90,10 @@ public class Task {
 		return outputs;
 	}
 
+	public List<String> getElements() {
+		return elements;
+	}
+
 	private void parse(InputStream stream)  {
 		DOMImplementationRegistry registry;
 		try {
@@ -107,8 +115,11 @@ public class Task {
 		
 		org.w3c.dom.Element root = doc.getDocumentElement();
 		
+		NodeList ilist = root.getElementsByTagName("table");
+		org.w3c.dom.Element tbl = (org.w3c.dom.Element) ilist.item(0);
+		
 		//Читаем строки таблицы 
-		NodeList list = root.getElementsByTagName("row");
+		NodeList list = tbl.getElementsByTagName("row");
 		for (int i = 0; i < list.getLength(); i++) {
 			org.w3c.dom.Element element = (org.w3c.dom.Element) list.item(i);
 			String vector = element.getAttribute("vector");
@@ -116,6 +127,17 @@ public class Task {
 			inputs = vector.length();
 			outputs = value.length();
 			table.put(vector, value);
+		}
+		
+		ilist = root.getElementsByTagName("elements");
+		org.w3c.dom.Element elems = (org.w3c.dom.Element) ilist.item(0);
+		
+		//Читаем элементы для решения задачи 
+		list = elems.getElementsByTagName("element");
+		for (int i = 0; i < list.getLength(); i++) {
+			org.w3c.dom.Element element = (org.w3c.dom.Element) list.item(i);
+			String name = element.getAttribute("name");
+			elements.add(name);
 		}
 	}
 }

@@ -30,6 +30,7 @@ package com.gmail.gbmarkovsky.le.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -37,6 +38,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -69,23 +74,29 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 	private JToggleButton cursorButton;
 	private JButton deleteButton;
 	private JToggleButton wireButton;
-	private JToggleButton andGateButton;
-	private JToggleButton orGateButton;
-	private JToggleButton notGateButton;
+//	private JToggleButton andGateButton;
+//	private JToggleButton orGateButton;
+//	private JToggleButton notGateButton;
 	private JToggleButton inputButton;
-	private JToggleButton yesButton;
+//	private JToggleButton yesButton;
 	private JToggleButton outputButton;
 	private JToggleButton indicatorButton;
 	
+	private Map<GateType, JToggleButton> buttons = new HashMap<GateType, JToggleButton>();
+	
 	public CircuitEditorPanel() {
-		initControls();
-		initListeners();
+		this(false);
 	}
 
-	private void initControls() {
+	public CircuitEditorPanel(boolean mode) {
+		initControls(mode);
+		initListeners();
+	}
+	
+	private void initControls(boolean mode) {
 		setLayout(new BorderLayout());
 		circuitEditor =  new CircuitEditor();
-		initControlPanel();
+		initControlPanel(mode);
 		
 		circuitEditor.addCircuitTool(new ElementDrugger(circuitEditor));
 		circuitEditor.addCircuitTool(new ElementSelector(circuitEditor));
@@ -100,7 +111,7 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 		add(controlPanel, BorderLayout.NORTH);
 	}
 	
-	private void initControlPanel(){
+	private void initControlPanel(boolean mode){
 		controlPanel = new JPanel(new GridBagLayout());
 		controlPanel.setBorder(BorderFactory.createBevelBorder(1));
 		
@@ -110,19 +121,22 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 		cursorButton = new JToggleButton(imageIcon, true);
 		wireButton = new JToggleButton(wireIcon);
 		deleteButton = new JButton(deleteIcon);
-		andGateButton = new JToggleButton(" И ");
-		orGateButton = new JToggleButton("ИЛИ");
-		notGateButton = new JToggleButton("НЕ");
+		
+
+		
+//		andGateButton = new JToggleButton(" И ");
+//		orGateButton = new JToggleButton("ИЛИ");
+//		notGateButton = new JToggleButton("НЕ");
 		inputButton = new JToggleButton("Вход");
-		yesButton = new JToggleButton("ДА");
+//		yesButton = new JToggleButton("ДА");
 		outputButton = new JToggleButton("Выход");
 		indicatorButton = new JToggleButton("Индикатор");
-		
-		andGateButton.setToolTipText("И");
-		orGateButton.setToolTipText("ИЛИ");
-		notGateButton.setToolTipText("Отрицание");
+//		
+//		andGateButton.setToolTipText("И");
+//		orGateButton.setToolTipText("ИЛИ");
+//		notGateButton.setToolTipText("Отрицание");
 		inputButton.setToolTipText("Вход схемы");
-		yesButton.setToolTipText("Тождественная функция");
+//		yesButton.setToolTipText("Тождественная функция");
 		outputButton.setToolTipText("Выход схемы");
 		indicatorButton.setToolTipText("Семисегментный индикатор");
 		
@@ -144,13 +158,21 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
         ButtonGroup group = new ButtonGroup();
         group.add(cursorButton);
         group.add(wireButton);
-        group.add(andGateButton);
-        group.add(orGateButton);
-        group.add(notGateButton);
+//        group.add(andGateButton);
+//        group.add(orGateButton);
+//        group.add(notGateButton);
         group.add(inputButton);
-        group.add(yesButton); 
+//        group.add(yesButton); 
         group.add(outputButton);
         group.add(indicatorButton);
+        
+		EnumSet<GateType> elems = EnumSet.allOf(GateType.class);
+		
+		for (GateType gateType : elems) {
+			JToggleButton button = new JToggleButton(gateType.getName());
+			group.add(button);
+			buttons.put(gateType, button);
+		}
         
         JPanel radioPanel = new JPanel(new GridBagLayout());
         //radioPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -177,16 +199,40 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 		radioPanel.add(jSeparator, new GridBagConstraints(4, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
         		new Insets(5, 3, 5, 3), 0, 0));
-        radioPanel.add(andGateButton, new GridBagConstraints(5, 0, 1, 1, 1.0, 1.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-        		new Insets(5, 0, 5, 0), 0, 0));
-        radioPanel.add(orGateButton, new GridBagConstraints(6, 0, 1, 1, 1.0, 1.0,
+		
+		JPanel gatesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+		
+		for (JToggleButton button : buttons.values()) {
+			gatesPanel.add(button);
+		}
+		
+      radioPanel.add(gatesPanel, new GridBagConstraints(5, 0, 1, 1, 1.0, 1.0,
+		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+		new Insets(0, 0, 0, 0), 0, 0));
+		
+//        radioPanel.add(andGateButton, new GridBagConstraints(5, 0, 1, 1, 1.0, 1.0,
+//        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+//        		new Insets(5, 0, 5, 0), 0, 0));
+//        radioPanel.add(orGateButton, new GridBagConstraints(6, 0, 1, 1, 1.0, 1.0,
+//        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+//        		new Insets(5, 2, 5, 0), 0, 0));
+//        radioPanel.add(notGateButton, new GridBagConstraints(7, 0, 1, 1, 1.0, 1.0,
+//        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+//        		new Insets(5, 2, 5, 0), 0, 0));
+//        radioPanel.add(yesButton, new GridBagConstraints(8, 0, 1, 1, 1.0, 1.0,
+//        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+//        		new Insets(5, 2, 5, 0), 0, 0));
+        if (!mode) {
+        jSeparator = new JSeparator(JSeparator.VERTICAL);
+        jSeparator.setPreferredSize(new Dimension(1, 1));
+		radioPanel.add(jSeparator, new GridBagConstraints(6, 0, 1, 1, 0.0, 0.0,
+        		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
+        		new Insets(5, 3, 5, 3), 0, 0));
+        radioPanel.add(inputButton, new GridBagConstraints(7, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(notGateButton, new GridBagConstraints(7, 0, 1, 1, 1.0, 1.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-        		new Insets(5, 2, 5, 0), 0, 0));
-        radioPanel.add(yesButton, new GridBagConstraints(8, 0, 1, 1, 1.0, 1.0,
+
+        radioPanel.add(outputButton, new GridBagConstraints(8, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
         
@@ -195,22 +241,10 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 		radioPanel.add(jSeparator, new GridBagConstraints(9, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
         		new Insets(5, 3, 5, 3), 0, 0));
-        radioPanel.add(inputButton, new GridBagConstraints(10, 0, 1, 1, 1.0, 1.0,
+        radioPanel.add(indicatorButton, new GridBagConstraints(10, 0, 1, 1, 1.0, 1.0,
         		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
         		new Insets(5, 2, 5, 0), 0, 0));
-
-        radioPanel.add(outputButton, new GridBagConstraints(11, 0, 1, 1, 1.0, 1.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-        		new Insets(5, 2, 5, 0), 0, 0));
-        
-        jSeparator = new JSeparator(JSeparator.VERTICAL);
-        jSeparator.setPreferredSize(new Dimension(1, 1));
-		radioPanel.add(jSeparator, new GridBagConstraints(12, 0, 1, 1, 0.0, 0.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
-        		new Insets(5, 3, 5, 3), 0, 0));
-        radioPanel.add(indicatorButton, new GridBagConstraints(13, 0, 1, 1, 1.0, 1.0,
-        		GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-        		new Insets(5, 2, 5, 0), 0, 0));
+        }
         
         controlPanel.add(radioPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
         		GridBagConstraints.CENTER, GridBagConstraints.NONE,
@@ -250,38 +284,51 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 				circuitEditor.addCircuitTool(new WireCutter(circuitEditor));
 			}
 		});
-        andGateButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				circuitEditor.clearCircuitTools();
-				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.AND));
-			}
-		});
-        orGateButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				circuitEditor.clearCircuitTools();
-				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.OR));
-			}
-		});
-        notGateButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				circuitEditor.clearCircuitTools();
-				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.NOT));
-			}
-		});
-        yesButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				circuitEditor.clearCircuitTools();
-				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.CONST));
-			}
-		});
+        
+		for (final GateType gateType : buttons.keySet()) {
+			JToggleButton button = buttons.get(gateType);
+			button.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					circuitEditor.clearCircuitTools();
+					circuitEditor.addCircuitTool(new GateCreator(circuitEditor, gateType));
+				}
+			});
+		}
+        
+//        andGateButton.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				circuitEditor.clearCircuitTools();
+//				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.AND));
+//			}
+//		});
+//        orGateButton.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				circuitEditor.clearCircuitTools();
+//				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.OR));
+//			}
+//		});
+//        notGateButton.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				circuitEditor.clearCircuitTools();
+//				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.NOT));
+//			}
+//		});
+//        yesButton.addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				circuitEditor.clearCircuitTools();
+//				circuitEditor.addCircuitTool(new GateCreator(circuitEditor, GateType.CONST));
+//			}
+//		});
         inputButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -318,6 +365,14 @@ public class CircuitEditorPanel extends JPanel implements PropertyChangeListener
 			deleteButton.setEnabled(true);
 		} else if (evt.getPropertyName().equals(CircuitEditor.SELECTION_CLEARED)) {
 			deleteButton.setEnabled(false);
+		}
+	}
+	
+	public void leaveOnly(List<String> elementNames) {
+		for (final GateType gateType : buttons.keySet()) {
+			if (!elementNames.contains(gateType.getName())) {
+				buttons.get(gateType).setVisible(false);
+			}
 		}
 	}
 }

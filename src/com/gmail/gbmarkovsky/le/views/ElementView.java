@@ -50,4 +50,6 @@ public interface ElementView {
 	public void setFantom();
 	public void setSelected(boolean selected);
 	public void paint(Graphics g);
+	public void setReadOnly(boolean readOnly);
+	public boolean isReadOnly();
 }

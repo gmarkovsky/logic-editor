@@ -1,6 +1,13 @@
-<table>
-	<row vector="00" value="0"/>
-	<row vector="01" value="1"/>
-	<row vector="10" value="1"/>
-	<row vector="11" value="0"/>
-</table>
+<task>
+	<table>
+		<row vector="00" value="0" />
+		<row vector="01" value="1" />
+		<row vector="10" value="1" />
+		<row vector="11" value="0" />
+	</table>
+	<elements>
+		<element name="AND" />
+		<element name="OR" />
+		<element name="NOT" />
+	</elements>
+</task>

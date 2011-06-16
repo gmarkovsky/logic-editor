@@ -55,6 +55,7 @@ public class SevenSegmentsDetectorView implements ElementView {
 	
 	private Point position;
 	private SevenSegmentsDetector indicator;
+	private boolean readOnly;
 	
 	public SevenSegmentsDetectorView(Point position,
 			SevenSegmentsDetector indicator) {
@@ -215,4 +216,13 @@ public class SevenSegmentsDetectorView implements ElementView {
 		this.selected = selected;
 	}
 	
+	@Override
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+	
+	@Override
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
+	}
 }
