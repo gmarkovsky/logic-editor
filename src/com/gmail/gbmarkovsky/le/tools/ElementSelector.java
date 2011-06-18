@@ -53,21 +53,6 @@ public class ElementSelector extends AbstractCircuitTool {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		
-	}
-
-	@Override
 	public void mousePressed(MouseEvent event) {
 		Point point = event.getPoint();
 		
@@ -93,9 +78,6 @@ public class ElementSelector extends AbstractCircuitTool {
 				circuitEditor.setSelectedWireView(selectedWire);
 			}
 		}
-		
-		
-		
 		
 		if (selectedElement == null) {
 			basePoint = point;
@@ -140,11 +122,6 @@ public class ElementSelector extends AbstractCircuitTool {
 			circuitEditor.appearSelection(elementsInsideRect);
 			circuitEditor.repaint();
 		}
-	}
-	
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		
 	}
 
 	public void paint(Graphics g) {

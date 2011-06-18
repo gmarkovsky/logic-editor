@@ -28,7 +28,6 @@
  */
 package com.gmail.gbmarkovsky.le.tools;
 
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
@@ -44,18 +43,6 @@ public class WireCutter extends AbstractCircuitTool {
 	
 	public WireCutter(CircuitEditor circuitEditor) {
 		super(circuitEditor);
-	}
-
-	@Override
-	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -98,17 +85,6 @@ public class WireCutter extends AbstractCircuitTool {
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
 	public void mouseDragged(MouseEvent e) {
 		if (draggedFracture != null) {
 			int dx = e.getX() - prevPosition.x;
@@ -133,5 +109,4 @@ public class WireCutter extends AbstractCircuitTool {
 	public void mouseMoved(MouseEvent e) {
 		prevPosition = e.getPoint();
 	}
-
 }

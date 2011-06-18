@@ -28,6 +28,9 @@
  */
 package com.gmail.gbmarkovsky.le.tools;
 
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+
 import com.gmail.gbmarkovsky.le.gui.CircuitEditor;
 
 public abstract class AbstractCircuitTool implements CircuitTool {
@@ -35,5 +38,46 @@ public abstract class AbstractCircuitTool implements CircuitTool {
 
 	public AbstractCircuitTool(CircuitEditor circuitEditor) {
 		this.circuitEditor = circuitEditor;
+	}
+	
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		
 	}
 }

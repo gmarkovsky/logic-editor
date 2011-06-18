@@ -53,36 +53,6 @@ public class PinSelector extends AbstractCircuitTool {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		
-	}
-
-	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		Point position = arg0.getPoint();
 		PinView pinViewForLocation = circuitEditor.getCircuitView().getPinViewForLocation(position);
@@ -142,9 +112,6 @@ public class PinSelector extends AbstractCircuitTool {
 			g.setColor(new Color(250, 75, 75));
 			g.drawRect(p.x - PinView.PIN_WIDTH/2 - 1, p.y - PinView.PIN_HEIGHT/2 - 1,
 					PinView.PIN_WIDTH + 1, PinView.PIN_HEIGHT + 1);
-		}
-		if (markedFracture != null) {
-			
 		}
 	}
 }
