@@ -28,7 +28,6 @@
  */
 package com.gmail.gbmarkovsky.le.tools;
 
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -43,21 +42,6 @@ public class ElementDrugger extends AbstractCircuitTool {
 	public ElementDrugger(CircuitEditor circuitEditor) {
 		super(circuitEditor);
 		prevPosition = new Point();
-	}
-	
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		
 	}
 
 	@Override
@@ -108,10 +92,5 @@ public class ElementDrugger extends AbstractCircuitTool {
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		prevPosition = arg0.getPoint();
-	}
-
-	@Override
-	public void paint(Graphics g) {
-		
 	}
 }

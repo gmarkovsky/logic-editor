@@ -28,7 +28,6 @@
  */
 package com.gmail.gbmarkovsky.le.tools;
 
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
@@ -45,21 +44,6 @@ public class WireChanger extends AbstractCircuitTool {
 	
 	public WireChanger(CircuitEditor circuitEditor) {
 		super(circuitEditor);
-	}
-	
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		
 	}
 
 	@Override
@@ -132,16 +116,6 @@ public class WireChanger extends AbstractCircuitTool {
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		
-	}
-
-	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		if (wireView != null) {
 			if (donorPin.getPin().getType() == PinType.INPUT) {
@@ -164,22 +138,5 @@ public class WireChanger extends AbstractCircuitTool {
 		}
 		
 		circuitEditor.repaint();
-	}
-
-	public void paint(Graphics g) {
-//		if (startPin != null) {
-//			Graphics2D g2 = (Graphics2D) g;
-//			if (startPin.getPin().getSignal() == Signal.TRUE) {
-//				g2.setColor(new Color(147, 205, 90));
-//			} else if (startPin.getPin().getSignal() == Signal.FALSE) {
-//				g2.setColor(Color.gray);
-//			}
-//			Stroke tmpStroke = g2.getStroke();
-//	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//	        BasicStroke stroke = new BasicStroke(3.0f);
-//	        g2.setStroke(stroke);
-//			g2.drawLine(startPin.getBorder().x, startPin.getBorder().y, mousePosition.x, mousePosition.y);
-//			g2.setStroke(tmpStroke);
-//		}
 	}
 }

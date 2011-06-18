@@ -88,21 +88,6 @@ public class ConnectorCreator extends AbstractCircuitTool {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		
-	}
-
-	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		Point toPoint = new Point(arg0.getX() - connectorView.getWidth(), arg0.getY() - connectorView.getHeight());
 		connectorView.setPosition(toPoint);
